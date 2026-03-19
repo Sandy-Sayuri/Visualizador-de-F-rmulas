@@ -25,7 +25,6 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { SimulationCanvasComponent } from '../simulation-canvas/simulation-canvas.component';
 import { FormulaScenarioAnalyzerService } from '../../formula/formula-scenario-analyzer.service';
 import {
-  FORMULA_ENGINE_DOMAIN_CATALOG,
   PHYSICS_GUIDED_SCENARIO_CATALOG,
   PhysicsGuidedScenarioDescriptorModel,
   PhysicsDomainDescriptorModel,
@@ -40,6 +39,7 @@ import {
   FormulaScenarioDraftModel,
 } from '../../models/formula-scenario.model';
 import { FormulaScenarioRunnerService } from '../../services/formula-scenario-runner.service';
+import { PhysicsDomainRegistryService } from '../../formula/physics-domain-registry.service';
 
 type FormulaScenarioBuilderFormGroup = FormGroup<{
   simulationName: FormControl<string>;
@@ -65,6 +65,7 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
   readonly speedSteps = [1, 2, 4, 8];
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly analyzer = inject(FormulaScenarioAnalyzerService);
+  private readonly domainRegistry = inject(PhysicsDomainRegistryService);
   private readonly destroyRef = inject(DestroyRef);
 
   @Input() initialDraft: FormulaScenarioDraftModel | null = null;
@@ -93,10 +94,12 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
   });
 
   readonly presets: FormulaPresetModel[] = FORMULA_SCENARIO_PRESETS;
+  readonly registeredDomains: readonly PhysicsDomainDescriptorModel[] =
+    this.domainRegistry.getDomains();
   readonly supportedDomains: PhysicsDomainDescriptorModel[] =
-    FORMULA_ENGINE_DOMAIN_CATALOG.filter((domain) => domain.status === 'implemented');
+    this.registeredDomains.filter((domain) => domain.status === 'implemented');
   readonly plannedDomains: PhysicsDomainDescriptorModel[] =
-    FORMULA_ENGINE_DOMAIN_CATALOG.filter((domain) => domain.status === 'planned');
+    this.registeredDomains.filter((domain) => domain.status === 'planned');
   readonly guidedScenarios: PhysicsGuidedScenarioDescriptorModel[] =
     PHYSICS_GUIDED_SCENARIO_CATALOG;
   readonly supportedShapes = [
@@ -106,6 +109,7 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
     'x = A*cos(w*t)',
     'F = G*(m1*m2)/r^2',
     'y = A*sin(k*x - w*t)',
+    'Optica: reflexao, refracao, lente',
   ];
 
   readonly form: FormulaScenarioBuilderFormGroup = this.formBuilder.group({
@@ -144,6 +148,14 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => this.detectParameters(true));
+
+    this.form.valueChanges
+      .pipe(debounceTime(160), takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        if (this.isGuidedPreset() && this.analysis() && !this.runner.isRunning()) {
+          this.applyPreview();
+        }
+      });
 
     this.loadPreset(this.presets[0]);
   }
@@ -224,6 +236,19 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
 
   isGravityCategory(): boolean {
     return this.analysis()?.particleStrategy === 'pair';
+  }
+
+  activePreset(): FormulaPresetModel | null {
+    const formula = this.form.controls.formula.getRawValue().trim();
+    return this.presets.find((preset) => preset.formula === formula) ?? null;
+  }
+
+  isGuidedPreset(): boolean {
+    return !!this.activePreset()?.guided;
+  }
+
+  guidedPresetSummary(): string {
+    return this.activePreset()?.summary ?? '';
   }
 
   parameterControl(key: string): FormControl<number> {

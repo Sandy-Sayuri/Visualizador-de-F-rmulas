@@ -1,4 +1,5 @@
 import { CanvasDecorationModel, CanvasLegendItemModel } from './canvas-decoration.model';
+import { OpticalSceneSnapshotModel } from './optical-scene.model';
 import type { FormulaScenarioClassificationModel } from './formula-engine.model';
 import { RuntimeBodyModel } from './runtime-body.model';
 
@@ -66,9 +67,14 @@ export interface FormulaScenarioDraftModel {
   config: FormulaScenarioConfigModel;
 }
 
+export interface FormulaScenarioStateSceneDataModel {
+  optical?: OpticalSceneSnapshotModel;
+}
+
 export interface FormulaScenarioStateModel {
   time: number;
   bodies: RuntimeBodyModel[];
+  sceneData?: FormulaScenarioStateSceneDataModel;
 }
 
 export type FormulaSceneModeModel =
@@ -76,7 +82,8 @@ export type FormulaSceneModeModel =
   | 'single-trajectory'
   | 'oscillation'
   | 'wave-field'
-  | 'pair-interaction';
+  | 'pair-interaction'
+  | 'optical-rays';
 
 export interface FormulaSceneDecisionModel {
   mode: FormulaSceneModeModel;

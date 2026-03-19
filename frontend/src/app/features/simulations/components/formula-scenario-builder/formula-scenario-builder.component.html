@@ -5,7 +5,13 @@
         <div>
           <p class="eyebrow">Formula</p>
           <h2>Entrada principal</h2>
-          <p class="muted-text">Use o formato alvo = expressao.</p>
+          <p class="muted-text">
+            @if (isGuidedPreset()) {
+              Cenario guiado deste dominio.
+            } @else {
+              Use o formato alvo = expressao.
+            }
+          </p>
         </div>
       </div>
 
@@ -17,15 +23,23 @@
         }
       </div>
 
-      <label class="formula-field">
-        <span>Formula</span>
-        <textarea
-          formControlName="formula"
-          rows="3"
-          data-testid="formula-main-input"
-          placeholder="Ex.: ax = -k*x/m"
-        ></textarea>
-      </label>
+      @if (isGuidedPreset()) {
+        <section class="guided-scenario-card" data-testid="guided-scenario-card">
+          <span>Cenario selecionado</span>
+          <strong>{{ activePreset()?.heroText || activePreset()?.label }}</strong>
+          <p>{{ guidedPresetSummary() }}</p>
+        </section>
+      } @else {
+        <label class="formula-field">
+          <span>Formula</span>
+          <textarea
+            formControlName="formula"
+            rows="3"
+            data-testid="formula-main-input"
+            placeholder="Ex.: ax = -k*x/m"
+          ></textarea>
+        </label>
+      }
 
       @if (formulaError()) {
         <p class="feedback error">{{ formulaError() }}</p>
@@ -64,7 +78,7 @@
         </div>
 
         <div class="support-shapes">
-          <span>Cenarios guiados em preparo</span>
+          <span>Cenarios guiados</span>
 
           <div class="support-chip-row">
             @for (scenario of guidedScenarios; track scenario.id) {

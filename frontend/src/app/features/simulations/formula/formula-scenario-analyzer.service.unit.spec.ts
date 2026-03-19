@@ -83,6 +83,20 @@ describe('FormulaScenarioAnalyzerService', () => {
     ]);
   });
 
+  it('extracts guided optical parameters without exposing a free formula surface', () => {
+    const analysis = service.analyze('optics_refraction = 0');
+
+    expect(analysis.classification.domain).toBe('optics');
+    expect(analysis.classification.family).toBe('refraction');
+    expect(analysis.parameterDefinitions.map((parameter) => parameter.key)).toEqual([
+      'angleDeg',
+      'n1',
+      'n2',
+      'sourceX',
+      'sourceY',
+    ]);
+  });
+
   it('throws a friendly error for invalid formulas', () => {
     expect(() => service.analyze('x + y')).toThrowError(
       'Use o formato variavel = expressao.',

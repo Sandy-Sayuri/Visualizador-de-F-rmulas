@@ -190,6 +190,28 @@ export class SimulationCanvasRendererService {
         context.stroke();
         context.closePath();
         context.restore();
+        continue;
+      }
+
+      if (decoration.kind === 'arc') {
+        const center = this.toCanvasPoint(decoration.center, width, height, scale);
+        context.save();
+        context.globalAlpha = decoration.opacity;
+        context.strokeStyle = decoration.color;
+        context.lineWidth = decoration.width;
+        context.setLineDash(decoration.dashed ? [6, 8] : []);
+        context.beginPath();
+        context.arc(
+          center.x,
+          center.y,
+          decoration.radius * scale.scale,
+          -decoration.startAngle,
+          -decoration.endAngle,
+          true,
+        );
+        context.stroke();
+        context.closePath();
+        context.restore();
       }
     }
   }
@@ -341,6 +363,14 @@ export class SimulationCanvasRendererService {
 
       if (decoration.kind === 'dot') {
         coordinates.push(Math.abs(decoration.position.x), Math.abs(decoration.position.y));
+        return;
+      }
+
+      if (decoration.kind === 'arc') {
+        coordinates.push(
+          Math.abs(decoration.center.x) + decoration.radius,
+          Math.abs(decoration.center.y) + decoration.radius,
+        );
         return;
       }
 

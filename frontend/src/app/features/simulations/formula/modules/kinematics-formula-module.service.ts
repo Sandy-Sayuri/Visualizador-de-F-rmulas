@@ -1,24 +1,28 @@
 import { Injectable } from '@angular/core';
 
 import {
-  FormulaDomainModuleModel,
-  FormulaScenarioClassificationModel,
   FormulaScenarioFeatureModel,
+  PhysicsDomainDescriptorModel,
   ParsedFormulaModel,
 } from '../../models/formula-engine.model';
+import { BasePhysicsDomainService } from './base-physics-domain.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class KinematicsFormulaModuleService
-  implements FormulaDomainModuleModel
-{
+export class KinematicsFormulaModuleService extends BasePhysicsDomainService {
   readonly id = 'kinematics';
+  readonly descriptor: PhysicsDomainDescriptorModel = {
+    domain: 'kinematics',
+    label: 'Cinematica',
+    status: 'implemented',
+    notes: 'Formulas diretas de posicao, velocidade e trajetorias simples.',
+  };
 
   classify(
     parsed: ParsedFormulaModel,
     features: FormulaScenarioFeatureModel,
-  ): FormulaScenarioClassificationModel | null {
+  ) {
     if (features.particleStrategy === 'pair') {
       return null;
     }
@@ -36,19 +40,15 @@ export class KinematicsFormulaModuleService
       parsed.targetInfo.evaluationMode === 'position' ||
       parsed.targetInfo.evaluationMode === 'scalar';
 
-    return {
-      moduleId: this.id,
-      domain: 'kinematics',
+    return this.buildClassification({
       family: directExpression ? 'direct-trajectory' : 'time-driven-velocity',
-      displayLabel: 'Cinematica',
       solverStrategy: directExpression
         ? 'direct-expression'
         : 'single-state-integration',
       visualStrategy:
         directExpression && !features.usesState ? 'particle' : 'trajectory',
-      supportStatus: 'implemented',
       confidence: features.usesState ? 0.72 : 0.9,
       reasons: ['A formula relaciona tempo e movimento sem interacao entre corpos.'],
-    };
+    });
   }
 }

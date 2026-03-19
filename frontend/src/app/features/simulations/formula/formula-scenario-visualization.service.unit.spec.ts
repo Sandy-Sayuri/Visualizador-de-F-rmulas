@@ -47,4 +47,29 @@ describe('FormulaScenarioVisualizationService', () => {
     expect(scene.decorations.some((decoration) => decoration.kind === 'path')).toBeTrue();
     expect(scene.legendItems.some((item) => item.label === 'Onda')).toBeTrue();
   });
+
+  it('builds optical ray decorations for guided optics scenarios', () => {
+    const config = {
+      formula: 'optics_reflection = 0',
+      parameterValues: {
+        angleDeg: 34,
+        sourceX: -210,
+        sourceY: 170,
+      },
+      primaryLabel: 'Fonte',
+      secondaryLabel: 'Espelho',
+      primaryColor: '#ffd166',
+      secondaryColor: '#7ce6ff',
+      particleRadius: 8,
+    };
+    const analysis = analyzer.analyze(config.formula);
+    const program = engine.compileProgram(config, analysis);
+    const state = engine.createInitialState(config, program);
+    const scene = service.buildScene(analysis, state);
+
+    expect(scene.decision.mode).toBe('optical-rays');
+    expect(scene.decorations.some((decoration) => decoration.kind === 'line')).toBeTrue();
+    expect(scene.decorations.some((decoration) => decoration.kind === 'arc')).toBeTrue();
+    expect(scene.legendItems.some((item) => item.tone === 'ray')).toBeTrue();
+  });
 });

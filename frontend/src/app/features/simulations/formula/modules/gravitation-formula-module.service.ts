@@ -1,24 +1,28 @@
 import { Injectable } from '@angular/core';
 
 import {
-  FormulaDomainModuleModel,
-  FormulaScenarioClassificationModel,
   FormulaScenarioFeatureModel,
+  PhysicsDomainDescriptorModel,
   ParsedFormulaModel,
 } from '../../models/formula-engine.model';
+import { BasePhysicsDomainService } from './base-physics-domain.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GravitationFormulaModuleService
-  implements FormulaDomainModuleModel
-{
+export class GravitationFormulaModuleService extends BasePhysicsDomainService {
   readonly id = 'gravitation';
+  readonly descriptor: PhysicsDomainDescriptorModel = {
+    domain: 'gravitation',
+    label: 'Gravitacao',
+    status: 'implemented',
+    notes: 'Interacao simples entre dois corpos com lei de forca.',
+  };
 
   classify(
     parsed: ParsedFormulaModel,
     features: FormulaScenarioFeatureModel,
-  ): FormulaScenarioClassificationModel | null {
+  ) {
     if (
       parsed.targetInfo.evaluationMode !== 'force' ||
       features.particleStrategy !== 'pair'
@@ -26,19 +30,15 @@ export class GravitationFormulaModuleService
       return null;
     }
 
-    return {
-      moduleId: this.id,
-      domain: 'gravitation',
+    return this.buildClassification({
       family: 'two-body-force',
-      displayLabel: 'Gravitacao',
       solverStrategy: 'pair-force-integration',
       visualStrategy: 'pair-interaction',
-      supportStatus: 'implemented',
       confidence: 0.98,
       reasons: [
         'A formula define uma forca com interacao entre corpos.',
         'Ha pistas de massa e distancia compativeis com gravitacao simples.',
       ],
-    };
+    });
   }
 }

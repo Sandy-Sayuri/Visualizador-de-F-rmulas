@@ -127,4 +127,28 @@ describe('FormulaScenarioEngineService', () => {
       ),
     ).toBeTrue();
   });
+
+  it('builds a guided optics reflection scene with animated ray bodies', () => {
+    const config = {
+      formula: 'optics_reflection = 0',
+      parameterValues: {
+        angleDeg: 34,
+        sourceX: -210,
+        sourceY: 170,
+      },
+      primaryLabel: 'Fonte',
+      secondaryLabel: 'Espelho',
+      primaryColor: '#ffd166',
+      secondaryColor: '#7ce6ff',
+      particleRadius: 8,
+    };
+    const program = service.compileProgram(config);
+    const initialState = service.createInitialState(config, program);
+    const nextState = service.step(initialState, config, program, 0.3);
+
+    expect(program.analysis.classification.domain).toBe('optics');
+    expect(initialState.bodies.length).toBeGreaterThanOrEqual(2);
+    expect(initialState.sceneData?.optical?.scenario).toBe('reflection');
+    expect(nextState.bodies[0].position.x).not.toBe(initialState.bodies[0].position.x);
+  });
 });

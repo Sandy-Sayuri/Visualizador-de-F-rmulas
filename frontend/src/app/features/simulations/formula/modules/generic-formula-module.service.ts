@@ -1,42 +1,44 @@
 import { Injectable } from '@angular/core';
 
 import {
-  FormulaDomainModuleModel,
-  FormulaScenarioClassificationModel,
   FormulaScenarioFeatureModel,
+  PhysicsDomainDescriptorModel,
   ParsedFormulaModel,
 } from '../../models/formula-engine.model';
+import { BasePhysicsDomainService } from './base-physics-domain.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GenericFormulaModuleService implements FormulaDomainModuleModel {
+export class GenericFormulaModuleService extends BasePhysicsDomainService {
   readonly id = 'generic';
+  readonly descriptor: PhysicsDomainDescriptorModel = {
+    domain: 'generic',
+    label: 'Expressoes genericas',
+    status: 'implemented',
+    notes: 'Fallback seguro para formulas fora dos dominios especializados.',
+  };
 
   classify(
     parsed: ParsedFormulaModel,
     features: FormulaScenarioFeatureModel,
-  ): FormulaScenarioClassificationModel | null {
+  ) {
     const solverStrategy =
       parsed.targetInfo.evaluationMode === 'position' ||
       parsed.targetInfo.evaluationMode === 'scalar'
         ? 'direct-expression'
         : 'single-state-integration';
 
-    return {
-      moduleId: this.id,
-      domain: 'generic',
+    return this.buildClassification({
       family: 'free-expression',
-      displayLabel: 'Expressao generica',
       solverStrategy,
       visualStrategy: features.usesTrig
         ? 'oscillation-pattern'
         : features.usesState || parsed.targetInfo.evaluationMode !== 'position'
           ? 'trajectory'
           : 'particle',
-      supportStatus: 'implemented',
       confidence: 0.3,
       reasons: ['A formula nao entrou em um dominio especializado e usa o fallback seguro.'],
-    };
+    });
   }
 }

@@ -12,9 +12,7 @@ import {
 } from '../models/formula-scenario.model';
 import { FormulaScenarioAnalyzerService } from './formula-scenario-analyzer.service';
 import { FormulaScenarioEvaluatorService } from './formula-scenario-evaluator.service';
-import { PairForceFormulaSolverService } from './solvers/pair-force-formula-solver.service';
-import { SingleBodyFormulaSolverService } from './solvers/single-body-formula-solver.service';
-import { WaveFormulaSolverService } from './solvers/wave-formula-solver.service';
+import { FormulaScenarioSolverRegistryService } from './formula-scenario-solver-registry.service';
 
 export interface FormulaScenarioProgram extends FormulaScenarioProgramContract {
   solver: FormulaScenarioSolverModel;
@@ -26,11 +24,7 @@ export interface FormulaScenarioProgram extends FormulaScenarioProgramContract {
 export class FormulaScenarioEngineService {
   private readonly analyzer = inject(FormulaScenarioAnalyzerService);
   private readonly evaluator = inject(FormulaScenarioEvaluatorService);
-  private readonly solvers = [
-    inject(PairForceFormulaSolverService),
-    inject(WaveFormulaSolverService),
-    inject(SingleBodyFormulaSolverService),
-  ];
+  private readonly solverRegistry = inject(FormulaScenarioSolverRegistryService);
 
   private readonly context: FormulaScenarioSolverContextModel = {
     validationDeltaTime: 0.016,
@@ -80,12 +74,6 @@ export class FormulaScenarioEngineService {
   private resolveSolver(
     analysis: FormulaScenarioAnalysisModel,
   ): FormulaScenarioSolverModel {
-    const solver = this.solvers.find((candidate) => candidate.supports(analysis));
-
-    if (!solver) {
-      throw new Error('Nao ha solver disponivel para essa formula nesta etapa.');
-    }
-
-    return solver;
+    return this.solverRegistry.resolve(analysis);
   }
 }

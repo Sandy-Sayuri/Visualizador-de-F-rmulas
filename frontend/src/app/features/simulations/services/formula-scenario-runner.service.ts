@@ -165,6 +165,7 @@ export class FormulaScenarioRunnerService {
         force: { ...body.force },
         trail: body.trail.map((point) => ({ ...point })),
       })),
+      sceneData: state.sceneData ? structuredClone(state.sceneData) : undefined,
     };
   }
 }

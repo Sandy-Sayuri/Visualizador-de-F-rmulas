@@ -63,3 +63,20 @@ test('loads a saved simulation from the backend library and opens its details', 
     await request.delete(`http://127.0.0.1:3000/api/simulations/${createdSimulation.id}`);
   }
 });
+
+test('runs a guided optics reflection scene from the presets', async ({ page }) => {
+  await page.goto('/simulations');
+
+  await page.getByRole('button', { name: 'Reflexao' }).first().click();
+  await expect(page.getByTestId('guided-scenario-card')).toBeVisible();
+  await expect(page.getByTestId('formula-category')).toContainText('Optica');
+  await expect(page.getByTestId('formula-param-angleDeg')).toBeVisible();
+  await expect(page.getByTestId('formula-param-sourceX')).toBeVisible();
+  await expect(page.getByTestId('formula-param-sourceY')).toBeVisible();
+
+  await page.getByTestId('toggle-formula-scenario').click();
+
+  const formulaLegend = page.locator('[data-testid="canvas-legend"]').first();
+  await expect(formulaLegend).toContainText('Raios');
+  await expect(formulaLegend).toContainText('Angulos');
+});

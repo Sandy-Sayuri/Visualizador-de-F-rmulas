@@ -33,11 +33,23 @@ export type CanvasDecorationModel =
       opacity: number;
       width: number;
       dashed?: boolean;
+    }
+  | {
+      kind: 'arc';
+      center: Vector2Model;
+      radius: number;
+      startAngle: number;
+      endAngle: number;
+      color: string;
+      opacity: number;
+      width: number;
+      dashed?: boolean;
     };
 
 export interface CanvasLegendItemModel {
   key: string;
   tone:
+    | 'ray'
     | 'velocity'
     | 'force'
     | 'trail'

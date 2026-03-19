@@ -1,6 +1,7 @@
 import type { MathNode } from 'mathjs';
 
 import type {
+  FormulaParameterDefinitionModel,
   FormulaScenarioAnalysisModel,
   FormulaScenarioAxisModel,
   FormulaScenarioConfigModel,
@@ -29,6 +30,7 @@ export type FormulaSolverStrategyModel =
   | 'single-state-integration'
   | 'pair-force-integration'
   | 'wave-sampling'
+  | 'optical-guided'
   | 'equation-system'
   | 'ode-system';
 
@@ -37,6 +39,7 @@ export type FormulaVisualStrategyModel =
   | 'trajectory'
   | 'oscillation-pattern'
   | 'pair-interaction'
+  | 'optical-rays'
   | 'graph'
   | 'wave'
   | 'field';
@@ -81,13 +84,25 @@ export interface FormulaScenarioClassificationModel {
   reasons: string[];
 }
 
-export interface FormulaDomainModuleModel {
+export interface PhysicsDomainModuleModel {
   id: string;
+  descriptor: PhysicsDomainDescriptorModel;
+  canHandle(
+    parsed: ParsedFormulaModel,
+    features: FormulaScenarioFeatureModel,
+  ): boolean;
   classify(
     parsed: ParsedFormulaModel,
     features: FormulaScenarioFeatureModel,
   ): FormulaScenarioClassificationModel | null;
+  extractParameters(
+    parsed: ParsedFormulaModel,
+    features: FormulaScenarioFeatureModel,
+    fallbackDefinitions: FormulaParameterDefinitionModel[],
+  ): FormulaParameterDefinitionModel[];
 }
+
+export type FormulaDomainModuleModel = PhysicsDomainModuleModel;
 
 export interface FormulaScenarioProgramContract {
   analysis: FormulaScenarioAnalysisModel;
@@ -148,6 +163,10 @@ export interface PhysicsGuidedScenarioDescriptorModel {
   notes: string;
 }
 
+export interface PhysicsDomainRegistryModel {
+  getDomains(): readonly PhysicsDomainDescriptorModel[];
+}
+
 export const FORMULA_ENGINE_DOMAIN_CATALOG: PhysicsDomainDescriptorModel[] = [
   {
     domain: 'kinematics',
@@ -194,8 +213,8 @@ export const FORMULA_ENGINE_DOMAIN_CATALOG: PhysicsDomainDescriptorModel[] = [
   {
     domain: 'optics',
     label: 'Optica',
-    status: 'planned',
-    notes: 'Raios, lentes e fenomenos geometricos ainda nao possuem visualizer dedicado.',
+    status: 'implemented',
+    notes: 'Cenarios guiados de reflexao, refracao e lente convergente simples.',
   },
   {
     domain: 'electromagnetism',

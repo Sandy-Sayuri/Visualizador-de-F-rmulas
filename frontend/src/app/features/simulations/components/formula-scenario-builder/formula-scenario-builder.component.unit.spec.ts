@@ -62,4 +62,19 @@ describe('FormulaScenarioBuilderComponent', () => {
     component.decreaseTimeScale();
     expect(component.runner.timeScale()).toBe(2);
   });
+
+  it('switches to a guided optical preset without exposing the formula textarea', () => {
+    const opticsPreset = component.presets.find((preset) => preset.id === 'optics-reflection');
+
+    component.loadPreset(opticsPreset!);
+    fixture.detectChanges();
+
+    expect(component.isGuidedPreset()).toBeTrue();
+    expect(component.analysis()?.classification.domain).toBe('optics');
+    expect(component.parameterDefinitions().map((parameter) => parameter.key)).toEqual([
+      'angleDeg',
+      'sourceX',
+      'sourceY',
+    ]);
+  });
 });

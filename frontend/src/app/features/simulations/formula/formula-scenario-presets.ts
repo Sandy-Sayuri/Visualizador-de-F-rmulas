@@ -3,6 +3,8 @@ export interface FormulaPresetModel {
   label: string;
   simulationName: string;
   formula: string;
+  heroText?: string;
+  guided?: boolean;
   primaryLabel: string;
   secondaryLabel: string;
   summary: string;
@@ -53,5 +55,38 @@ export const FORMULA_SCENARIO_PRESETS: FormulaPresetModel[] = [
     primaryLabel: 'Frente de onda',
     secondaryLabel: 'Eixo',
     summary: 'Uma onda periodica se propaga no espaco com amplitude e frequencia.',
+  },
+  {
+    id: 'optics-reflection',
+    label: 'Reflexao',
+    simulationName: 'Reflexao plana',
+    formula: 'optics_reflection = 0',
+    heroText: 'Optica: reflexao',
+    guided: true,
+    primaryLabel: 'Fonte',
+    secondaryLabel: 'Superficie',
+    summary: 'Um raio incide em uma superficie plana e reflete com angulos simetricos.',
+  },
+  {
+    id: 'optics-refraction',
+    label: 'Refracao',
+    simulationName: 'Refracao simples',
+    formula: 'optics_refraction = 0',
+    heroText: 'Optica: refracao',
+    guided: true,
+    primaryLabel: 'Fonte',
+    secondaryLabel: 'Interface',
+    summary: 'O raio muda de direcao ao cruzar uma interface com indices diferentes.',
+  },
+  {
+    id: 'optics-lens',
+    label: 'Lente',
+    simulationName: 'Lente convergente',
+    formula: 'optics_lens = 0',
+    heroText: 'Optica: lente',
+    guided: true,
+    primaryLabel: 'Fonte',
+    secondaryLabel: 'Lente',
+    summary: 'Raios atravessam uma lente convergente e se aproximam do foco.',
   },
 ];

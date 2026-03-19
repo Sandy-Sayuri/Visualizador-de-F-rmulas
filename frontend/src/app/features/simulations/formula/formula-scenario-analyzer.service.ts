@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 
 import { FormulaScenarioClassifierService } from './formula-scenario-classifier.service';
 import { FormulaScenarioParserService } from './formula-scenario-parser.service';
+import { PhysicsDomainRegistryService } from './physics-domain-registry.service';
 import {
   FormulaParameterDefinitionModel,
   FormulaScenarioAnalysisModel,
@@ -16,15 +17,22 @@ const GLOBAL_RESERVED_SYMBOLS = new Set(['t', 'dt', 'pi', 'e']);
 export class FormulaScenarioAnalyzerService {
   private readonly parser = inject(FormulaScenarioParserService);
   private readonly classifier = inject(FormulaScenarioClassifierService);
+  private readonly domainRegistry = inject(PhysicsDomainRegistryService);
 
   analyze(formula: string): FormulaScenarioAnalysisModel {
     const parsed = this.parser.parseFormula(formula);
     const { classification, features } = this.classifier.classify(parsed);
     const stateSymbols = this.classifier.resolveStateSymbols(features.particleStrategy);
-    const parameterDefinitions = parsed.symbols
+    const fallbackParameterDefinitions = parsed.symbols
       .filter((symbol) => !GLOBAL_RESERVED_SYMBOLS.has(symbol))
       .filter((symbol) => !stateSymbols.has(symbol))
       .map((symbol) => this.createParameterDefinition(symbol));
+    const parameterDefinitions = this.domainRegistry.extractParameters(
+      parsed,
+      features,
+      classification,
+      this.deduplicateDefinitions(fallbackParameterDefinitions),
+    );
 
     return {
       formula: parsed.formula,
@@ -36,7 +44,7 @@ export class FormulaScenarioAnalyzerService {
       evaluationMode: parsed.targetInfo.evaluationMode,
       particleStrategy: features.particleStrategy,
       classification,
-      parameterDefinitions: this.deduplicateDefinitions(parameterDefinitions),
+      parameterDefinitions,
       symbols: parsed.symbols,
       functionNames: parsed.functionNames,
       usesTime: features.usesTime,

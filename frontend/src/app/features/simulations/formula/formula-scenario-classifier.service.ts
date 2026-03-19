@@ -6,12 +6,7 @@ import {
   ParsedFormulaModel,
 } from '../models/formula-engine.model';
 import { FormulaScenarioParticleStrategyModel } from '../models/formula-scenario.model';
-import { DynamicsFormulaModuleService } from './modules/dynamics-formula-module.service';
-import { GenericFormulaModuleService } from './modules/generic-formula-module.service';
-import { GravitationFormulaModuleService } from './modules/gravitation-formula-module.service';
-import { KinematicsFormulaModuleService } from './modules/kinematics-formula-module.service';
-import { OscillationFormulaModuleService } from './modules/oscillation-formula-module.service';
-import { WaveFormulaModuleService } from './modules/wave-formula-module.service';
+import { PhysicsDomainRegistryService } from './physics-domain-registry.service';
 
 const TRIG_FUNCTIONS = new Set(['sin', 'cos', 'tan', 'asin', 'acos', 'atan']);
 const SINGLE_STATE_SYMBOLS = new Set([
@@ -68,14 +63,7 @@ const INTERACTION_HINTS = new Set([
   providedIn: 'root',
 })
 export class FormulaScenarioClassifierService {
-  private readonly modules = [
-    inject(GravitationFormulaModuleService),
-    inject(WaveFormulaModuleService),
-    inject(OscillationFormulaModuleService),
-    inject(DynamicsFormulaModuleService),
-    inject(KinematicsFormulaModuleService),
-    inject(GenericFormulaModuleService),
-  ];
+  private readonly registry = inject(PhysicsDomainRegistryService);
 
   classify(parsed: ParsedFormulaModel): {
     classification: FormulaScenarioClassificationModel;
@@ -95,15 +83,8 @@ export class FormulaScenarioClassifierService {
       functionNames: parsed.functionNames,
     };
 
-    const classification =
-      this.modules
-        .map((moduleRef) => moduleRef.classify(parsed, features))
-        .filter((match): match is FormulaScenarioClassificationModel => !!match)
-        .sort((left, right) => right.confidence - left.confidence)[0] ??
-      this.modules[this.modules.length - 1].classify(parsed, features)!;
-
     return {
-      classification,
+      classification: this.registry.resolveClassification(parsed, features),
       features,
     };
   }

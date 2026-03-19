@@ -122,7 +122,8 @@ span {
 
 .support-card,
 .support-heading,
-.support-shapes {
+.support-shapes,
+.guided-scenario-card {
   display: grid;
   gap: 0.65rem;
 }
@@ -131,6 +132,18 @@ span {
   padding: 0.9rem;
   border-radius: 1.2rem;
   background: rgba(255, 255, 255, 0.04);
+}
+
+.guided-scenario-card {
+  padding: 1rem;
+  border-radius: 1.15rem;
+  background: rgba(124, 230, 255, 0.08);
+  border: 1px solid rgba(124, 230, 255, 0.16);
+}
+
+.guided-scenario-card strong {
+  color: #f5f1e6;
+  font-size: 1.05rem;
 }
 
 .support-heading strong,
