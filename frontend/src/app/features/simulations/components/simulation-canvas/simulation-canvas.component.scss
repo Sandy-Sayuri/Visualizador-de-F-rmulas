@@ -40,6 +40,8 @@ h2 {
 
 .canvas-frame {
   position: relative;
+  min-height: clamp(260px, 42vh, 460px);
+  aspect-ratio: 86 / 42;
   border-radius: 1.2rem;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -50,14 +52,14 @@ h2 {
 }
 
 .canvas-shell.minimal .canvas-frame {
-  min-height: clamp(300px, 44vh, 420px);
+  min-height: clamp(250px, 38vh, 420px);
 }
 
 canvas {
   display: block;
   width: 100%;
-  height: auto;
-  min-height: 360px;
+  height: 100%;
+  min-height: 0;
   cursor: crosshair;
 }
 
@@ -79,7 +81,7 @@ canvas {
   display: flex;
   gap: 0.75rem;
   flex-wrap: wrap;
-  max-width: calc(100% - 2rem);
+  max-width: min(calc(100% - 2rem), 36rem);
   padding: 0.65rem 0.8rem;
   border-radius: 1rem;
   background: rgba(6, 11, 20, 0.76);
@@ -155,8 +157,24 @@ canvas {
     flex-direction: column;
   }
 
+  .canvas-frame {
+    min-height: 240px;
+  }
+
   .legend {
     left: 0.75rem;
     right: 0.75rem;
+    max-width: none;
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .canvas-shell {
+    padding: 1rem;
+  }
+
+  .canvas-frame {
+    min-height: 220px;
   }
 }

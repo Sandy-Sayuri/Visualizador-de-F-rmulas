@@ -99,4 +99,32 @@ describe('FormulaScenarioEngineService', () => {
     expect(program.analysis.target).toBe('scalar');
     expect(nextState.bodies[0].position.x).toBeCloseTo(20, 2);
   });
+
+  it('samples a traveling wave into multiple bodies across the field', () => {
+    const config = {
+      formula: 'y = A*sin(k*x - w*t)',
+      parameterValues: {
+        A: 60,
+        k: 0.03,
+        w: 1.4,
+      },
+      primaryLabel: 'Frente de onda',
+      secondaryLabel: 'Eixo',
+      primaryColor: '#7ce6ff',
+      secondaryColor: '#f4c66a',
+      particleRadius: 8,
+    };
+    const program = service.compileProgram(config);
+    const initialState = service.createInitialState(config, program);
+    const nextState = service.step(initialState, config, program, 0.2);
+
+    expect(program.analysis.classification.domain).toBe('waves');
+    expect(initialState.bodies.length).toBeGreaterThan(10);
+    expect(
+      nextState.bodies.some(
+        (body, index) =>
+          Math.abs(body.position.y - initialState.bodies[index].position.y) > 0.1,
+      ),
+    ).toBeTrue();
+  });
 });

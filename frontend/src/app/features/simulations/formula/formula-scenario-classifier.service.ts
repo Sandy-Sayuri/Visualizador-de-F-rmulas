@@ -11,6 +11,7 @@ import { GenericFormulaModuleService } from './modules/generic-formula-module.se
 import { GravitationFormulaModuleService } from './modules/gravitation-formula-module.service';
 import { KinematicsFormulaModuleService } from './modules/kinematics-formula-module.service';
 import { OscillationFormulaModuleService } from './modules/oscillation-formula-module.service';
+import { WaveFormulaModuleService } from './modules/wave-formula-module.service';
 
 const TRIG_FUNCTIONS = new Set(['sin', 'cos', 'tan', 'asin', 'acos', 'atan']);
 const SINGLE_STATE_SYMBOLS = new Set([
@@ -69,6 +70,7 @@ const INTERACTION_HINTS = new Set([
 export class FormulaScenarioClassifierService {
   private readonly modules = [
     inject(GravitationFormulaModuleService),
+    inject(WaveFormulaModuleService),
     inject(OscillationFormulaModuleService),
     inject(DynamicsFormulaModuleService),
     inject(KinematicsFormulaModuleService),

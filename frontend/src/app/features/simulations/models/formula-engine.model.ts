@@ -28,6 +28,7 @@ export type FormulaSolverStrategyModel =
   | 'direct-expression'
   | 'single-state-integration'
   | 'pair-force-integration'
+  | 'wave-sampling'
   | 'equation-system'
   | 'ode-system';
 
@@ -137,6 +138,16 @@ export interface PhysicsDomainDescriptorModel {
   notes: string;
 }
 
+export interface PhysicsGuidedScenarioDescriptorModel {
+  id: string;
+  domain: Extract<
+    PhysicsDomainModel,
+    'optics' | 'electromagnetism' | 'thermodynamics'
+  >;
+  label: string;
+  notes: string;
+}
+
 export const FORMULA_ENGINE_DOMAIN_CATALOG: PhysicsDomainDescriptorModel[] = [
   {
     domain: 'kinematics',
@@ -171,8 +182,8 @@ export const FORMULA_ENGINE_DOMAIN_CATALOG: PhysicsDomainDescriptorModel[] = [
   {
     domain: 'waves',
     label: 'Ondas',
-    status: 'planned',
-    notes: 'Propagacao, frequencia, fase e superposicao ainda nao implementadas.',
+    status: 'implemented',
+    notes: 'Ondas viajantes simples com propagacao, amplitude e frequencia.',
   },
   {
     domain: 'thermodynamics',
@@ -191,5 +202,50 @@ export const FORMULA_ENGINE_DOMAIN_CATALOG: PhysicsDomainDescriptorModel[] = [
     label: 'Eletromagnetismo',
     status: 'planned',
     notes: 'Campos eletricos e magneticos exigem novas estrategias de solver e renderizacao.',
+  },
+];
+
+export const PHYSICS_GUIDED_SCENARIO_CATALOG: PhysicsGuidedScenarioDescriptorModel[] = [
+  {
+    id: 'optics-reflection',
+    domain: 'optics',
+    label: 'Reflexao',
+    notes: 'Raio incidente, normal e angulo refletido.',
+  },
+  {
+    id: 'optics-refraction',
+    domain: 'optics',
+    label: 'Refracao',
+    notes: 'Mudanca de meio e desvio do raio.',
+  },
+  {
+    id: 'optics-lens',
+    domain: 'optics',
+    label: 'Lente simples',
+    notes: 'Convergencia e divergencia de raios.',
+  },
+  {
+    id: 'electro-coulomb',
+    domain: 'electromagnetism',
+    label: 'Lei de Coulomb',
+    notes: 'Forca eletrica entre duas cargas.',
+  },
+  {
+    id: 'electro-field',
+    domain: 'electromagnetism',
+    label: 'Campo eletrico',
+    notes: 'Vetores de campo em torno de cargas.',
+  },
+  {
+    id: 'thermo-gas',
+    domain: 'thermodynamics',
+    label: 'Gas ideal',
+    notes: 'Relacao simplificada entre pressao, volume e temperatura.',
+  },
+  {
+    id: 'thermo-compression',
+    domain: 'thermodynamics',
+    label: 'Compressao',
+    notes: 'Recipiente e densidade variando no tempo.',
   },
 ];

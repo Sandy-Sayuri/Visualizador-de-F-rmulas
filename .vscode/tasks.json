@@ -1,0 +1,32 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "OrbitLab: Backend",
+      "type": "npm",
+      "script": "start:dev",
+      "path": "backend",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "OrbitLab: Frontend",
+      "type": "shell",
+      "command": "npm start -- --host 127.0.0.1 --port 4200",
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "OrbitLab: Rodar Tudo",
+      "dependsOrder": "parallel",
+      "dependsOn": [
+        "OrbitLab: Backend",
+        "OrbitLab: Frontend"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

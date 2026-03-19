@@ -1,59 +1,214 @@
-# Frontend
+# OrbitLab Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.7.
+Frontend Angular do OrbitLab, hoje centrado em formulas de fisica e simulacao visual em tempo real.
 
-## Development server
+O foco atual do produto e permitir que o usuario escreva uma formula, veja os parametros serem detectados automaticamente e acompanhe o comportamento fisico resultante no canvas, sem depender de banco de dados no fluxo principal.
 
-To start a local development server, run:
+## O que esta funcional agora
 
-```bash
-ng serve
+- campo principal de formula
+- deteccao automatica de variaveis
+- geracao de inputs dinamicos
+- parser seguro com `mathjs`
+- classificacao inicial do fenomeno
+- simulacao em tempo real no canvas
+- controle de velocidade da simulacao
+- visualizacoes com:
+  - 1 particula
+  - 2 particulas
+  - vetores
+  - trajetorias
+  - onda animada
+
+## Dominios suportados
+
+- Cinematica
+- Dinamica simples
+- Oscilacao
+- Gravitacao basica
+- Ondas viajantes simples
+- Expressoes genericas com fallback seguro
+
+## Dominios preparados para expansao futura
+
+- Optica
+- Eletromagnetismo classico
+- Termodinamica introdutoria
+
+## Exemplos de formulas
+
+```txt
+x = x0 + v*t
+y = v0*t - (g*t^2)/2
+ax = -k*x/m
+x = A*cos(w*t)
+F = G*(m1*m2)/r^2
+y = A*sin(k*x - w*t)
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Rotas principais
 
-## Code scaffolding
+- `/simulations`: laboratorio principal, formula-first
+- `/simulations/library`: biblioteca secundaria de simulacoes
+- `/simulations/:id`: detalhe de simulacao
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Rotas antigas de criacao manual foram redirecionadas para o fluxo principal.
 
-```bash
-ng generate component component-name
+## Estrutura de pastas
+
+```txt
+src/app/
+|- core/
+|  \- config/
+|     \- api.config.ts
+\- features/
+   \- simulations/
+      |- components/
+      |- engine/
+      |- formula/
+      |  |- modules/
+      |  |- solvers/
+      |  \- visualizers/
+      |- models/
+      |- pages/
+      |- rendering/
+      \- services/
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Como a arquitetura esta organizada
 
-```bash
-ng generate --help
+### UI
+
+Pages e components so coordenam entrada do usuario, estado visual e eventos.
+
+### Parser matematico
+
+Responsavel por validar a formula, normalizar a entrada e gerar a AST com `mathjs`.
+
+Arquivos principais:
+
+- `formula-scenario-parser.service.ts`
+- `formula-scenario-evaluator.service.ts`
+
+### Classificador fisico
+
+Analisa simbolos, funcoes e alvo da expressao para identificar o dominio e a estrategia de resolucao.
+
+Arquivos principais:
+
+- `formula-scenario-classifier.service.ts`
+- `formula/modules/*`
+
+### Solver
+
+Escolhe como a simulacao sera calculada:
+
+- expressao direta
+- integracao de estado
+- forca entre dois corpos
+- amostragem de onda
+
+Arquivos principais:
+
+- `formula-scenario-engine.service.ts`
+- `formula/solvers/*`
+
+### Engine visual
+
+Traduz o estado numerico em uma cena compativel com o fenomeno:
+
+- particula
+- interacao entre pares
+- trajetoria
+- padrao oscilatorio
+- onda
+
+Arquivos principais:
+
+- `formula-scenario-visualization.service.ts`
+- `formula/visualizers/*`
+- `rendering/simulation-canvas-renderer.service.ts`
+
+## Como a tela principal funciona
+
+1. o usuario digita uma formula no formato `alvo = expressao`
+2. o parser valida e extrai os simbolos
+3. as variaveis viram inputs automaticamente
+4. o classificador escolhe o dominio fisico inicial
+5. o solver calcula a evolucao no tempo
+6. o visualizer escolhe a cena
+7. o canvas renderiza a animacao
+
+## Como a decisao visual e feita
+
+Alguns exemplos:
+
+- formulas simples de `x` ou `y` tendem a usar `1 particula`
+- leis de forca entre pares, como gravitacao, usam `2 particulas`
+- expressoes com velocidade, aceleracao ou interacao podem ativar `vetores`
+- movimento no tempo costuma manter `trajetoria`
+- expressoes de onda com `sin` ou `cos`, `x` e `t` usam visualizacao de `onda`
+
+## Integracao com o backend
+
+O frontend usa o backend apenas onde faz sentido, via `HttpClient`, com a base:
+
+```txt
+http://localhost:3000/api
 ```
 
-## Building
+O fluxo principal do laboratorio nao depende de banco. A API continua disponivel para simulacoes e para compatibilidade com a estrutura existente.
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Como rodar
 
 ```bash
-ng test
+cd frontend
+npm install
+npm start
 ```
 
-## Running end-to-end tests
+Aplicacao local:
 
-For end-to-end (e2e) testing, run:
+```txt
+http://localhost:4200/simulations
+```
+
+## Scripts
 
 ```bash
-ng e2e
+npm run build
+npm start
+npm run test:unit
+npm run test:integration
+npm run test:e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Testabilidade
 
-## Additional Resources
+O frontend foi organizado para manter a logica fora da UI sempre que possivel.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Isso permite testar separadamente:
+
+- parser
+- classificador
+- solvers
+- visualizers
+- runner
+- services de integracao
+- components e pages
+
+## Limitacoes atuais
+
+- a melhor entrada hoje e `uma formula por vez`
+- o formato esperado ainda e `alvo = expressao`
+- optica, eletromagnetismo e termodinamica ainda estao em preparacao
+- nem toda a fisica classica esta suportada nesta etapa
+
+## Visao de crescimento
+
+A base atual foi desenhada para crescer por modulos, sem reescrever o laboratorio:
+
+- novos classificadores por dominio
+- novos solvers
+- novos visualizers
+- novos cenarios guiados quando formula livre ainda nao for a melhor UX

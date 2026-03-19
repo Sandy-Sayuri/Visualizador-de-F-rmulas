@@ -10,6 +10,7 @@ import { PairInteractionSceneVisualizerService } from './visualizers/pair-intera
 import { OscillationSceneVisualizerService } from './visualizers/oscillation-scene-visualizer.service';
 import { ParticleSceneVisualizerService } from './visualizers/particle-scene-visualizer.service';
 import { TrajectorySceneVisualizerService } from './visualizers/trajectory-scene-visualizer.service';
+import { WaveSceneVisualizerService } from './visualizers/wave-scene-visualizer.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ import { TrajectorySceneVisualizerService } from './visualizers/trajectory-scene
 export class FormulaScenarioVisualizationService {
   private readonly visualizers: FormulaSceneVisualizerModel[] = [
     inject(PairInteractionSceneVisualizerService),
+    inject(WaveSceneVisualizerService),
     inject(OscillationSceneVisualizerService),
     inject(TrajectorySceneVisualizerService),
     inject(ParticleSceneVisualizerService),

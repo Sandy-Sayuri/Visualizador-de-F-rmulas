@@ -45,4 +45,13 @@ export const FORMULA_SCENARIO_PRESETS: FormulaPresetModel[] = [
     secondaryLabel: 'Corpo 2',
     summary: 'Duas particulas interagem e mostram forca, rastro e aproximacao.',
   },
+  {
+    id: 'wave',
+    label: 'Onda',
+    simulationName: 'Onda viajante',
+    formula: 'y = A*sin(k*x - w*t)',
+    primaryLabel: 'Frente de onda',
+    secondaryLabel: 'Eixo',
+    summary: 'Uma onda periodica se propaga no espaco com amplitude e frequencia.',
+  },
 ];

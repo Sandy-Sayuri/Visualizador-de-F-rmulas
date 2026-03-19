@@ -75,6 +75,7 @@ export type FormulaSceneModeModel =
   | 'single-particle'
   | 'single-trajectory'
   | 'oscillation'
+  | 'wave-field'
   | 'pair-interaction';
 
 export interface FormulaSceneDecisionModel {

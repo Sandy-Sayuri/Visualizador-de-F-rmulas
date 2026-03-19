@@ -30,6 +30,49 @@
       @if (formulaError()) {
         <p class="feedback error">{{ formulaError() }}</p>
       }
+
+      <section class="support-card" data-testid="supported-formula-topics">
+        <div class="support-heading">
+          <p class="eyebrow">Escopo atual</p>
+          <strong>Suporta agora</strong>
+        </div>
+
+        <div class="support-chip-row">
+          @for (domain of supportedDomains; track domain.domain) {
+            <span class="support-chip support-chip-active">{{ domain.label }}</span>
+          }
+        </div>
+
+        <div class="support-shapes">
+          <span>Formatos que funcionam bem</span>
+
+          <div class="support-chip-row">
+            @for (shape of supportedShapes; track shape) {
+              <code>{{ shape }}</code>
+            }
+          </div>
+        </div>
+
+        <div class="support-shapes">
+          <span>Ainda nao nesta etapa</span>
+
+          <div class="support-chip-row">
+            @for (domain of plannedDomains; track domain.domain) {
+              <span class="support-chip">{{ domain.label }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="support-shapes">
+          <span>Cenarios guiados em preparo</span>
+
+          <div class="support-chip-row">
+            @for (scenario of guidedScenarios; track scenario.id) {
+              <span class="support-chip">{{ scenario.label }}</span>
+            }
+          </div>
+        </div>
+      </section>
     </section>
 
     <section class="panel config-panel">
@@ -159,14 +202,27 @@
       </div>
 
       <div class="sim-speed-row">
-        <button
-          type="button"
-          class="secondary-button speed-button"
-          data-testid="increase-simulation-speed"
-          (click)="increaseTimeScale()"
-        >
-          Acelerar simulacao {{ speedLabel() }}
-        </button>
+        <div class="speed-control" data-testid="simulation-speed-control">
+          <button
+            type="button"
+            class="secondary-button speed-step-button"
+            data-testid="decrease-simulation-speed"
+            (click)="decreaseTimeScale()"
+          >
+            -
+          </button>
+
+          <span class="speed-indicator">Velocidade {{ speedLabel() }}</span>
+
+          <button
+            type="button"
+            class="secondary-button speed-step-button"
+            data-testid="increase-simulation-speed"
+            (click)="increaseTimeScale()"
+          >
+            +
+          </button>
+        </div>
       </div>
 
       <app-simulation-canvas

@@ -53,4 +53,13 @@ describe('FormulaScenarioBuilderComponent', () => {
     component.increaseTimeScale();
     expect(component.runner.timeScale()).toBe(4);
   });
+
+  it('decreases the runner time scale from the speed button', () => {
+    component.runner.setTimeScale(8);
+    component.decreaseTimeScale();
+    expect(component.runner.timeScale()).toBe(4);
+
+    component.decreaseTimeScale();
+    expect(component.runner.timeScale()).toBe(2);
+  });
 });

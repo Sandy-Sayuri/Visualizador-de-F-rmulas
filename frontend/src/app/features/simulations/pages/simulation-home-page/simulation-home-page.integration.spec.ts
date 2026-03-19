@@ -21,6 +21,9 @@ describe('SimulationHomePageComponent integration', () => {
 
     expect(element.textContent).toContain('Digite a formula e veja o movimento');
     expect(element.textContent).toContain('100% local');
+    expect(element.textContent).toContain('Suporta agora');
+    expect(element.textContent).toContain('Cinematica');
+    expect(element.textContent).toContain('Ondas');
     expect(element.textContent).not.toContain('Formulas prontas');
     expect(element.querySelector('[data-testid="save-formula-scenario"]')).toBeNull();
   });

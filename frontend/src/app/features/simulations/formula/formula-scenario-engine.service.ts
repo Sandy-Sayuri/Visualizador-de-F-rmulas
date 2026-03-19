@@ -14,6 +14,7 @@ import { FormulaScenarioAnalyzerService } from './formula-scenario-analyzer.serv
 import { FormulaScenarioEvaluatorService } from './formula-scenario-evaluator.service';
 import { PairForceFormulaSolverService } from './solvers/pair-force-formula-solver.service';
 import { SingleBodyFormulaSolverService } from './solvers/single-body-formula-solver.service';
+import { WaveFormulaSolverService } from './solvers/wave-formula-solver.service';
 
 export interface FormulaScenarioProgram extends FormulaScenarioProgramContract {
   solver: FormulaScenarioSolverModel;
@@ -27,6 +28,7 @@ export class FormulaScenarioEngineService {
   private readonly evaluator = inject(FormulaScenarioEvaluatorService);
   private readonly solvers = [
     inject(PairForceFormulaSolverService),
+    inject(WaveFormulaSolverService),
     inject(SingleBodyFormulaSolverService),
   ];
 

@@ -91,4 +91,14 @@ describe('Simulations API (e2e)', () => {
 
     expect(response.body.message).toBeInstanceOf(Array);
   });
+
+  it('exposes Swagger document', async () => {
+    const response = await request(app.getHttpServer())
+      .get('/api/docs-json')
+      .expect(200);
+
+    expect(response.body.info.title).toBe('OrbitLab API');
+    expect(response.body.paths['/api/simulations']).toBeDefined();
+    expect(response.body.paths['/api/simulations/{id}']).toBeDefined();
+  });
 });

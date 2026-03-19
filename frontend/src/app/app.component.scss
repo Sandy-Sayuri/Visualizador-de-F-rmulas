@@ -15,7 +15,7 @@
 
 .page-frame {
   margin: 0 auto;
-  max-width: 1520px;
+  width: min(100%, 1680px);
 }
 
 @media (max-width: 840px) {

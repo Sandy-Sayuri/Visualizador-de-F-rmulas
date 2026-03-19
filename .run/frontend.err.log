@@ -27,3 +27,1080 @@
         ╵                                       [32m~~~~~~~~~~~~~~~~[0m
 
 [39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG9: Property 'presets' does not exist on type 'SimulationHomePageComponent'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/pages/simulation-home-page/simulation-home-page.component.html:12:24:
+[37m      12 │         @for (preset of [32mpresets[37m; track preset.id) {
+         ╵                         [32m~~~~~~~[0m
+
+  Error occurs in the template of component SimulationHomePageComponent.
+
+    src/app/features/simulations/pages/simulation-home-page/simulation-home-page.component.ts:10:15:
+[37m      10 │   templateUrl: [32m'./simulation-home-page.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7030: Not all code paths return a value.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:77:36:
+[37m      77 │   readonly categoryLabel = computed([32m() => {[37m
+         ╵                                     [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:84:21:
+[37m      84 │     switch (analysis.[32mcategory[37m) {
+         ╵                      [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:201:28:
+[37m      201 │     return this.analysis()?.[32mcategory[37m === 'two-body-gravity';
+          ╵                             [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2724: '"../models/formula-scenario.model"' has no exported member named 'FormulaScenarioCategoryModel'. Did you mean 'FormulaScenarioStateModel'?[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-analyzer.service.ts:6:2:
+[37m      6 │   [32mFormulaScenarioCategoryModel[37m,
+        ╵   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2353: Object literal may only specify known properties, and 'category' does not exist in type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-analyzer.service.ts:63:6:
+[37m      63 │       [32mcategory[37m,
+         ╵       [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:46:25:
+[37m      46 │     if (program.analysis.[32mcategory[37m === 'two-body-gravity') {
+         ╵                          [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:61:25:
+[37m      61 │     if (program.analysis.[32mcategory[37m === 'two-body-gravity') {
+         ╵                          [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:32:17:
+[37m      32 │     if (analysis.[32mcategory[37m === 'harmonic-oscillation') {
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:37:17:
+[37m      37 │     if (analysis.[32mcategory[37m === 'vertical-launch') {
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:49:17:
+[37m      49 │     if (analysis.[32mcategory[37m === 'two-body-gravity' && state.bodies.l...
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2366: Function lacks ending return statement and return type does not include 'undefined'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:103:5:
+[37m      103 │   ): [32mFormulaSceneDecisionModel[37m {
+          ╵      [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:104:21:
+[37m      104 │     switch (analysis.[32mcategory[37m) {
+          ╵                      [32m~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../formula/formula-scenario-analyzer.service"[0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:7:47:
+[37m      7 │ ...erService } from [32m'../../formula/formula-scenario-analyzer.service'[37m;
+        ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../formula/formula-scenario-analyzer.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:26:47:
+[37m      26 │ ...rService } from [32m'../../formula/formula-scenario-analyzer.service'[37m;
+         ╵                    [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7030: Not all code paths return a value.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:77:36:
+[37m      77 │   readonly categoryLabel = computed([32m() => {[37m
+         ╵                                     [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:84:21:
+[37m      84 │     switch (analysis.[32mcategory[37m) {
+         ╵                      [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:161:23:
+[37m      161 │       const analysis = [32mthis.analyzer[37m.analyze(formula);
+          ╵                        [32m~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:201:28:
+[37m      201 │     return this.analysis()?.[32mcategory[37m === 'two-body-gravity';
+          ╵                             [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./formula-scenario-analyzer.service"[0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:3:47:
+[37m      3 │ ...enarioAnalyzerService } from [32m'./formula-scenario-analyzer.service'[37m;
+        ╵                                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './formula-scenario-analyzer.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:11:47:
+[37m      11 │ ...narioAnalyzerService } from [32m'./formula-scenario-analyzer.service'[37m;
+         ╵                                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:29:41:
+[37m      29 │ ...olvedAnalysis = analysis ?? [32mthis.analyzer[37m.analyze(config.formula);
+         ╵                                [32m~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:46:25:
+[37m      46 │     if (program.analysis.[32mcategory[37m === 'two-body-gravity') {
+         ╵                          [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:61:25:
+[37m      61 │     if (program.analysis.[32mcategory[37m === 'two-body-gravity') {
+         ╵                          [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:32:17:
+[37m      32 │     if (analysis.[32mcategory[37m === 'harmonic-oscillation') {
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:37:17:
+[37m      37 │     if (analysis.[32mcategory[37m === 'vertical-launch') {
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:49:17:
+[37m      49 │     if (analysis.[32mcategory[37m === 'two-body-gravity' && state.bodies.l...
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2366: Function lacks ending return statement and return type does not include 'undefined'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:103:5:
+[37m      103 │   ): [32mFormulaSceneDecisionModel[37m {
+          ╵      [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:104:21:
+[37m      104 │     switch (analysis.[32mcategory[37m) {
+          ╵                      [32m~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../formula/formula-scenario-analyzer.service"[0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:7:47:
+[37m      7 │ ...erService } from [32m'../../formula/formula-scenario-analyzer.service'[37m;
+        ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../formula/formula-scenario-analyzer.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:26:47:
+[37m      26 │ ...rService } from [32m'../../formula/formula-scenario-analyzer.service'[37m;
+         ╵                    [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7030: Not all code paths return a value.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:77:36:
+[37m      77 │   readonly categoryLabel = computed([32m() => {[37m
+         ╵                                     [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:84:21:
+[37m      84 │     switch (analysis.[32mcategory[37m) {
+         ╵                      [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:161:23:
+[37m      161 │       const analysis = [32mthis.analyzer[37m.analyze(formula);
+          ╵                        [32m~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:201:28:
+[37m      201 │     return this.analysis()?.[32mcategory[37m === 'two-body-gravity';
+          ╵                             [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./formula-scenario-analyzer.service"[0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:3:47:
+[37m      3 │ ...enarioAnalyzerService } from [32m'./formula-scenario-analyzer.service'[37m;
+        ╵                                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './formula-scenario-analyzer.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:11:47:
+[37m      11 │ ...narioAnalyzerService } from [32m'./formula-scenario-analyzer.service'[37m;
+         ╵                                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:29:41:
+[37m      29 │ ...olvedAnalysis = analysis ?? [32mthis.analyzer[37m.analyze(config.formula);
+         ╵                                [32m~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:46:25:
+[37m      46 │     if (program.analysis.[32mcategory[37m === 'two-body-gravity') {
+         ╵                          [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:61:25:
+[37m      61 │     if (program.analysis.[32mcategory[37m === 'two-body-gravity') {
+         ╵                          [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:32:17:
+[37m      32 │     if (analysis.[32mcategory[37m === 'harmonic-oscillation') {
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:37:17:
+[37m      37 │     if (analysis.[32mcategory[37m === 'vertical-launch') {
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:49:17:
+[37m      49 │     if (analysis.[32mcategory[37m === 'two-body-gravity' && state.bodies.l...
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2366: Function lacks ending return statement and return type does not include 'undefined'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:103:5:
+[37m      103 │   ): [32mFormulaSceneDecisionModel[37m {
+          ╵      [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:104:21:
+[37m      104 │     switch (analysis.[32mcategory[37m) {
+          ╵                      [32m~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../formula/formula-scenario-analyzer.service"[0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:7:47:
+[37m      7 │ ...erService } from [32m'../../formula/formula-scenario-analyzer.service'[37m;
+        ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../formula/formula-scenario-analyzer.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:26:47:
+[37m      26 │ ...rService } from [32m'../../formula/formula-scenario-analyzer.service'[37m;
+         ╵                    [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7030: Not all code paths return a value.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:77:36:
+[37m      77 │   readonly categoryLabel = computed([32m() => {[37m
+         ╵                                     [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:84:21:
+[37m      84 │     switch (analysis.[32mcategory[37m) {
+         ╵                      [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:161:23:
+[37m      161 │       const analysis = [32mthis.analyzer[37m.analyze(formula);
+          ╵                        [32m~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:201:28:
+[37m      201 │     return this.analysis()?.[32mcategory[37m === 'two-body-gravity';
+          ╵                             [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./formula-scenario-analyzer.service"[0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:3:47:
+[37m      3 │ ...enarioAnalyzerService } from [32m'./formula-scenario-analyzer.service'[37m;
+        ╵                                 [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './formula-scenario-analyzer.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:11:47:
+[37m      11 │ ...narioAnalyzerService } from [32m'./formula-scenario-analyzer.service'[37m;
+         ╵                                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:29:41:
+[37m      29 │ ...olvedAnalysis = analysis ?? [32mthis.analyzer[37m.analyze(config.formula);
+         ╵                                [32m~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:46:25:
+[37m      46 │     if (program.analysis.[32mcategory[37m === 'two-body-gravity') {
+         ╵                          [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-engine.service.ts:61:25:
+[37m      61 │     if (program.analysis.[32mcategory[37m === 'two-body-gravity') {
+         ╵                          [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:32:17:
+[37m      32 │     if (analysis.[32mcategory[37m === 'harmonic-oscillation') {
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:37:17:
+[37m      37 │     if (analysis.[32mcategory[37m === 'vertical-launch') {
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:49:17:
+[37m      49 │     if (analysis.[32mcategory[37m === 'two-body-gravity' && state.bodies.l...
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2366: Function lacks ending return statement and return type does not include 'undefined'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:103:5:
+[37m      103 │   ): [32mFormulaSceneDecisionModel[37m {
+          ╵      [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:104:21:
+[37m      104 │     switch (analysis.[32mcategory[37m) {
+          ╵                      [32m~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7030: Not all code paths return a value.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:77:36:
+[37m      77 │   readonly categoryLabel = computed([32m() => {[37m
+         ╵                                     [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:84:21:
+[37m      84 │     switch (analysis.[32mcategory[37m) {
+         ╵                      [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:201:28:
+[37m      201 │     return this.analysis()?.[32mcategory[37m === 'two-body-gravity';
+          ╵                             [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./formula-scenario-engine.service"[0m
+
+    src/app/features/simulations/formula/formula-scenario-persistence.service.ts:2:45:
+[37m      2 │ ...laScenarioEngineService } from [32m'./formula-scenario-engine.service'[37m;
+        ╵                                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './formula-scenario-engine.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-persistence.service.ts:6:45:
+[37m      6 │ ...laScenarioEngineService } from [32m'./formula-scenario-engine.service'[37m;
+        ╵                                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-persistence.service.ts:31:20:
+[37m      31 │     const program = [32mthis.engine[37m.compileProgram(draft.config);
+         ╵                     [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-persistence.service.ts:32:25:
+[37m      32 │     const initialState = [32mthis.engine[37m.createInitialState(draft.conf...
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'body' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-persistence.service.ts:37:39:
+[37m      37 │       bodies: initialState.bodies.map(([32mbody[37m) => ({
+         ╵                                        [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:32:17:
+[37m      32 │     if (analysis.[32mcategory[37m === 'harmonic-oscillation') {
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:37:17:
+[37m      37 │     if (analysis.[32mcategory[37m === 'vertical-launch') {
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:49:17:
+[37m      49 │     if (analysis.[32mcategory[37m === 'two-body-gravity' && state.bodies.l...
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2366: Function lacks ending return statement and return type does not include 'undefined'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:103:5:
+[37m      103 │   ): [32mFormulaSceneDecisionModel[37m {
+          ╵      [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:104:21:
+[37m      104 │     switch (analysis.[32mcategory[37m) {
+          ╵                      [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../formula/formula-scenario-engine.service"[0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:2:45:
+[37m      2 │ ...oEngineService } from [32m'../formula/formula-scenario-engine.service'[37m;
+        ╵                          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-engine.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:3:69:
+[37m      3 │ ...cenarioProgram } from [32m'../formula/formula-scenario-engine.service'[37m;
+        ╵                          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:66:22:
+[37m      66 │       const program = [32mthis.engine[37m.compileProgram(config);
+         ╵                       [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:67:27:
+[37m      67 │       const initialState = [32mthis.engine[37m.createInitialState(config, ...
+         ╵                            [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:140:21:
+[37m      140 │       this.state.set([32mthis.engine[37m.step(currentState, currentConfig...
+          ╵                      [32m~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7030: Not all code paths return a value.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:77:36:
+[37m      77 │   readonly categoryLabel = computed([32m() => {[37m
+         ╵                                     [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:84:21:
+[37m      84 │     switch (analysis.[32mcategory[37m) {
+         ╵                      [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:201:28:
+[37m      201 │     return this.analysis()?.[32mcategory[37m === 'two-body-gravity';
+          ╵                             [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "./formula-scenario-engine.service"[0m
+
+    src/app/features/simulations/formula/formula-scenario-persistence.service.ts:2:45:
+[37m      2 │ ...laScenarioEngineService } from [32m'./formula-scenario-engine.service'[37m;
+        ╵                                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module './formula-scenario-engine.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-persistence.service.ts:6:45:
+[37m      6 │ ...laScenarioEngineService } from [32m'./formula-scenario-engine.service'[37m;
+        ╵                                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-persistence.service.ts:31:20:
+[37m      31 │     const program = [32mthis.engine[37m.compileProgram(draft.config);
+         ╵                     [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-persistence.service.ts:32:25:
+[37m      32 │     const initialState = [32mthis.engine[37m.createInitialState(draft.conf...
+         ╵                          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7006: Parameter 'body' implicitly has an 'any' type.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-persistence.service.ts:37:39:
+[37m      37 │       bodies: initialState.bodies.map(([32mbody[37m) => ({
+         ╵                                        [32m~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:32:17:
+[37m      32 │     if (analysis.[32mcategory[37m === 'harmonic-oscillation') {
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:37:17:
+[37m      37 │     if (analysis.[32mcategory[37m === 'vertical-launch') {
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:49:17:
+[37m      49 │     if (analysis.[32mcategory[37m === 'two-body-gravity' && state.bodies.l...
+         ╵                  [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2366: Function lacks ending return statement and return type does not include 'undefined'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:103:5:
+[37m      103 │   ): [32mFormulaSceneDecisionModel[37m {
+          ╵      [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:104:21:
+[37m      104 │     switch (analysis.[32mcategory[37m) {
+          ╵                      [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../formula/formula-scenario-engine.service"[0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:2:45:
+[37m      2 │ ...oEngineService } from [32m'../formula/formula-scenario-engine.service'[37m;
+        ╵                          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-engine.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:3:69:
+[37m      3 │ ...cenarioProgram } from [32m'../formula/formula-scenario-engine.service'[37m;
+        ╵                          [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:66:22:
+[37m      66 │       const program = [32mthis.engine[37m.compileProgram(config);
+         ╵                       [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:67:27:
+[37m      67 │       const initialState = [32mthis.engine[37m.createInitialState(config, ...
+         ╵                            [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:140:21:
+[37m      140 │       this.state.set([32mthis.engine[37m.step(currentState, currentConfig...
+          ╵                      [32m~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7030: Not all code paths return a value.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:77:36:
+[37m      77 │   readonly categoryLabel = computed([32m() => {[37m
+         ╵                                     [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:84:21:
+[37m      84 │     switch (analysis.[32mcategory[37m) {
+         ╵                      [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:201:28:
+[37m      201 │     return this.analysis()?.[32mcategory[37m === 'two-body-gravity';
+          ╵                             [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../formula/formula-scenario-visualization.service"[0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:3:52:
+[37m      3 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS7030: Not all code paths return a value.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:77:36:
+[37m      77 │   readonly categoryLabel = computed([32m() => {[37m
+         ╵                                     [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:84:21:
+[37m      84 │     switch (analysis.[32mcategory[37m) {
+         ╵                      [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'category' does not exist on type 'FormulaScenarioAnalysisModel'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:201:28:
+[37m      201 │     return this.analysis()?.[32mcategory[37m === 'two-body-gravity';
+          ╵                             [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../formula/formula-scenario-visualization.service"[0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:3:52:
+[37m      3 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992008: Could not find stylesheet file './simulation-home-page.component.scss'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/pages/simulation-home-page/simulation-home-page.component.ts:15:12:
+[37m      15 │   styleUrl: [32m'./simulation-home-page.component.scss'[37m,
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992008: Could not find stylesheet file './simulation-home-page.component.scss'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/pages/simulation-home-page/simulation-home-page.component.ts:15:12:
+[37m      15 │   styleUrl: [32m'./simulation-home-page.component.scss'[37m,
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992008: Could not find stylesheet file './simulation-home-page.component.scss'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/pages/simulation-home-page/simulation-home-page.component.ts:15:12:
+[37m      15 │   styleUrl: [32m'./simulation-home-page.component.scss'[37m,
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992008: Could not find stylesheet file './simulation-home-page.component.scss'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/pages/simulation-home-page/simulation-home-page.component.ts:15:12:
+[37m      15 │   styleUrl: [32m'./simulation-home-page.component.scss'[37m,
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992008: Could not find stylesheet file './simulation-home-page.component.scss'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/pages/simulation-home-page/simulation-home-page.component.ts:15:12:
+[37m      15 │   styleUrl: [32m'./simulation-home-page.component.scss'[37m,
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992008: Could not find stylesheet file './simulation-home-page.component.scss'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/pages/simulation-home-page/simulation-home-page.component.ts:15:12:
+[37m      15 │   styleUrl: [32m'./simulation-home-page.component.scss'[37m,
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992008: Could not find stylesheet file './simulation-home-page.component.scss'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/pages/simulation-home-page/simulation-home-page.component.ts:15:12:
+[37m      15 │   styleUrl: [32m'./simulation-home-page.component.scss'[37m,
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992008: Could not find stylesheet file './simulation-home-page.component.scss'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/pages/simulation-home-page/simulation-home-page.component.ts:15:12:
+[37m      15 │   styleUrl: [32m'./simulation-home-page.component.scss'[37m,
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992008: Could not find stylesheet file './formula-scenario-builder.component.scss'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:55:12:
+[37m      55 │   styleUrl: [32m'./formula-scenario-builder.component.scss'[37m,
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992008: Could not find stylesheet file './simulation-home-page.component.scss'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/pages/simulation-home-page/simulation-home-page.component.ts:15:12:
+[37m      15 │   styleUrl: [32m'./simulation-home-page.component.scss'[37m,
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992008: Could not find stylesheet file './formula-scenario-builder.component.scss'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/components/formula-scenario-builder/formula-scenario-builder.component.ts:55:12:
+[37m      55 │   styleUrl: [32m'./formula-scenario-builder.component.scss'[37m,
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-992008: Could not find stylesheet file './simulation-home-page.component.scss'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/pages/simulation-home-page/simulation-home-page.component.ts:15:12:
+[37m      15 │   styleUrl: [32m'./simulation-home-page.component.scss'[37m,
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../formula/formula-scenario-visualization.service' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:4:52:
+[37m      4 │ ...Service } from [32m'../formula/formula-scenario-visualization.service'[37m;
+        ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/services/formula-scenario-runner.service.ts:50:11:
+[37m      50 │     return [32mthis.visualization[37m.buildScene(currentAnalysis, currentS...
+         ╵            [32m~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2739: Type '{ formula: string; normalizedFormula: string; target: FormulaScenarioTargetModel; targetName: string; axis: FormulaScenarioAxisModel; ... 8 more ...; usesInteraction: boolean; }' is missing the following properties from type 'FormulaScenarioAnalysisModel': classification, functionNames[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-analyzer.service.ts:109:4:
+[37m      109 │     [32mreturn[37m {
+          ╵     [32m~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS18046: 'visualizer.buildScene' is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/formula/formula-scenario-visualization.service.ts:48:11:
+[37m      48 │     return [32mvisualizer.buildScene[37m(analysis, state);
+         ╵            [32m~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m

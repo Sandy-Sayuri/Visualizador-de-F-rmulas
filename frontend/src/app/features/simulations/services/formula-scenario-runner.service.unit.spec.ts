@@ -68,4 +68,25 @@ describe('FormulaScenarioRunnerService', () => {
     service.setTimeScale(0.1);
     expect(service.timeScale()).toBe(0.25);
   });
+
+  it('loads a wave formula and exposes a wave scene', () => {
+    service.loadConfig({
+      formula: 'y = A*sin(k*x - w*t)',
+      parameterValues: {
+        A: 60,
+        k: 0.03,
+        w: 1.4,
+      },
+      primaryLabel: 'Frente de onda',
+      secondaryLabel: 'Eixo',
+      primaryColor: '#7ce6ff',
+      secondaryColor: '#f4c66a',
+      particleRadius: 8,
+    });
+
+    expect(service.bodies().length).toBeGreaterThan(10);
+    expect(service.visualScene().decision.mode).toBe('wave-field');
+    expect(service.visualScene().decision.showPatterns).toBeTrue();
+    expect(service.errorMessage()).toBeNull();
+  });
 });

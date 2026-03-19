@@ -25,6 +25,12 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { SimulationCanvasComponent } from '../simulation-canvas/simulation-canvas.component';
 import { FormulaScenarioAnalyzerService } from '../../formula/formula-scenario-analyzer.service';
 import {
+  FORMULA_ENGINE_DOMAIN_CATALOG,
+  PHYSICS_GUIDED_SCENARIO_CATALOG,
+  PhysicsGuidedScenarioDescriptorModel,
+  PhysicsDomainDescriptorModel,
+} from '../../models/formula-engine.model';
+import {
   FORMULA_SCENARIO_PRESETS,
   FormulaPresetModel,
 } from '../../formula/formula-scenario-presets';
@@ -87,6 +93,20 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
   });
 
   readonly presets: FormulaPresetModel[] = FORMULA_SCENARIO_PRESETS;
+  readonly supportedDomains: PhysicsDomainDescriptorModel[] =
+    FORMULA_ENGINE_DOMAIN_CATALOG.filter((domain) => domain.status === 'implemented');
+  readonly plannedDomains: PhysicsDomainDescriptorModel[] =
+    FORMULA_ENGINE_DOMAIN_CATALOG.filter((domain) => domain.status === 'planned');
+  readonly guidedScenarios: PhysicsGuidedScenarioDescriptorModel[] =
+    PHYSICS_GUIDED_SCENARIO_CATALOG;
+  readonly supportedShapes = [
+    'x = x0 + v*t',
+    'y = v0*t - (g*t^2)/2',
+    'ax = -k*x/m',
+    'x = A*cos(w*t)',
+    'F = G*(m1*m2)/r^2',
+    'y = A*sin(k*x - w*t)',
+  ];
 
   readonly form: FormulaScenarioBuilderFormGroup = this.formBuilder.group({
     simulationName: this.formBuilder.control('Novo experimento fisico', {
@@ -214,6 +234,16 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
     const currentScale = this.runner.timeScale();
     const nextScale =
       this.speedSteps.find((speed) => speed > currentScale) ?? currentScale;
+
+    this.runner.setTimeScale(nextScale);
+  }
+
+  decreaseTimeScale(): void {
+    const currentScale = this.runner.timeScale();
+    const nextScale =
+      [...this.speedSteps]
+        .reverse()
+        .find((speed) => speed < currentScale) ?? currentScale;
 
     this.runner.setTimeScale(nextScale);
   }

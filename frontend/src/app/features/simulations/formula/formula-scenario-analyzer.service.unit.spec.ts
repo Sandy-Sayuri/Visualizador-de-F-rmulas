@@ -70,6 +70,19 @@ describe('FormulaScenarioAnalyzerService', () => {
     ]);
   });
 
+  it('classifies traveling wave formulas as waves and keeps only real parameters', () => {
+    const analysis = service.analyze('y = A*sin(k*x - w*t)');
+
+    expect(analysis.target).toBe('y');
+    expect(analysis.classification.domain).toBe('waves');
+    expect(analysis.classification.solverStrategy).toBe('wave-sampling');
+    expect(analysis.parameterDefinitions.map((parameter) => parameter.key)).toEqual([
+      'A',
+      'k',
+      'w',
+    ]);
+  });
+
   it('throws a friendly error for invalid formulas', () => {
     expect(() => service.analyze('x + y')).toThrowError(
       'Use o formato variavel = expressao.',

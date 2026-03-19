@@ -1,0 +1,53 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "OrbitLab: Backend (NestJS)",
+      "type": "pwa-node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/backend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start:dev"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "OrbitLab: Frontend (Angular)",
+      "type": "pwa-node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start", "--", "--host", "127.0.0.1", "--port", "4200"],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": ["<node_internals>/**"],
+      "serverReadyAction": {
+        "pattern": "127\\.0\\.0\\.1:4200|localhost:4200",
+        "uriFormat": "http://127.0.0.1:4200/simulations",
+        "action": "openExternally"
+      }
+    },
+    {
+      "name": "OrbitLab: Abrir App",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://127.0.0.1:4200/simulations",
+      "webRoot": "${workspaceFolder}/frontend",
+      "presentation": {
+        "group": "orbitlab",
+        "order": 3
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "OrbitLab: Front + Back",
+      "configurations": [
+        "OrbitLab: Backend (NestJS)",
+        "OrbitLab: Frontend (Angular)"
+      ],
+      "stopAll": true
+    }
+  ]
+}
