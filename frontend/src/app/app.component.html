@@ -1,4 +1,41 @@
-<div class="app-shell">
+<div
+  class="app-shell"
+  [attr.data-theme]="selectedTheme()"
+  [style.--active-theme-index]="selectedThemeIndex()"
+>
+  <div class="theme-ambient" aria-hidden="true">
+    <span class="theme-ambient__orb theme-ambient__orb--one"></span>
+    <span class="theme-ambient__orb theme-ambient__orb--two"></span>
+    <span class="theme-ambient__grid"></span>
+  </div>
+
+  <header class="app-toolbar">
+    <div class="brand-lockup">
+      <p>OrbitLab</p>
+      <div>
+        <strong>Theme deck</strong>
+        <span>Original, Space e Neobrutalism</span>
+      </div>
+    </div>
+
+    <div class="theme-switcher" role="toolbar" aria-label="Selecionar tema">
+      <span class="theme-switcher__indicator" aria-hidden="true"></span>
+
+      @for (theme of themeOptions; track theme.id) {
+        <button
+          type="button"
+          class="theme-switcher__option"
+          [class.is-active]="selectedTheme() === theme.id"
+          [attr.aria-pressed]="selectedTheme() === theme.id"
+          (click)="setTheme(theme.id)"
+        >
+          <strong>{{ theme.label }}</strong>
+          <small>{{ theme.caption }}</small>
+        </button>
+      }
+    </div>
+  </header>
+
   <main class="page-frame">
     <router-outlet />
   </main>

@@ -7,9 +7,13 @@
   display: grid;
   gap: 1rem;
   padding: 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.25rem;
-  background: rgba(8, 14, 26, 0.72);
+  border: var(--theme-border-width) solid var(--theme-panel-border);
+  border-radius: var(--theme-card-radius);
+  background: var(--theme-panel-muted-background);
+  transition:
+    background 280ms ease,
+    border-color 280ms ease,
+    box-shadow 280ms ease;
 }
 
 .controls-strip {
@@ -25,7 +29,7 @@
 
 .eyebrow {
   margin: 0 0 0.35rem;
-  color: #9dc7ff;
+  color: var(--theme-eyebrow);
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -35,6 +39,10 @@ h3,
 p,
 small {
   margin: 0;
+}
+
+h3 {
+  font-family: var(--theme-font-display);
 }
 
 .stats-grid {
@@ -47,8 +55,8 @@ small {
   display: grid;
   gap: 0.35rem;
   padding: 0.85rem;
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--theme-input-radius);
+  background: var(--theme-subtle-background);
 }
 
 .stats-grid span,
@@ -56,7 +64,7 @@ small {
 .live-controls span,
 .explanation-card p,
 small {
-  color: rgba(245, 241, 230, 0.7);
+  color: var(--theme-text-muted);
 }
 
 .body-chip-grid {
@@ -70,16 +78,26 @@ small {
   gap: 0.55rem;
   align-items: center;
   padding: 0.75rem 0.95rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.04);
-  color: #f5f1e6;
+  border-radius: var(--theme-pill-radius);
+  border: var(--theme-border-width) solid var(--theme-input-border);
+  background: var(--theme-subtle-background);
+  color: var(--theme-text);
   cursor: pointer;
+  transition:
+    transform 140ms ease,
+    background 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease;
 }
 
 .chip-button.active {
-  border-color: rgba(244, 198, 106, 0.46);
-  background: rgba(244, 198, 106, 0.12);
+  border-color: var(--theme-chip-selected-border);
+  background: var(--theme-chip-selected-background);
+}
+
+.chip-button:hover {
+  transform: translateY(-1px);
 }
 
 .swatch {
@@ -102,34 +120,53 @@ label {
 input {
   width: 100%;
   padding: 0.75rem 0.85rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 0.85rem;
-  background: rgba(2, 8, 18, 0.48);
-  color: #f5f1e6;
+  border: var(--theme-border-width) solid var(--theme-input-border);
+  border-radius: var(--theme-input-radius);
+  background: var(--theme-input-background);
+  color: var(--theme-text);
   font: inherit;
+  transition:
+    background 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--theme-input-focus-border);
+  box-shadow: var(--theme-input-focus-ring);
 }
 
 button {
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--theme-pill-radius);
   padding: 0.82rem 1rem;
   font: inherit;
   cursor: pointer;
+  transition:
+    transform 140ms ease,
+    background 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
 }
 
 .primary-button {
-  background: linear-gradient(135deg, #f4c66a, #f08d4e);
-  color: #11131e;
+  background: var(--theme-button-primary-background);
+  color: var(--theme-button-primary-text);
 }
 
 .secondary-button {
-  background: rgba(157, 199, 255, 0.16);
-  color: #f5f1e6;
+  background: var(--theme-button-secondary-background);
+  color: var(--theme-button-secondary-text);
 }
 
 .danger-button {
-  background: rgba(234, 101, 93, 0.16);
-  color: #ffb8b1;
+  background: var(--theme-button-danger-background);
+  color: var(--theme-button-danger-text);
 }
 
 .velocity-grid {

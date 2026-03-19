@@ -7,7 +7,16 @@ body {
 
 body {
   color: #f5f1e6;
-  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+  font-family: 'Trebuchet MS', 'Gill Sans', sans-serif;
+  line-height: 1.45;
+  transition:
+    background-color 280ms ease,
+    color 240ms ease;
+}
+
+app-root {
+  display: block;
+  min-height: 100vh;
 }
 
 *,
@@ -20,4 +29,616 @@ button,
 input,
 textarea {
   font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: rgba(124, 230, 255, 0.22);
+}
+
+.app-shell {
+  --theme-font-body: 'Trebuchet MS', 'Gill Sans', sans-serif;
+  --theme-font-display: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --theme-app-background:
+    radial-gradient(circle at top left, rgba(244, 187, 68, 0.18), transparent 24rem),
+    radial-gradient(circle at center right, rgba(124, 230, 255, 0.12), transparent 22rem),
+    linear-gradient(180deg, #05101d 0%, #0b1728 45%, #111f34 100%);
+  --theme-text: #f5f1e6;
+  --theme-text-muted: rgba(245, 241, 230, 0.76);
+  --theme-text-soft: rgba(245, 241, 230, 0.58);
+  --theme-eyebrow: #9dc7ff;
+  --theme-heading-accent: #f4c66a;
+  --theme-panel-background:
+    linear-gradient(180deg, rgba(12, 22, 38, 0.96), rgba(7, 12, 22, 0.98)),
+    rgba(8, 14, 26, 0.82);
+  --theme-panel-muted-background: rgba(8, 14, 26, 0.72);
+  --theme-hero-background:
+    radial-gradient(circle at top right, rgba(124, 230, 255, 0.1), transparent 18rem),
+    linear-gradient(180deg, rgba(11, 22, 38, 0.94), rgba(7, 14, 25, 0.98));
+  --theme-card-background:
+    linear-gradient(180deg, rgba(17, 28, 48, 0.92), rgba(10, 16, 31, 0.96)),
+    rgba(12, 18, 34, 0.92);
+  --theme-panel-border: rgba(255, 255, 255, 0.08);
+  --theme-secondary-border: rgba(255, 255, 255, 0.06);
+  --theme-panel-shadow: 0 28px 70px rgba(0, 0, 0, 0.24);
+  --theme-card-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+  --theme-subtle-background: rgba(255, 255, 255, 0.04);
+  --theme-subtle-background-strong: rgba(255, 255, 255, 0.05);
+  --theme-secondary-surface: rgba(255, 255, 255, 0.03);
+  --theme-badge-background: rgba(124, 230, 255, 0.14);
+  --theme-badge-text: #d9f8ff;
+  --theme-warm-badge-background: rgba(244, 198, 106, 0.16);
+  --theme-warm-badge-text: #f4c66a;
+  --theme-accent-card-background: rgba(124, 230, 255, 0.08);
+  --theme-accent-card-border: rgba(124, 230, 255, 0.16);
+  --theme-secondary-accent-background: rgba(157, 199, 255, 0.08);
+  --theme-secondary-accent-border: rgba(157, 199, 255, 0.16);
+  --theme-warning-background: rgba(244, 198, 106, 0.08);
+  --theme-warning-border: rgba(244, 198, 106, 0.16);
+  --theme-warning-text: #fff3d6;
+  --theme-warning-strong-background:
+    linear-gradient(180deg, rgba(255, 179, 108, 0.12), rgba(124, 230, 255, 0.08));
+  --theme-warning-strong-border: rgba(244, 198, 106, 0.2);
+  --theme-chip-background: rgba(157, 199, 255, 0.14);
+  --theme-chip-text: #f5f1e6;
+  --theme-chip-active-background:
+    linear-gradient(135deg, rgba(244, 198, 106, 0.28), rgba(240, 141, 78, 0.3));
+  --theme-chip-active-text: #fff3d6;
+  --theme-chip-active-shadow:
+    inset 0 0 0 1px rgba(244, 198, 106, 0.32),
+    0 8px 18px rgba(240, 141, 78, 0.16);
+  --theme-chip-hover-background: rgba(124, 230, 255, 0.16);
+  --theme-chip-hover-text: #f5f1e6;
+  --theme-chip-selected-border: rgba(244, 198, 106, 0.46);
+  --theme-chip-selected-background: rgba(244, 198, 106, 0.12);
+  --theme-input-background: rgba(2, 8, 18, 0.58);
+  --theme-input-border: rgba(255, 255, 255, 0.12);
+  --theme-input-focus-border: rgba(124, 230, 255, 0.42);
+  --theme-input-focus-ring: 0 0 0 3px rgba(124, 230, 255, 0.12);
+  --theme-range-accent: #f4c66a;
+  --theme-button-primary-background: linear-gradient(135deg, #f4c66a, #f08d4e);
+  --theme-button-primary-text: #11131e;
+  --theme-button-secondary-background: rgba(157, 199, 255, 0.16);
+  --theme-button-secondary-text: #f5f1e6;
+  --theme-button-danger-background: rgba(234, 101, 93, 0.16);
+  --theme-button-danger-text: #ffb8b1;
+  --theme-button-ghost-border: rgba(255, 255, 255, 0.12);
+  --theme-button-ghost-text: #f5f1e6;
+  --theme-error-background: rgba(234, 101, 93, 0.12);
+  --theme-error-text: #ffb8b1;
+  --theme-code-background: rgba(255, 255, 255, 0.06);
+  --theme-selection-background: rgba(244, 198, 106, 0.08);
+  --theme-selection-border: rgba(244, 198, 106, 0.34);
+  --theme-canvas-background:
+    radial-gradient(circle at top, rgba(124, 230, 255, 0.08), transparent 18rem),
+    linear-gradient(180deg, rgba(4, 10, 20, 0.96), rgba(8, 16, 28, 0.98));
+  --theme-canvas-border: rgba(255, 255, 255, 0.08);
+  --theme-canvas-inset-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --theme-canvas-empty-background:
+    linear-gradient(180deg, rgba(2, 8, 23, 0.18), rgba(2, 8, 23, 0.52));
+  --theme-legend-background: rgba(6, 11, 20, 0.76);
+  --theme-legend-text: rgba(245, 241, 230, 0.82);
+  --theme-focus-outline: rgba(124, 230, 255, 0.5);
+  --theme-toolbar-background: rgba(7, 14, 25, 0.68);
+  --theme-toolbar-border: rgba(255, 255, 255, 0.08);
+  --theme-toolbar-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+  --theme-switch-track-background: rgba(255, 255, 255, 0.04);
+  --theme-switch-track-border: rgba(255, 255, 255, 0.08);
+  --theme-switch-indicator-background: rgba(124, 230, 255, 0.16);
+  --theme-switch-indicator-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+  --theme-switch-muted-text: rgba(245, 241, 230, 0.62);
+  --theme-shell-radius: 1.75rem;
+  --theme-surface-radius: 1.6rem;
+  --theme-card-radius: 1.2rem;
+  --theme-pill-radius: 999px;
+  --theme-input-radius: 1rem;
+  --theme-border-width: 1px;
+  --theme-ambient-orb-a: radial-gradient(circle, rgba(244, 187, 68, 0.24) 0%, transparent 68%);
+  --theme-ambient-orb-b: radial-gradient(circle, rgba(124, 230, 255, 0.18) 0%, transparent 70%);
+  --theme-ambient-grid:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  --theme-ambient-grid-size: 120px 120px;
+  --theme-ambient-grid-opacity: 0.16;
+  min-height: 100vh;
+  padding: clamp(1rem, 2vw, 1.75rem);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--theme-app-background);
+  color: var(--theme-text);
+  font-family: var(--theme-font-body);
+  transition:
+    background 420ms ease,
+    color 240ms ease;
+}
+
+.app-shell[data-theme='space'] {
+  --theme-font-body: 'Avenir Next', 'Trebuchet MS', sans-serif;
+  --theme-font-display: 'Iowan Old Style', 'Baskerville', 'Palatino Linotype', serif;
+  --theme-app-background:
+    radial-gradient(circle at 18% 10%, rgba(64, 135, 255, 0.3), transparent 23rem),
+    radial-gradient(circle at 84% 12%, rgba(72, 239, 255, 0.18), transparent 20rem),
+    radial-gradient(circle at 50% 105%, rgba(255, 179, 92, 0.16), transparent 24rem),
+    linear-gradient(180deg, #02030a 0%, #040813 28%, #071126 64%, #09172f 100%);
+  --theme-text: #eef6ff;
+  --theme-text-muted: rgba(229, 241, 255, 0.78);
+  --theme-text-soft: rgba(194, 212, 235, 0.6);
+  --theme-eyebrow: #86eaff;
+  --theme-heading-accent: #ffe08c;
+  --theme-panel-background:
+    radial-gradient(circle at 18% -34%, rgba(92, 162, 255, 0.18), transparent 17rem),
+    linear-gradient(180deg, rgba(10, 18, 46, 0.94), rgba(4, 8, 24, 0.98));
+  --theme-panel-muted-background:
+    linear-gradient(180deg, rgba(8, 16, 38, 0.84), rgba(4, 8, 22, 0.92));
+  --theme-hero-background:
+    radial-gradient(circle at 16% -4%, rgba(96, 156, 255, 0.34), transparent 19rem),
+    radial-gradient(circle at 88% 8%, rgba(78, 240, 255, 0.18), transparent 18rem),
+    radial-gradient(circle at 62% 116%, rgba(255, 190, 112, 0.2), transparent 16rem),
+    linear-gradient(180deg, rgba(8, 18, 44, 0.96), rgba(3, 8, 22, 0.98));
+  --theme-card-background:
+    radial-gradient(circle at 16% -28%, rgba(82, 148, 255, 0.14), transparent 15rem),
+    linear-gradient(180deg, rgba(11, 23, 55, 0.94), rgba(5, 10, 26, 0.98));
+  --theme-panel-border: rgba(118, 184, 255, 0.28);
+  --theme-secondary-border: rgba(118, 184, 255, 0.16);
+  --theme-panel-shadow:
+    0 34px 90px rgba(1, 4, 15, 0.52),
+    0 0 0 1px rgba(82, 150, 255, 0.05);
+  --theme-card-shadow:
+    0 20px 54px rgba(1, 4, 15, 0.4),
+    0 0 22px rgba(60, 128, 255, 0.08);
+  --theme-subtle-background: rgba(18, 35, 72, 0.52);
+  --theme-subtle-background-strong: rgba(24, 44, 86, 0.62);
+  --theme-secondary-surface: rgba(18, 31, 62, 0.6);
+  --theme-badge-background: linear-gradient(135deg, rgba(54, 140, 255, 0.3), rgba(74, 239, 255, 0.18));
+  --theme-badge-text: #ecfcff;
+  --theme-warm-badge-background: rgba(255, 211, 120, 0.2);
+  --theme-warm-badge-text: #ffe9ab;
+  --theme-accent-card-background: rgba(74, 239, 255, 0.12);
+  --theme-accent-card-border: rgba(74, 239, 255, 0.26);
+  --theme-secondary-accent-background: rgba(111, 160, 255, 0.16);
+  --theme-secondary-accent-border: rgba(111, 160, 255, 0.24);
+  --theme-warning-background: rgba(255, 199, 104, 0.14);
+  --theme-warning-border: rgba(255, 199, 104, 0.26);
+  --theme-warning-text: #fff2ca;
+  --theme-warning-strong-background:
+    linear-gradient(180deg, rgba(255, 187, 96, 0.2), rgba(74, 239, 255, 0.12));
+  --theme-warning-strong-border: rgba(255, 199, 104, 0.34);
+  --theme-chip-background: rgba(86, 138, 255, 0.18);
+  --theme-chip-text: #edf6ff;
+  --theme-chip-active-background:
+    linear-gradient(135deg, rgba(255, 220, 128, 0.32), rgba(74, 239, 255, 0.24));
+  --theme-chip-active-shadow:
+    inset 0 0 0 1px rgba(255, 220, 128, 0.3),
+    0 10px 28px rgba(3, 10, 28, 0.36);
+  --theme-chip-hover-background: rgba(74, 239, 255, 0.18);
+  --theme-chip-selected-border: rgba(255, 220, 128, 0.54);
+  --theme-chip-selected-background: rgba(255, 220, 128, 0.16);
+  --theme-input-background: rgba(4, 9, 24, 0.76);
+  --theme-input-border: rgba(118, 184, 255, 0.22);
+  --theme-input-focus-border: rgba(74, 239, 255, 0.5);
+  --theme-input-focus-ring: 0 0 0 3px rgba(74, 239, 255, 0.15);
+  --theme-range-accent: #ffe08c;
+  --theme-button-primary-background: linear-gradient(135deg, #ffe08c, #ff9d63);
+  --theme-button-primary-text: #11172a;
+  --theme-button-secondary-background: rgba(74, 239, 255, 0.18);
+  --theme-button-secondary-text: #eefaff;
+  --theme-button-ghost-border: rgba(118, 184, 255, 0.24);
+  --theme-button-ghost-text: #eef6ff;
+  --theme-code-background: rgba(105, 157, 255, 0.14);
+  --theme-selection-background: rgba(255, 220, 128, 0.12);
+  --theme-selection-border: rgba(255, 220, 128, 0.38);
+  --theme-canvas-background:
+    radial-gradient(circle at 50% -8%, rgba(74, 239, 255, 0.16), transparent 18rem),
+    linear-gradient(180deg, rgba(5, 11, 28, 0.94), rgba(6, 15, 38, 0.98));
+  --theme-canvas-border: rgba(118, 184, 255, 0.22);
+  --theme-canvas-inset-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 0 60px rgba(66, 129, 255, 0.08);
+  --theme-canvas-empty-background:
+    linear-gradient(180deg, rgba(4, 10, 27, 0.2), rgba(4, 10, 27, 0.62));
+  --theme-legend-background: rgba(5, 11, 28, 0.86);
+  --theme-toolbar-background: rgba(7, 14, 34, 0.74);
+  --theme-toolbar-border: rgba(118, 184, 255, 0.18);
+  --theme-toolbar-shadow:
+    0 18px 48px rgba(1, 4, 15, 0.4),
+    0 0 18px rgba(68, 131, 255, 0.08);
+  --theme-switch-track-background: rgba(10, 19, 43, 0.88);
+  --theme-switch-track-border: rgba(118, 184, 255, 0.2);
+  --theme-switch-indicator-background:
+    linear-gradient(135deg, rgba(66, 141, 255, 0.38), rgba(74, 239, 255, 0.2));
+  --theme-switch-indicator-shadow:
+    0 12px 32px rgba(1, 4, 15, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --theme-ambient-orb-a: radial-gradient(circle, rgba(66, 141, 255, 0.28) 0%, transparent 68%);
+  --theme-ambient-orb-b: radial-gradient(circle, rgba(74, 239, 255, 0.18) 0%, transparent 72%);
+  --theme-ambient-grid:
+    radial-gradient(circle at 20% 24%, rgba(255, 255, 255, 0.82) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 78% 34%, rgba(134, 234, 255, 0.8) 0 1.1px, transparent 1.8px),
+    radial-gradient(circle at 36% 72%, rgba(255, 224, 140, 0.68) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.24) 0 1px, transparent 1.8px),
+    linear-gradient(180deg, rgba(3, 8, 20, 0), rgba(3, 8, 20, 0.18));
+  --theme-ambient-grid-size: 320px 320px, 420px 420px, 520px 520px, 28px 28px, 100% 100%;
+  --theme-ambient-grid-opacity: 0.34;
+}
+
+.app-shell[data-theme='neobrutalism'] {
+  --theme-font-body: 'Franklin Gothic Medium', 'Arial Narrow', 'Trebuchet MS', sans-serif;
+  --theme-font-display: 'Arial Black', 'Franklin Gothic Heavy', sans-serif;
+  --theme-app-background:
+    radial-gradient(circle at 10% 12%, rgba(0, 95, 255, 0.16), transparent 20rem),
+    radial-gradient(circle at 88% 18%, rgba(255, 92, 44, 0.16), transparent 18rem),
+    linear-gradient(180deg, #fff6cf 0%, #ffe7ae 52%, #ffd33e 100%);
+  --theme-text: #101010;
+  --theme-text-muted: rgba(16, 16, 16, 0.74);
+  --theme-text-soft: rgba(16, 16, 16, 0.58);
+  --theme-eyebrow: #0057ff;
+  --theme-heading-accent: #ff5c2c;
+  --theme-panel-background: linear-gradient(180deg, #fffef1, #fff7c8);
+  --theme-panel-muted-background: rgba(255, 252, 236, 0.96);
+  --theme-hero-background: linear-gradient(135deg, #ffde59 0%, #ff9d4d 46%, #62d0ff 100%);
+  --theme-card-background: linear-gradient(180deg, #fffef1, #ffe8ab);
+  --theme-panel-border: #101010;
+  --theme-secondary-border: #101010;
+  --theme-panel-shadow: 10px 10px 0 rgba(16, 16, 16, 0.96);
+  --theme-card-shadow: 8px 8px 0 rgba(16, 16, 16, 0.96);
+  --theme-subtle-background: rgba(255, 255, 255, 0.72);
+  --theme-subtle-background-strong: rgba(255, 255, 255, 0.86);
+  --theme-secondary-surface: rgba(255, 255, 255, 0.66);
+  --theme-badge-background: #101010;
+  --theme-badge-text: #fffbe8;
+  --theme-warm-badge-background: #ff5c2c;
+  --theme-warm-badge-text: #fff8ea;
+  --theme-accent-card-background: rgba(98, 208, 255, 0.34);
+  --theme-accent-card-border: #101010;
+  --theme-secondary-accent-background: rgba(255, 222, 89, 0.48);
+  --theme-secondary-accent-border: #101010;
+  --theme-warning-background: rgba(255, 92, 44, 0.22);
+  --theme-warning-border: #101010;
+  --theme-warning-text: #101010;
+  --theme-warning-strong-background: linear-gradient(135deg, #ffde59 0%, #ff7b54 100%);
+  --theme-warning-strong-border: #101010;
+  --theme-chip-background: rgba(98, 208, 255, 0.34);
+  --theme-chip-text: #101010;
+  --theme-chip-active-background: linear-gradient(135deg, #ffde59 0%, #ff9d4d 100%);
+  --theme-chip-active-text: #101010;
+  --theme-chip-active-shadow: 4px 4px 0 rgba(16, 16, 16, 0.96);
+  --theme-chip-hover-background: rgba(255, 92, 44, 0.22);
+  --theme-chip-hover-text: #101010;
+  --theme-chip-selected-border: #101010;
+  --theme-chip-selected-background: rgba(255, 92, 44, 0.22);
+  --theme-input-background: #fffef1;
+  --theme-input-border: #101010;
+  --theme-input-focus-border: #0057ff;
+  --theme-input-focus-ring: 0 0 0 4px rgba(0, 87, 255, 0.2);
+  --theme-range-accent: #101010;
+  --theme-button-primary-background: linear-gradient(135deg, #ffde59, #ff934f);
+  --theme-button-primary-text: #101010;
+  --theme-button-secondary-background: #62d0ff;
+  --theme-button-secondary-text: #101010;
+  --theme-button-danger-background: #ff6b57;
+  --theme-button-danger-text: #101010;
+  --theme-button-ghost-border: #101010;
+  --theme-button-ghost-text: #101010;
+  --theme-error-background: rgba(255, 107, 87, 0.26);
+  --theme-error-text: #101010;
+  --theme-code-background: rgba(255, 255, 255, 0.78);
+  --theme-selection-background: rgba(255, 92, 44, 0.16);
+  --theme-selection-border: #101010;
+  --theme-canvas-background:
+    linear-gradient(180deg, rgba(255, 253, 239, 0.98), rgba(255, 239, 180, 0.98));
+  --theme-canvas-border: #101010;
+  --theme-canvas-inset-shadow: inset 0 0 0 2px rgba(16, 16, 16, 0.96);
+  --theme-canvas-empty-background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 222, 89, 0.28));
+  --theme-legend-background: rgba(255, 255, 255, 0.96);
+  --theme-legend-text: #101010;
+  --theme-focus-outline: rgba(0, 87, 255, 0.5);
+  --theme-toolbar-background: rgba(255, 252, 236, 0.92);
+  --theme-toolbar-border: #101010;
+  --theme-toolbar-shadow: 10px 10px 0 rgba(16, 16, 16, 0.96);
+  --theme-switch-track-background: rgba(255, 255, 255, 0.82);
+  --theme-switch-track-border: #101010;
+  --theme-switch-indicator-background: linear-gradient(135deg, #ffde59, #62d0ff);
+  --theme-switch-indicator-shadow: 4px 4px 0 rgba(16, 16, 16, 0.96);
+  --theme-switch-muted-text: rgba(16, 16, 16, 0.6);
+  --theme-shell-radius: 1rem;
+  --theme-surface-radius: 0.9rem;
+  --theme-card-radius: 0.85rem;
+  --theme-pill-radius: 0.8rem;
+  --theme-input-radius: 0.75rem;
+  --theme-border-width: 3px;
+  --theme-ambient-orb-a: radial-gradient(circle, rgba(255, 92, 44, 0.22) 0%, transparent 68%);
+  --theme-ambient-orb-b: radial-gradient(circle, rgba(0, 87, 255, 0.18) 0%, transparent 70%);
+  --theme-ambient-grid:
+    linear-gradient(rgba(16, 16, 16, 0.08) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(16, 16, 16, 0.08) 2px, transparent 2px);
+  --theme-ambient-grid-size: 34px 34px;
+  --theme-ambient-grid-opacity: 0.44;
+}
+
+.theme-ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.theme-ambient__orb,
+.theme-ambient__grid {
+  position: absolute;
+  transition:
+    background 420ms ease,
+    opacity 320ms ease,
+    transform 520ms ease;
+}
+
+.theme-ambient__orb {
+  width: 38rem;
+  height: 38rem;
+  border-radius: 50%;
+  filter: blur(8px);
+  opacity: 0.9;
+}
+
+.theme-ambient__orb--one {
+  top: -14rem;
+  left: -10rem;
+  background: var(--theme-ambient-orb-a);
+  animation: drift-one 18s ease-in-out infinite;
+}
+
+.theme-ambient__orb--two {
+  right: -14rem;
+  bottom: -18rem;
+  background: var(--theme-ambient-orb-b);
+  animation: drift-two 22s ease-in-out infinite;
+}
+
+.theme-ambient__grid {
+  inset: 0;
+  background-image: var(--theme-ambient-grid);
+  background-size: var(--theme-ambient-grid-size);
+  opacity: var(--theme-ambient-grid-opacity);
+  transform: perspective(1200px) rotateX(72deg) translateY(-12%);
+  transform-origin: top center;
+}
+
+.app-toolbar,
+.page-frame {
+  position: relative;
+  z-index: 1;
+}
+
+.app-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin: 0 auto 1rem;
+  width: min(100%, 1680px);
+  padding: 0.75rem 0.9rem;
+  border: var(--theme-border-width) solid var(--theme-toolbar-border);
+  border-radius: calc(var(--theme-shell-radius) - 0.2rem);
+  background: var(--theme-toolbar-background);
+  box-shadow: var(--theme-toolbar-shadow);
+  backdrop-filter: blur(14px);
+  transition:
+    background 320ms ease,
+    border-color 320ms ease,
+    box-shadow 320ms ease,
+    color 240ms ease;
+}
+
+.brand-lockup {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+  min-width: 0;
+}
+
+.brand-lockup > p {
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--theme-pill-radius);
+  background: var(--theme-badge-background);
+  color: var(--theme-badge-text);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.brand-lockup > div {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.brand-lockup strong,
+.theme-switcher__option strong {
+  font-family: var(--theme-font-display);
+}
+
+.brand-lockup strong {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.brand-lockup span {
+  color: var(--theme-switch-muted-text);
+  font-size: 0.88rem;
+}
+
+.theme-switcher {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-width: min(100%, 26rem);
+  padding: 0.28rem;
+  border: var(--theme-border-width) solid var(--theme-switch-track-border);
+  border-radius: calc(var(--theme-pill-radius) + 0.2rem);
+  background: var(--theme-switch-track-background);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.theme-switcher__indicator {
+  position: absolute;
+  top: 0.28rem;
+  bottom: 0.28rem;
+  left: 0.28rem;
+  width: calc((100% - 0.56rem) / 3);
+  border-radius: var(--theme-pill-radius);
+  background: var(--theme-switch-indicator-background);
+  box-shadow: var(--theme-switch-indicator-shadow);
+  transform: translateX(calc(var(--active-theme-index) * 100%));
+  transition:
+    transform 340ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 280ms ease,
+    box-shadow 280ms ease;
+}
+
+.theme-switcher__option {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.15rem;
+  align-items: center;
+  justify-items: center;
+  min-height: 3.5rem;
+  padding: 0.55rem 0.8rem;
+  border: 0;
+  border-radius: var(--theme-pill-radius);
+  background: transparent;
+  color: var(--theme-switch-muted-text);
+  cursor: pointer;
+  transition:
+    color 220ms ease,
+    transform 180ms ease;
+}
+
+.theme-switcher__option small {
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.theme-switcher__option.is-active {
+  color: var(--theme-text);
+}
+
+.theme-switcher__option:hover {
+  transform: translateY(-1px);
+}
+
+.theme-switcher__option:focus-visible {
+  outline: 2px solid var(--theme-focus-outline);
+  outline-offset: 2px;
+}
+
+.app-shell[data-theme='space'] .theme-ambient__orb {
+  filter: blur(44px);
+}
+
+.app-shell[data-theme='space'] .theme-ambient__orb--one {
+  width: 44rem;
+  height: 44rem;
+  top: -10rem;
+  left: -6rem;
+}
+
+.app-shell[data-theme='space'] .theme-ambient__orb--two {
+  width: 40rem;
+  height: 40rem;
+  right: -8rem;
+  bottom: -12rem;
+}
+
+.app-shell[data-theme='space'] .theme-ambient__grid {
+  transform: none;
+  opacity: 0.58;
+  mix-blend-mode: screen;
+}
+
+.app-shell[data-theme='space'] .hero-card {
+  background:
+    radial-gradient(circle at 16% 6%, rgba(88, 160, 255, 0.34), transparent 18rem),
+    radial-gradient(circle at 84% 14%, rgba(74, 239, 255, 0.18), transparent 16rem),
+    radial-gradient(circle at 66% 118%, rgba(255, 192, 106, 0.22), transparent 14rem),
+    linear-gradient(180deg, rgba(9, 18, 45, 0.96), rgba(3, 8, 22, 0.98)) !important;
+  box-shadow:
+    0 30px 90px rgba(1, 4, 15, 0.48),
+    0 0 24px rgba(65, 132, 255, 0.12) !important;
+}
+
+.app-shell[data-theme='space'] .builder-host {
+  background:
+    radial-gradient(circle at 82% 20%, rgba(74, 239, 255, 0.14), transparent 15rem),
+    radial-gradient(circle at 10% 112%, rgba(83, 141, 255, 0.22), transparent 18rem),
+    linear-gradient(180deg, rgba(5, 10, 26, 0.96), rgba(3, 7, 20, 0.98)) !important;
+}
+
+.page-frame {
+  margin: 0 auto;
+  width: min(100%, 1680px);
+}
+
+@keyframes drift-one {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(1.5rem, 2.5rem, 0) scale(1.08);
+  }
+}
+
+@keyframes drift-two {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-2rem, -1rem, 0) scale(1.06);
+  }
+}
+
+@media (max-width: 840px) {
+  .app-shell {
+    padding: 1rem;
+  }
+
+  .app-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .theme-switcher {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .brand-lockup {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .theme-switcher__option {
+    min-height: 3.15rem;
+    padding-inline: 0.4rem;
+  }
+
+  .theme-switcher__option strong {
+    font-size: 0.88rem;
+  }
+
+  .theme-switcher__option small {
+    font-size: 0.68rem;
+  }
 }

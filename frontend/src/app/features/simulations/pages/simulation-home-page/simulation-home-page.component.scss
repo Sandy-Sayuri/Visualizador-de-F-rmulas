@@ -5,12 +5,14 @@
 
 .hero-card,
 .builder-host {
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.75rem;
-  background:
-    radial-gradient(circle at top right, rgba(124, 230, 255, 0.1), transparent 18rem),
-    linear-gradient(180deg, rgba(11, 22, 38, 0.94), rgba(7, 14, 25, 0.98));
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.24);
+  border: var(--theme-border-width) solid var(--theme-panel-border);
+  border-radius: var(--theme-shell-radius);
+  background: var(--theme-hero-background);
+  box-shadow: var(--theme-panel-shadow);
+  transition:
+    background 280ms ease,
+    border-color 280ms ease,
+    box-shadow 280ms ease;
 }
 
 .hero-card {
@@ -31,7 +33,7 @@
 
 .eyebrow {
   margin: 0;
-  color: #f4c66a;
+  color: var(--theme-heading-accent);
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -43,13 +45,13 @@ p {
 }
 
 h1 {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: var(--theme-font-display);
   font-size: clamp(1.8rem, 3vw, 3rem);
   line-height: 1;
 }
 
 .lead {
-  color: rgba(245, 241, 230, 0.76);
+  color: var(--theme-text-muted);
   max-width: 60rem;
 }
 
@@ -58,10 +60,13 @@ h1 {
   align-items: center;
   justify-content: center;
   padding: 0.65rem 0.95rem;
-  border-radius: 999px;
-  background: rgba(124, 230, 255, 0.14);
-  color: #d9f8ff;
+  border-radius: var(--theme-pill-radius);
+  background: var(--theme-badge-background);
+  color: var(--theme-badge-text);
   white-space: nowrap;
+  transition:
+    background 280ms ease,
+    color 280ms ease;
 }
 
 .tag-row {
@@ -73,25 +78,25 @@ h1 {
 .preset-chip {
   border: 0;
   padding: 0.55rem 0.8rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(245, 241, 230, 0.76);
+  border-radius: var(--theme-pill-radius);
+  background: var(--theme-subtle-background-strong);
+  color: var(--theme-text-muted);
   cursor: pointer;
   font-size: 0.92rem;
   transition:
     transform 140ms ease,
-    background-color 140ms ease,
+    background 140ms ease,
     color 140ms ease;
 }
 
 .preset-chip:hover {
   transform: translateY(-1px);
-  background: rgba(124, 230, 255, 0.16);
-  color: #f5f1e6;
+  background: var(--theme-chip-hover-background);
+  color: var(--theme-chip-hover-text);
 }
 
 .preset-chip:focus-visible {
-  outline: 2px solid rgba(124, 230, 255, 0.5);
+  outline: 2px solid var(--theme-focus-outline);
   outline-offset: 2px;
 }
 
