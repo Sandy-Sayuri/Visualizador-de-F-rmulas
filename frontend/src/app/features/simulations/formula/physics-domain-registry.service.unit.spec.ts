@@ -32,7 +32,7 @@ describe('PhysicsDomainRegistryService', () => {
     expect(domains).toContain(
       jasmine.objectContaining({
         key: 'thermodynamics',
-        status: 'planned',
+        status: 'implemented',
       }),
     );
   });

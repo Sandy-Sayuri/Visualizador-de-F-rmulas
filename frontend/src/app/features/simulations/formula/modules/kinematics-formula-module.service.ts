@@ -32,23 +32,40 @@ export class KinematicsFormulaModuleService extends BasePhysicsDomainService {
       parsed.targetInfo.evaluationMode === 'velocity' ||
       parsed.targetInfo.evaluationMode === 'scalar';
 
-    if (!isKinematicsTarget || !features.usesTime) {
+    if (!isKinematicsTarget) {
+      return null;
+    }
+
+    if (!features.usesTime && parsed.targetInfo.evaluationMode !== 'velocity') {
       return null;
     }
 
     const directExpression =
       parsed.targetInfo.evaluationMode === 'position' ||
       parsed.targetInfo.evaluationMode === 'scalar';
+    const reasons =
+      parsed.targetInfo.evaluationMode === 'velocity' && !features.usesTime
+        ? ['A formula define uma velocidade constante que pode ser integrada no eixo x.']
+        : ['A formula relaciona tempo e movimento sem interacao entre corpos.'];
 
     return this.buildClassification({
-      family: directExpression ? 'direct-trajectory' : 'time-driven-velocity',
+      family: directExpression
+        ? 'direct-trajectory'
+        : features.usesTime
+          ? 'time-driven-velocity'
+          : 'constant-velocity',
       solverStrategy: directExpression
         ? 'direct-expression'
         : 'single-state-integration',
       visualStrategy:
         directExpression && !features.usesState ? 'particle' : 'trajectory',
-      confidence: features.usesState ? 0.72 : 0.9,
-      reasons: ['A formula relaciona tempo e movimento sem interacao entre corpos.'],
+      confidence:
+        parsed.targetInfo.evaluationMode === 'velocity' && !features.usesTime
+          ? 0.84
+          : features.usesState
+            ? 0.72
+            : 0.9,
+      reasons,
     });
   }
 }

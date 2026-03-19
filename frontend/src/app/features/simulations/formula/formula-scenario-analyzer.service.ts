@@ -68,6 +68,10 @@ export class FormulaScenarioAnalyzerService {
       v0: { key: 'v0', label: 'v0', defaultValue: 42 },
       vx0: { key: 'vx0', label: 'vx0', defaultValue: 42 },
       vy0: { key: 'vy0', label: 'vy0', defaultValue: 0 },
+      deltaT: { key: 'deltaT', label: 'deltaT', defaultValue: 2, min: 0.1, step: 0.1 },
+      deltaS: { key: 'deltaS', label: 'deltaS', defaultValue: 20, step: 1 },
+      deltaX: { key: 'deltaX', label: 'deltaX', defaultValue: 20, step: 1 },
+      deltaY: { key: 'deltaY', label: 'deltaY', defaultValue: 20, step: 1 },
       a: { key: 'a', label: 'a', defaultValue: 8 },
       ax0: { key: 'ax0', label: 'ax0', defaultValue: 0 },
       ay0: { key: 'ay0', label: 'ay0', defaultValue: -9.81 },
@@ -128,6 +132,16 @@ export class FormulaScenarioAnalyzerService {
         key,
         label: key,
         defaultValue: 6,
+      };
+    }
+
+    if (/^delta/i.test(key)) {
+      return {
+        key,
+        label: key,
+        defaultValue: /t$/i.test(key) ? 2 : 20,
+        min: /t$/i.test(key) ? 0.1 : undefined,
+        step: /t$/i.test(key) ? 0.1 : 1,
       };
     }
 

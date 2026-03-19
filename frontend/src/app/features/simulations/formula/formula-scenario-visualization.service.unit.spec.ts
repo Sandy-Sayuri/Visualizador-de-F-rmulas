@@ -73,6 +73,32 @@ describe('FormulaScenarioVisualizationService', () => {
     expect(scene.legendItems.some((item) => item.tone === 'ray')).toBeTrue();
   });
 
+  it('builds plane and weight-component decorations for the inclined-plane scene', () => {
+    const config = {
+      formula: 'dynamics_incline = 0',
+      parameterValues: {
+        mass: 12,
+        angleDeg: 30,
+        g: 9.81,
+      },
+      primaryLabel: 'Bloco',
+      secondaryLabel: 'Plano',
+      primaryColor: '#ffb36c',
+      secondaryColor: '#9dc7ff',
+      particleRadius: 8,
+    };
+    const analysis = analyzer.analyze(config.formula);
+    const program = engine.compileProgram(config, analysis);
+    const state = engine.createInitialState(config, program);
+    const scene = service.buildScene(analysis, state);
+
+    expect(scene.decision.mode).toBe('inclined-plane');
+    expect(scene.decision.showVectors).toBeTrue();
+    expect(scene.decorations.filter((decoration) => decoration.kind === 'arrow').length).toBe(3);
+    expect(scene.decorations.some((decoration) => decoration.kind === 'arc')).toBeTrue();
+    expect(scene.legendItems.some((item) => item.label === 'Peso total (mg)')).toBeTrue();
+  });
+
   it('builds field lines and arrows for electromagnetism scenes', () => {
     const config = {
       formula: 'F = k*(q1*q2)/r^2',
@@ -100,5 +126,31 @@ describe('FormulaScenarioVisualizationService', () => {
     expect(scene.decorations.some((decoration) => decoration.kind === 'path')).toBeTrue();
     expect(scene.decorations.some((decoration) => decoration.kind === 'arrow')).toBeTrue();
     expect(scene.legendItems.some((item) => item.tone === 'field')).toBeTrue();
+  });
+
+  it('builds a thermodynamics chamber scene with container guides and particle legend', () => {
+    const config = {
+      formula: 'thermo_gas = 0',
+      parameterValues: {
+        temperature: 460,
+        volume: 80,
+        particleCount: 18,
+      },
+      primaryLabel: 'Particulas',
+      secondaryLabel: 'Recipiente',
+      primaryColor: '#ffb36c',
+      secondaryColor: '#9dc7ff',
+      particleRadius: 7,
+    };
+    const analysis = analyzer.analyze(config.formula);
+    const program = engine.compileProgram(config, analysis);
+    const state = engine.createInitialState(config, program);
+    const scene = service.buildScene(analysis, state);
+
+    expect(scene.decision.mode).toBe('thermo-chamber');
+    expect(scene.decorations.some((decoration) => decoration.kind === 'line')).toBeTrue();
+    expect(scene.decorations.some((decoration) => decoration.kind === 'path')).toBeTrue();
+    expect(scene.legendItems.some((item) => item.label === 'Particulas')).toBeTrue();
+    expect(scene.legendItems.some((item) => item.label === 'Temperatura')).toBeTrue();
   });
 });

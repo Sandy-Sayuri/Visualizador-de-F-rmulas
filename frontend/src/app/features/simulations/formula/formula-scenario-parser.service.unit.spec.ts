@@ -23,6 +23,16 @@ describe('FormulaScenarioParserService', () => {
     expect(parsed.expression).toBe('A*cos(w*t)');
   });
 
+  it('normalizes delta notation and accepts v as a velocity target', () => {
+    const parsed = service.parseFormula('v = Δs/Δt');
+
+    expect(parsed.targetInfo.target).toBe('vx');
+    expect(parsed.targetInfo.evaluationMode).toBe('velocity');
+    expect(parsed.normalizedFormula).toBe('v = deltaS/deltaT');
+    expect(parsed.expression).toBe('deltaS/deltaT');
+    expect(parsed.symbols).toEqual(['deltaS', 'deltaT']);
+  });
+
   it('throws a friendly error for malformed formulas', () => {
     expect(() => service.parseFormula('x + y')).toThrowError(
       'Use o formato variavel = expressao.',

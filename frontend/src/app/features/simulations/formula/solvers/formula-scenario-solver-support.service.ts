@@ -17,10 +17,12 @@ export class FormulaScenarioSolverSupportService {
     position: Vector2Model;
     velocity: Vector2Model;
     force: Vector2Model;
+    potentialEnergy?: number;
     trail: Vector2Model[];
   }): RuntimeBodyModel {
     const speed = Math.hypot(input.velocity.x, input.velocity.y);
     const kineticEnergy = 0.5 * input.mass * speed * speed;
+    const potentialEnergy = input.potentialEnergy ?? 0;
 
     return {
       id: input.id,
@@ -33,8 +35,8 @@ export class FormulaScenarioSolverSupportService {
       force: input.force,
       speed,
       kineticEnergy,
-      potentialEnergy: 0,
-      totalEnergy: kineticEnergy,
+      potentialEnergy,
+      totalEnergy: kineticEnergy + potentialEnergy,
       trail: input.trail,
     };
   }

@@ -1,6 +1,8 @@
 import { CanvasDecorationModel, CanvasLegendItemModel } from './canvas-decoration.model';
 import { ElectromagnetismSceneSnapshotModel } from './electromagnetism-scene.model';
+import { InclinedPlaneSceneSnapshotModel } from './inclined-plane-scene.model';
 import { OpticalSceneSnapshotModel } from './optical-scene.model';
+import { ThermodynamicsSceneSnapshotModel } from './thermodynamics-scene.model';
 import type { FormulaScenarioClassificationModel } from './formula-engine.model';
 import { RuntimeBodyModel } from './runtime-body.model';
 
@@ -30,7 +32,9 @@ export interface FormulaParameterDefinitionModel {
   label: string;
   defaultValue: number;
   min?: number;
+  max?: number;
   step?: number;
+  inputMode?: 'number' | 'range';
 }
 
 export interface FormulaScenarioAnalysisModel {
@@ -70,7 +74,9 @@ export interface FormulaScenarioDraftModel {
 
 export interface FormulaScenarioStateSceneDataModel {
   electromagnetism?: ElectromagnetismSceneSnapshotModel;
+  inclinedPlane?: InclinedPlaneSceneSnapshotModel;
   optical?: OpticalSceneSnapshotModel;
+  thermodynamics?: ThermodynamicsSceneSnapshotModel;
 }
 
 export interface FormulaScenarioStateModel {
@@ -82,10 +88,12 @@ export interface FormulaScenarioStateModel {
 export type FormulaSceneModeModel =
   | 'single-particle'
   | 'single-trajectory'
+  | 'inclined-plane'
   | 'oscillation'
   | 'wave-field'
   | 'pair-interaction'
   | 'electric-field'
+  | 'thermo-chamber'
   | 'optical-rays';
 
 export interface FormulaSceneDecisionModel {

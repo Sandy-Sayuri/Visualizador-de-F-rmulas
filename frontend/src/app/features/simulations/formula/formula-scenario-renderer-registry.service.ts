@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { FormulaSceneVisualizerModel } from '../models/formula-engine.model';
 import { FormulaScenarioAnalysisModel } from '../models/formula-scenario.model';
 import { ElectromagnetismSceneVisualizerService } from './visualizers/electromagnetism-scene-visualizer.service';
+import { InclinedPlaneSceneVisualizerService } from './visualizers/inclined-plane-scene-visualizer.service';
 import { OpticalSceneVisualizerService } from './visualizers/optical-scene-visualizer.service';
 import { OscillationSceneVisualizerService } from './visualizers/oscillation-scene-visualizer.service';
 import { PairInteractionSceneVisualizerService } from './visualizers/pair-interaction-scene-visualizer.service';
@@ -18,6 +19,7 @@ export class FormulaScenarioRendererRegistryService {
   private readonly visualizers: FormulaSceneVisualizerModel[] = [
     inject(PairInteractionSceneVisualizerService),
     inject(WaveSceneVisualizerService),
+    inject(InclinedPlaneSceneVisualizerService),
     inject(OpticalSceneVisualizerService),
     inject(ElectromagnetismSceneVisualizerService),
     inject(ThermodynamicsSceneVisualizerService),

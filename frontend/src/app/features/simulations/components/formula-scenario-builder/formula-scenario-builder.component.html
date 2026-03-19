@@ -17,7 +17,13 @@
 
       <div class="preset-row">
         @for (preset of presets; track preset.id) {
-          <button type="button" class="chip-button" (click)="loadPreset(preset)">
+          <button
+            type="button"
+            class="chip-button"
+            [class.chip-button-active]="activePreset()?.id === preset.id"
+            [attr.aria-pressed]="activePreset()?.id === preset.id"
+            (click)="loadPreset(preset)"
+          >
             {{ preset.label }}
           </button>
         }
@@ -86,6 +92,18 @@
             }
           </div>
         </div>
+
+        <div class="system-warning" data-testid="system-variable-warning">
+          <strong>Aviso sobre variaveis</strong>
+          <p>
+            O sistema ja usa <code>t</code>, <code>dt</code>, <code>x</code>,
+            <code>y</code>, <code>vx</code>, <code>vy</code>, <code>ax</code>,
+            <code>ay</code>, <code>r</code>, <code>distance</code>,
+            <code>dx</code> e <code>dy</code> internamente. Deltas como
+            <code>Δs</code> e <code>Δt</code> viram
+            <code>deltaS</code> e <code>deltaT</code>.
+          </p>
+        </div>
       </section>
     </section>
 
@@ -105,13 +123,30 @@
         <div class="parameter-grid">
           @for (parameter of parameterDefinitions(); track parameter.key) {
             <label class="compact-field">
-              <span>{{ parameter.label }}</span>
-              <input
-                type="number"
-                step="any"
-                [formControl]="parameterControl(parameter.key)"
-                [attr.data-testid]="'formula-param-' + parameter.key"
-              />
+              <span class="parameter-label-row">
+                <span>{{ parameter.label }}</span>
+                <strong>{{ parameterControl(parameter.key).value }}</strong>
+              </span>
+
+              @if (parameter.inputMode === 'range') {
+                <input
+                  type="range"
+                  [min]="parameter.min ?? 0"
+                  [max]="parameter.max ?? 100"
+                  [step]="parameter.step ?? 1"
+                  [formControl]="parameterControl(parameter.key)"
+                  [attr.data-testid]="'formula-param-' + parameter.key"
+                />
+              } @else {
+                <input
+                  type="number"
+                  step="any"
+                  [attr.min]="parameter.min ?? null"
+                  [attr.max]="parameter.max ?? null"
+                  [formControl]="parameterControl(parameter.key)"
+                  [attr.data-testid]="'formula-param-' + parameter.key"
+                />
+              }
             </label>
           }
         </div>
@@ -214,6 +249,46 @@
           <strong>{{ (runner.selectedBody()?.speed ?? 0) | number: '1.0-2' }}</strong>
         </article>
       </div>
+
+      @if (inclinedPlaneSnapshot(); as incline) {
+        <section class="inclined-plane-card" data-testid="inclined-plane-insights">
+          <div class="inclined-plane-heading">
+            <div>
+              <p class="eyebrow">Decomposicao do peso</p>
+              <strong>Plano inclinado</strong>
+            </div>
+            <span>{{ incline.angleDeg | number: '1.0-0' }} deg</span>
+          </div>
+
+          <div class="inclined-plane-grid">
+            <article>
+              <span>Peso total</span>
+              <strong>{{ incline.weightMagnitude | number: '1.1-2' }} N</strong>
+              <small>P = m*g</small>
+            </article>
+            <article>
+              <span>Componente paralela</span>
+              <strong>{{ incline.parallelMagnitude | number: '1.1-2' }} N</strong>
+              <small>Ppar = m*g*sen(theta)</small>
+            </article>
+            <article>
+              <span>Componente perpendicular</span>
+              <strong>{{ incline.perpendicularMagnitude | number: '1.1-2' }} N</strong>
+              <small>Pperp = m*g*cos(theta)</small>
+            </article>
+            <article>
+              <span>Aceleracao</span>
+              <strong>{{ incline.acceleration | number: '1.1-2' }} m/s²</strong>
+              <small>a = g*sen(theta)</small>
+            </article>
+          </div>
+
+          <p class="inclined-plane-note">
+            Sem atrito, aumentar a massa aumenta o peso e as componentes, mas a aceleracao continua
+            dependente de <code>g</code> e do angulo do plano.
+          </p>
+        </section>
+      }
 
       <div class="sim-speed-row">
         <div class="speed-control" data-testid="simulation-speed-control">

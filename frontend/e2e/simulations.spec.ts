@@ -94,3 +94,37 @@ test('runs an electromagnetism scene from the Coulomb formula', async ({ page })
   await expect(formulaLegend).toContainText('Campo');
   await expect(formulaLegend).toContainText('Forca');
 });
+
+test('runs a guided thermodynamics gas chamber with sliders and particle motion', async ({
+  page,
+}) => {
+  await page.goto('/simulations');
+
+  await page.getByRole('button', { name: /^Gas$/ }).click();
+  await expect(page.getByTestId('guided-scenario-card')).toBeVisible();
+  await expect(page.getByTestId('formula-category')).toContainText('Termodinamica');
+  await expect(page.getByTestId('formula-param-temperature')).toBeVisible();
+  await expect(page.getByTestId('formula-param-volume')).toBeVisible();
+  await expect(page.getByTestId('formula-param-particleCount')).toBeVisible();
+
+  await page.getByTestId('formula-param-temperature').evaluate((element, value) => {
+    const input = element as HTMLInputElement;
+    input.value = String(value);
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  }, 620);
+  await page.getByTestId('formula-param-volume').evaluate((element, value) => {
+    const input = element as HTMLInputElement;
+    input.value = String(value);
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  }, 68);
+  await page.getByTestId('toggle-formula-scenario').click();
+
+  await expect(page.getByTestId('formula-particle-count')).toContainText('24');
+
+  const formulaLegend = page.locator('[data-testid="canvas-legend"]').first();
+  await expect(formulaLegend).toContainText('Particulas');
+  await expect(formulaLegend).toContainText('Temperatura');
+  await expect(formulaLegend).toContainText('Recipiente');
+});

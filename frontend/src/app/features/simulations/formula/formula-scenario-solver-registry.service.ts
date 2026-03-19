@@ -5,6 +5,7 @@ import {
 } from '../models/formula-engine.model';
 import { FormulaScenarioAnalysisModel } from '../models/formula-scenario.model';
 import { ElectromagnetismFormulaSolverService } from './solvers/electromagnetism-formula-solver.service';
+import { InclinedPlaneFormulaSolverService } from './solvers/inclined-plane-formula-solver.service';
 import { OpticalFormulaSolverService } from './solvers/optical-formula-solver.service';
 import { PairForceFormulaSolverService } from './solvers/pair-force-formula-solver.service';
 import { SingleBodyFormulaSolverService } from './solvers/single-body-formula-solver.service';
@@ -18,6 +19,7 @@ export class FormulaScenarioSolverRegistryService {
   private readonly solvers: FormulaScenarioSolverModel[] = [
     inject(PairForceFormulaSolverService),
     inject(WaveFormulaSolverService),
+    inject(InclinedPlaneFormulaSolverService),
     inject(OpticalFormulaSolverService),
     inject(ElectromagnetismFormulaSolverService),
     inject(ThermodynamicsFormulaSolverService),

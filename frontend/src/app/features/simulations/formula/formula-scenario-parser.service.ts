@@ -16,12 +16,13 @@ import {
 })
 export class FormulaScenarioParserService {
   parseFormula(formula: string): ParsedFormulaModel {
-    const normalizedFormula = formula.trim();
+    const rawFormula = formula.trim();
 
-    if (!normalizedFormula) {
+    if (!rawFormula) {
       throw new Error('Informe uma formula para iniciar a simulacao.');
     }
 
+    const normalizedFormula = this.normalizeFormula(rawFormula);
     const segments = normalizedFormula.split('=');
 
     if (segments.length !== 2) {
@@ -40,7 +41,7 @@ export class FormulaScenarioParserService {
     const metadata = this.extractMetadata(expressionNode);
 
     return {
-      formula: normalizedFormula,
+      formula: rawFormula,
       normalizedFormula,
       leftSide,
       expression,
@@ -74,6 +75,8 @@ export class FormulaScenarioParserService {
         return this.createTargetInfo('x', targetName, 'x', 'position');
       case 'y':
         return this.createTargetInfo('y', targetName, 'y', 'position');
+      case 'v':
+        return this.createTargetInfo('vx', targetName, 'x', 'velocity');
       case 'vx':
         return this.createTargetInfo('vx', targetName, 'x', 'velocity');
       case 'vy':
@@ -93,6 +96,20 @@ export class FormulaScenarioParserService {
           'scalar',
         );
     }
+  }
+
+  private normalizeFormula(formula: string): string {
+    return formula
+      .normalize('NFKC')
+      .replace(/[\u200B-\u200D\uFEFF]/g, '')
+      .replace(/[−–—]/g, '-')
+      .replace(/[×·]/g, '*')
+      .replace(/²/g, '^2')
+      .replace(/³/g, '^3')
+      .replace(/[Δδ]\s*([A-Za-z_][A-Za-z0-9_]*)/g, (_match, symbol: string) =>
+        `delta${symbol.charAt(0).toUpperCase()}${symbol.slice(1)}`,
+      )
+      .trim();
   }
 
   private createTargetInfo(

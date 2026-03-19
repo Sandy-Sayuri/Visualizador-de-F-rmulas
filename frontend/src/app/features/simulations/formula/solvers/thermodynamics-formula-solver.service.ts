@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import {
   FormulaScenarioProgramContract,
@@ -10,6 +10,7 @@ import {
   FormulaScenarioConfigModel,
   FormulaScenarioStateModel,
 } from '../../models/formula-scenario.model';
+import { ThermodynamicsParticleSceneService } from '../thermodynamics/thermodynamics-particle-scene.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,35 +18,52 @@ import {
 export class ThermodynamicsFormulaSolverService
   implements FormulaScenarioSolverModel
 {
-  readonly id = 'thermodynamics-placeholder-solver';
+  private readonly scene = inject(ThermodynamicsParticleSceneService);
 
-  supports(_analysis: FormulaScenarioAnalysisModel): boolean {
-    return false;
+  readonly id = 'thermodynamics-particles-solver';
+
+  supports(analysis: FormulaScenarioAnalysisModel): boolean {
+    return analysis.classification.solverStrategy === 'thermodynamics-particles';
   }
 
   createValidationScope(
     _analysis: FormulaScenarioAnalysisModel,
-    _config: FormulaScenarioConfigModel,
+    config: FormulaScenarioConfigModel,
     _context: FormulaScenarioSolverContextModel,
   ): Record<string, number> {
-    throw new Error('Solver de termodinamica ainda nao implementado.');
+    return {
+      ...config.parameterValues,
+      t: 0,
+      temperature: config.parameterValues['temperature'] ?? 420,
+      volume: config.parameterValues['volume'] ?? 82,
+      particleCount: config.parameterValues['particleCount'] ?? 24,
+    };
   }
 
   createInitialState(
-    _config: FormulaScenarioConfigModel,
-    _program: FormulaScenarioProgramContract,
+    config: FormulaScenarioConfigModel,
+    program: FormulaScenarioProgramContract,
     _context: FormulaScenarioSolverContextModel,
   ): FormulaScenarioStateModel {
-    throw new Error('Solver de termodinamica ainda nao implementado.');
+    return this.scene.createInitialState(
+      program.analysis.classification.family as 'gas' | 'compression',
+      config,
+    );
   }
 
   step(
-    _state: FormulaScenarioStateModel,
-    _config: FormulaScenarioConfigModel,
-    _program: FormulaScenarioProgramContract,
-    _deltaTime: number,
-    _context: FormulaScenarioSolverContextModel,
+    state: FormulaScenarioStateModel,
+    config: FormulaScenarioConfigModel,
+    program: FormulaScenarioProgramContract,
+    deltaTime: number,
+    context: FormulaScenarioSolverContextModel,
   ): FormulaScenarioStateModel {
-    throw new Error('Solver de termodinamica ainda nao implementado.');
+    return this.scene.stepState(
+      program.analysis.classification.family as 'gas' | 'compression',
+      state,
+      config,
+      deltaTime,
+      context,
+    );
   }
 }

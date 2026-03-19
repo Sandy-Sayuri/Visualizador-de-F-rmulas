@@ -50,6 +50,19 @@ describe('FormulaScenarioAnalyzerService', () => {
     ]);
   });
 
+  it('accepts delta notation for constant velocity formulas', () => {
+    const analysis = service.analyze('v = Δs/Δt');
+
+    expect(analysis.target).toBe('vx');
+    expect(analysis.evaluationMode).toBe('velocity');
+    expect(analysis.classification.domain).toBe('kinematics');
+    expect(analysis.classification.family).toBe('constant-velocity');
+    expect(analysis.parameterDefinitions.map((parameter) => parameter.key)).toEqual([
+      'deltaS',
+      'deltaT',
+    ]);
+  });
+
   it('detects free scalar formulas and pair interactions from force laws', () => {
     const scalar = service.analyze('s = v*t');
     const analysis = service.analyze('F = G * (m1 * m2) / r^2');
@@ -97,6 +110,18 @@ describe('FormulaScenarioAnalyzerService', () => {
     ]);
   });
 
+  it('extracts the guided dynamics parameters for the inclined plane scene', () => {
+    const analysis = service.analyze('dynamics_incline = 0');
+
+    expect(analysis.classification.domain).toBe('dynamics');
+    expect(analysis.classification.family).toBe('inclined-plane');
+    expect(analysis.parameterDefinitions.map((parameter) => parameter.key)).toEqual([
+      'mass',
+      'angleDeg',
+      'g',
+    ]);
+  });
+
   it('extracts electromagnetism parameters for Coulomb formulas and guided field presets', () => {
     const coulomb = service.analyze('F = k*(q1*q2)/r^2');
     const field = service.analyze('electro_field = 0');
@@ -122,6 +147,24 @@ describe('FormulaScenarioAnalyzerService', () => {
       'x2',
       'y2',
     ]);
+  });
+
+  it('extracts guided thermodynamics parameters as sliders for gas and compression presets', () => {
+    const gas = service.analyze('thermo_gas = 0');
+    const compression = service.analyze('thermo_compression = 0');
+
+    expect(gas.classification.domain).toBe('thermodynamics');
+    expect(gas.classification.family).toBe('gas');
+    expect(gas.parameterDefinitions.map((parameter) => parameter.key)).toEqual([
+      'temperature',
+      'volume',
+      'particleCount',
+    ]);
+    expect(gas.parameterDefinitions.every((parameter) => parameter.inputMode === 'range')).toBeTrue();
+
+    expect(compression.classification.family).toBe('compression');
+    expect(compression.parameterDefinitions.find((parameter) => parameter.key === 'volume')?.label)
+      .toBe('Volume alvo');
   });
 
   it('throws a friendly error for invalid formulas', () => {

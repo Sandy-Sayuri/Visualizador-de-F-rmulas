@@ -320,9 +320,12 @@ export class SimulationCanvasRendererService {
       }
 
       context.shadowBlur = 0;
-      context.fillStyle = '#f5f1e6';
-      context.font = '12px Georgia';
-      context.fillText(body.name, point.x + radius + 6, point.y - radius - 4);
+
+      if (body.name) {
+        context.fillStyle = '#f5f1e6';
+        context.font = '12px Georgia';
+        context.fillText(body.name, point.x + radius + 6, point.y - radius - 4);
+      }
     }
   }
 

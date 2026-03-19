@@ -38,6 +38,7 @@ import {
   FormulaScenarioConfigModel,
   FormulaScenarioDraftModel,
 } from '../../models/formula-scenario.model';
+import { InclinedPlaneSceneSnapshotModel } from '../../models/inclined-plane-scene.model';
 import { FormulaScenarioRunnerService } from '../../services/formula-scenario-runner.service';
 import { PhysicsDomainRegistryService } from '../../formula/physics-domain-registry.service';
 
@@ -83,6 +84,9 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
     () => this.analysis()?.parameterDefinitions ?? [],
   );
   readonly speedLabel = computed(() => `${this.runner.timeScale()}x`);
+  readonly inclinedPlaneSnapshot = computed<InclinedPlaneSceneSnapshotModel | null>(
+    () => this.runner.state()?.sceneData?.inclinedPlane ?? null,
+  );
   readonly categoryLabel = computed(() => {
     const analysis = this.analysis();
 
@@ -108,10 +112,12 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
     'ax = -k*x/m',
     'x = A*cos(w*t)',
     'F = G*(m1*m2)/r^2',
+    'Dinamica: plano inclinado',
     'F = k*(q1*q2)/r^2',
     'y = A*sin(k*x - w*t)',
     'Optica: reflexao, refracao, lente',
     'Eletromagnetismo: cargas e campo',
+    'Termodinamica: gas e compressao',
   ];
 
   readonly form: FormulaScenarioBuilderFormGroup = this.formBuilder.group({
@@ -174,7 +180,19 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
       formula: preset.formula,
       primaryLabel: preset.primaryLabel,
       secondaryLabel: preset.secondaryLabel,
+      primaryColor:
+        preset.primaryColor ?? this.form.controls.primaryColor.getRawValue(),
+      secondaryColor:
+        preset.secondaryColor ?? this.form.controls.secondaryColor.getRawValue(),
+      particleRadius:
+        preset.particleRadius ?? this.form.controls.particleRadius.getRawValue(),
     });
+    this.detectParameters(true);
+
+    if (preset.parameterValues) {
+      this.syncParameterControls(this.analysis(), preset.parameterValues);
+    }
+
     this.preparePreview();
   }
 

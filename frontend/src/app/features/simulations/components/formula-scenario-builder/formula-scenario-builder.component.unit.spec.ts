@@ -76,6 +76,10 @@ describe('FormulaScenarioBuilderComponent', () => {
       'sourceX',
       'sourceY',
     ]);
+    const activeButton = fixture.nativeElement.querySelector(
+      '.chip-button-active',
+    ) as HTMLButtonElement | null;
+    expect(activeButton?.textContent?.trim()).toBe('Reflexao');
   });
 
   it('loads the guided electromagnetism field preset with dynamic parameters', () => {
@@ -95,5 +99,66 @@ describe('FormulaScenarioBuilderComponent', () => {
       'x2',
       'y2',
     ]);
+    expect(component.parameterControl('q1').value).toBe(2.4);
+    expect(component.parameterControl('x2').value).toBe(210);
+  });
+
+  it('loads the guided inclined-plane preset with live decomposition values', () => {
+    const inclinePreset = component.presets.find((preset) => preset.id === 'dynamics-incline');
+
+    component.loadPreset(inclinePreset!);
+    fixture.detectChanges();
+
+    expect(component.isGuidedPreset()).toBeTrue();
+    expect(component.analysis()?.classification.family).toBe('inclined-plane');
+    expect(component.parameterDefinitions().map((parameter) => parameter.key)).toEqual([
+      'mass',
+      'angleDeg',
+      'g',
+    ]);
+    expect(component.inclinedPlaneSnapshot()?.weightMagnitude).toBeCloseTo(117.72, 2);
+    expect(
+      fixture.nativeElement.querySelector('[data-testid="inclined-plane-insights"]'),
+    ).not.toBeNull();
+  });
+
+  it('applies different defaults for Coulomb, Cargas e Campo', () => {
+    const coulombPreset = component.presets.find((preset) => preset.id === 'electro-coulomb');
+    const chargesPreset = component.presets.find((preset) => preset.id === 'electro-guided');
+    const fieldPreset = component.presets.find((preset) => preset.id === 'electro-field');
+
+    component.loadPreset(coulombPreset!);
+    expect(component.parameterControl('q2').value).toBe(-1.2);
+    expect(component.form.controls.primaryColor.getRawValue()).toBe('#ffb36c');
+
+    component.loadPreset(chargesPreset!);
+    expect(component.parameterControl('q2').value).toBe(1.2);
+    expect(component.form.controls.secondaryColor.getRawValue()).toBe('#ffd166');
+
+    component.loadPreset(fieldPreset!);
+    expect(component.parameterControl('x1').value).toBe(0);
+    expect(component.parameterControl('y2').value).toBe(70);
+  });
+
+  it('loads the thermodynamics gas preset with slider parameters', () => {
+    const gasPreset = component.presets.find((preset) => preset.id === 'thermo-gas');
+
+    component.loadPreset(gasPreset!);
+    fixture.detectChanges();
+
+    expect(component.isGuidedPreset()).toBeTrue();
+    expect(component.analysis()?.classification.domain).toBe('thermodynamics');
+    expect(component.parameterDefinitions().map((parameter) => parameter.key)).toEqual([
+      'temperature',
+      'volume',
+      'particleCount',
+    ]);
+    expect(component.parameterDefinitions().every((parameter) => parameter.inputMode === 'range')).toBeTrue();
+    expect(component.parameterControl('temperature').value).toBe(420);
+
+    const activeButton = fixture.nativeElement.querySelector(
+      '.chip-button-active',
+    ) as HTMLButtonElement | null;
+    expect(activeButton?.textContent?.trim()).toBe('Gas');
   });
 });

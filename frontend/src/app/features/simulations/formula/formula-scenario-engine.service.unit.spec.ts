@@ -100,6 +100,28 @@ describe('FormulaScenarioEngineService', () => {
     expect(nextState.bodies[0].position.x).toBeCloseTo(20, 2);
   });
 
+  it('animates constant velocity formulas written with delta notation', () => {
+    const config = {
+      formula: 'v = Δs/Δt',
+      parameterValues: {
+        deltaS: 20,
+        deltaT: 2,
+      },
+      primaryLabel: 'Particula',
+      secondaryLabel: 'Secundaria',
+      primaryColor: '#7ce6ff',
+      secondaryColor: '#f4c66a',
+      particleRadius: 8,
+    };
+    const program = service.compileProgram(config);
+    const initialState = service.createInitialState(config, program);
+    const nextState = service.step(initialState, config, program, 1);
+
+    expect(program.analysis.target).toBe('vx');
+    expect(program.analysis.classification.family).toBe('constant-velocity');
+    expect(nextState.bodies[0].position.x).toBeGreaterThan(initialState.bodies[0].position.x);
+  });
+
   it('samples a traveling wave into multiple bodies across the field', () => {
     const config = {
       formula: 'y = A*sin(k*x - w*t)',
@@ -152,6 +174,34 @@ describe('FormulaScenarioEngineService', () => {
     expect(nextState.bodies[0].position.x).not.toBe(initialState.bodies[0].position.x);
   });
 
+  it('builds a guided inclined-plane scene with decomposed weight data', () => {
+    const config = {
+      formula: 'dynamics_incline = 0',
+      parameterValues: {
+        mass: 12,
+        angleDeg: 30,
+        g: 9.81,
+      },
+      primaryLabel: 'Bloco',
+      secondaryLabel: 'Plano',
+      primaryColor: '#ffb36c',
+      secondaryColor: '#9dc7ff',
+      particleRadius: 8,
+    };
+    const program = service.compileProgram(config);
+    const initialState = service.createInitialState(config, program);
+    const nextState = service.step(initialState, config, program, 0.5);
+
+    expect(program.analysis.classification.domain).toBe('dynamics');
+    expect(program.analysis.classification.family).toBe('inclined-plane');
+    expect(initialState.sceneData?.inclinedPlane?.parallelMagnitude).toBeCloseTo(58.86, 2);
+    expect(nextState.bodies[0].position.x).toBeGreaterThan(initialState.bodies[0].position.x);
+    expect(nextState.bodies[0].force.x).toBeCloseTo(
+      initialState.sceneData?.inclinedPlane?.parallelMagnitude ?? 0,
+      2,
+    );
+  });
+
   it('simulates Coulomb interaction as an electromagnetism pair scene', () => {
     const config = {
       formula: 'F = k*(q1*q2)/r^2',
@@ -179,5 +229,60 @@ describe('FormulaScenarioEngineService', () => {
     expect(initialState.sceneData?.electromagnetism?.scenario).toBe('coulomb');
     expect(nextState.bodies[0].position.x).toBeGreaterThan(initialState.bodies[0].position.x);
     expect(nextState.bodies[1].position.x).toBeLessThan(initialState.bodies[1].position.x);
+  });
+
+  it('creates a thermodynamics gas chamber with moving particles and chamber metadata', () => {
+    const config = {
+      formula: 'thermo_gas = 0',
+      parameterValues: {
+        temperature: 480,
+        volume: 84,
+        particleCount: 20,
+      },
+      primaryLabel: 'Particulas',
+      secondaryLabel: 'Recipiente',
+      primaryColor: '#ffb36c',
+      secondaryColor: '#9dc7ff',
+      particleRadius: 7,
+    };
+    const program = service.compileProgram(config);
+    const initialState = service.createInitialState(config, program);
+    const nextState = service.step(initialState, config, program, 0.18);
+
+    expect(program.analysis.classification.domain).toBe('thermodynamics');
+    expect(initialState.bodies.length).toBe(20);
+    expect(initialState.sceneData?.thermodynamics?.scenario).toBe('gas');
+    expect(nextState.bodies.some((body, index) => {
+      const previous = initialState.bodies[index];
+      return body.position.x !== previous.position.x || body.position.y !== previous.position.y;
+    })).toBeTrue();
+    expect(nextState.sceneData?.thermodynamics?.pressure).toBeGreaterThan(0);
+  });
+
+  it('moves the piston when running the compression thermodynamics preset', () => {
+    const config = {
+      formula: 'thermo_compression = 0',
+      parameterValues: {
+        temperature: 540,
+        volume: 48,
+        particleCount: 28,
+      },
+      primaryLabel: 'Particulas',
+      secondaryLabel: 'Pistao',
+      primaryColor: '#ff9d5c',
+      secondaryColor: '#f4c66a',
+      particleRadius: 7,
+    };
+    const program = service.compileProgram(config);
+    const initialState = service.createInitialState(config, program);
+    const nextState = service.step(initialState, config, program, 0.4);
+
+    expect(initialState.sceneData?.thermodynamics?.scenario).toBe('compression');
+    expect(nextState.sceneData?.thermodynamics?.currentVolume).toBeLessThan(
+      initialState.sceneData?.thermodynamics?.currentVolume ?? 1,
+    );
+    expect(nextState.sceneData?.thermodynamics?.pistonPosition).not.toBe(
+      initialState.sceneData?.thermodynamics?.pistonPosition,
+    );
   });
 });

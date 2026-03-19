@@ -29,7 +29,9 @@ export type FormulaSolverStrategyModel =
   | 'direct-expression'
   | 'single-state-integration'
   | 'pair-force-integration'
+  | 'guided-dynamics'
   | 'electromagnetic-interaction'
+  | 'thermodynamics-particles'
   | 'wave-sampling'
   | 'optical-guided'
   | 'equation-system'
@@ -38,9 +40,11 @@ export type FormulaSolverStrategyModel =
 export type FormulaVisualStrategyModel =
   | 'particle'
   | 'trajectory'
+  | 'inclined-plane'
   | 'oscillation-pattern'
   | 'pair-interaction'
   | 'optical-rays'
+  | 'thermodynamics-box'
   | 'graph'
   | 'wave'
   | 'field';
@@ -158,7 +162,7 @@ export interface PhysicsGuidedScenarioDescriptorModel {
   id: string;
   domain: Extract<
     PhysicsDomainModel,
-    'optics' | 'electromagnetism' | 'thermodynamics'
+    'dynamics' | 'optics' | 'electromagnetism' | 'thermodynamics'
   >;
   label: string;
   notes: string;
@@ -208,8 +212,8 @@ export const FORMULA_ENGINE_DOMAIN_CATALOG: PhysicsDomainDescriptorModel[] = [
   {
     domain: 'thermodynamics',
     label: 'Termodinamica',
-    status: 'planned',
-    notes: 'Estados macroscopicos, calor e transformacoes ficam para a proxima etapa.',
+    status: 'implemented',
+    notes: 'Gas ideal simples e compressao visual com particulas em recipiente.',
   },
   {
     domain: 'optics',
@@ -226,6 +230,12 @@ export const FORMULA_ENGINE_DOMAIN_CATALOG: PhysicsDomainDescriptorModel[] = [
 ];
 
 export const PHYSICS_GUIDED_SCENARIO_CATALOG: PhysicsGuidedScenarioDescriptorModel[] = [
+  {
+    id: 'dynamics-incline',
+    domain: 'dynamics',
+    label: 'Plano inclinado',
+    notes: 'Peso total e componentes paralela e perpendicular no plano.',
+  },
   {
     id: 'optics-reflection',
     domain: 'optics',

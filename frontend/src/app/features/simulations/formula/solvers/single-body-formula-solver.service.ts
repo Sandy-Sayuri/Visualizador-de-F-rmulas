@@ -160,9 +160,23 @@ export class SingleBodyFormulaSolverService
       }
       case 'velocity': {
         nextVelocityAxis = program.evaluateScalar(scope);
-        nextAccelerationAxis =
-          (nextVelocityAxis - currentVelocityAxis) / stepTime;
-        nextPositionAxis = currentPositionAxis + nextVelocityAxis * stepTime;
+
+        if (deltaTime === 0) {
+          nextAccelerationAxis = this.sampleFutureValue(
+            program,
+            currentBody,
+            nextTime,
+            mass,
+            config.parameterValues,
+            context.validationDeltaTime,
+            'velocity',
+          );
+          nextPositionAxis = currentPositionAxis;
+        } else {
+          nextAccelerationAxis =
+            (nextVelocityAxis - currentVelocityAxis) / stepTime;
+          nextPositionAxis = currentPositionAxis + nextVelocityAxis * stepTime;
+        }
         break;
       }
       case 'acceleration': {
