@@ -1,0 +1,140 @@
+<aside class="formula-panel">
+  <section class="panel-section controls-row">
+    <button
+      type="button"
+      class="primary-button"
+      data-testid="toggle-formula-motion"
+      (click)="toggleRequested.emit()"
+    >
+      {{ isRunning ? 'Pausar formula' : 'Iniciar formula' }}
+    </button>
+    <button type="button" class="secondary-button" (click)="resetRequested.emit()">
+      Resetar
+    </button>
+    <button
+      type="button"
+      class="secondary-button"
+      data-testid="save-formula-simulation"
+      (click)="submitSave()"
+    >
+      Salvar como simulacao
+    </button>
+  </section>
+
+  <section class="panel-section stats-grid">
+    <article>
+      <span>Tempo</span>
+      <strong>{{ elapsedSeconds | number: '1.1-1' }} s</strong>
+    </article>
+    <article>
+      <span>Velocidade</span>
+      <strong>{{ (selectedBody?.speed ?? 0) | number: '1.0-2' }}</strong>
+    </article>
+    <article>
+      <span>Forca</span>
+      <strong>{{ forceMagnitude(selectedBody) | number: '1.0-2' }}</strong>
+    </article>
+    <article>
+      <span>Energia</span>
+      <strong>{{ (selectedBody?.totalEnergy ?? 0) | number: '1.0-2' }}</strong>
+    </article>
+  </section>
+
+  <section class="panel-section">
+    <div class="section-header">
+      <div>
+        <p class="eyebrow">Formula Lab</p>
+        <h3>Entrada da formula</h3>
+      </div>
+    </div>
+
+    <form class="formula-form" [formGroup]="form" (ngSubmit)="submitApply()">
+      <div class="grid two-columns">
+        <label>
+          <span>Nome do objeto</span>
+          <input type="text" formControlName="objectName" />
+        </label>
+
+        <label>
+          <span>Cor</span>
+          <input type="text" formControlName="color" />
+        </label>
+      </div>
+
+      <div class="grid three-columns">
+        <label>
+          <span>Massa</span>
+          <input type="number" step="any" min="0.0000001" formControlName="mass" />
+        </label>
+
+        <label>
+          <span>Raio</span>
+          <input type="number" step="any" min="0.0000001" formControlName="radius" />
+        </label>
+      </div>
+
+      <div class="grid two-columns">
+        <label>
+          <span>Posicao inicial X</span>
+          <input type="number" step="any" formControlName="positionX" />
+        </label>
+
+        <label>
+          <span>Posicao inicial Y</span>
+          <input type="number" step="any" formControlName="positionY" />
+        </label>
+      </div>
+
+      <div class="grid two-columns">
+        <label>
+          <span>Velocidade inicial X</span>
+          <input type="number" step="any" formControlName="velocityX" />
+        </label>
+
+        <label>
+          <span>Velocidade inicial Y</span>
+          <input type="number" step="any" formControlName="velocityY" />
+        </label>
+      </div>
+
+      <label>
+        <span>Aceleracao X</span>
+        <input
+          type="text"
+          formControlName="accelerationXFormula"
+          data-testid="formula-ax"
+        />
+      </label>
+
+      <label>
+        <span>Aceleracao Y</span>
+        <input
+          type="text"
+          formControlName="accelerationYFormula"
+          data-testid="formula-ay"
+        />
+      </label>
+
+      <div class="formula-help">
+        Vars: <code>t</code> <code>dt</code> <code>x</code> <code>y</code>
+        <code>vx</code> <code>vy</code> <code>mass</code> <code>speed</code>
+        <code>pi</code> <code>e</code>
+      </div>
+
+      <button
+        type="submit"
+        class="primary-button full-width"
+        data-testid="apply-formula"
+      >
+        Aplicar formula
+      </button>
+    </form>
+  </section>
+
+  @if (errorMessage) {
+    <section class="panel-section feedback-card">
+      <p class="eyebrow">Ajuste</p>
+      <p class="error-text" data-testid="formula-error">{{ errorMessage }}</p>
+    </section>
+  }
+</aside>

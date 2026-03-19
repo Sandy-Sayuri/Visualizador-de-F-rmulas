@@ -1,0 +1,211 @@
+<section class="builder-shell">
+  <form class="builder-grid" [formGroup]="form">
+    <section class="panel formula-panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Formula</p>
+          <h2>Entrada principal</h2>
+          <p class="muted-text">
+            Digite a equacao fisica e deixe o OrbitLab identificar categoria,
+            parametros e cena inicial.
+          </p>
+        </div>
+
+        <span class="category-badge" data-testid="formula-category">
+          {{ categoryLabel() }}
+        </span>
+      </div>
+
+      <div class="preset-row">
+        @for (preset of presets; track preset.id) {
+          <button type="button" class="chip-button" (click)="loadPreset(preset)">
+            {{ preset.label }}
+          </button>
+        }
+      </div>
+
+      <div class="builder-form">
+        <label class="formula-field">
+          <span>Formula principal</span>
+          <textarea
+            formControlName="formula"
+            rows="3"
+            data-testid="formula-main-input"
+            placeholder="Ex.: x = x0 + v*t"
+          ></textarea>
+        </label>
+
+        @if (formulaError()) {
+          <p class="feedback error">{{ formulaError() }}</p>
+        }
+
+        <div class="action-row">
+          <button
+            type="button"
+            class="secondary-button"
+            data-testid="detect-formula-parameters"
+            (click)="detectParameters()"
+          >
+            Analisar formula
+          </button>
+
+          <button
+            type="button"
+            class="primary-button"
+            data-testid="apply-formula-scenario"
+            (click)="applyPreview()"
+          >
+            Atualizar cena
+          </button>
+        </div>
+
+        <div class="meta-grid">
+          <label>
+            <span>Nome do experimento</span>
+            <input type="text" formControlName="simulationName" data-testid="simulation-name" />
+          </label>
+
+          <label class="description-field">
+            <span>Resumo opcional</span>
+            <textarea formControlName="description" rows="3"></textarea>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel parameters-panel">
+      <div class="section-heading compact">
+        <div>
+          <p class="eyebrow">Parametros</p>
+          <h2>Inputs detectados</h2>
+        </div>
+
+        <strong>{{ parameterDefinitions().length }}</strong>
+      </div>
+
+      @if (!parameterDefinitions().length) {
+        <p class="muted-text">Nenhum parametro dinamico foi detectado ainda.</p>
+      } @else {
+        <div class="parameter-grid">
+          @for (parameter of parameterDefinitions(); track parameter.key) {
+            <label>
+              <span>{{ parameter.label }}</span>
+              <input
+                type="number"
+                step="any"
+                [formControl]="parameterControl(parameter.key)"
+                [attr.data-testid]="'formula-param-' + parameter.key"
+              />
+            </label>
+          }
+        </div>
+      }
+
+      <section class="subpanel">
+        <div class="subpanel-heading">
+          <p class="eyebrow">Cena</p>
+        </div>
+
+        <div class="parameter-grid">
+          <label>
+            <span>Objeto principal</span>
+            <input type="text" formControlName="primaryLabel" />
+          </label>
+
+          <label>
+            <span>Cor principal</span>
+            <input type="text" formControlName="primaryColor" />
+          </label>
+
+          @if (isGravityCategory()) {
+            <label>
+              <span>Objeto secundario</span>
+              <input type="text" formControlName="secondaryLabel" />
+            </label>
+
+            <label>
+              <span>Cor secundaria</span>
+              <input type="text" formControlName="secondaryColor" />
+            </label>
+          }
+
+          <label>
+            <span>Raio visual</span>
+            <input type="number" min="1" step="any" formControlName="particleRadius" />
+          </label>
+        </div>
+      </section>
+    </section>
+
+    <section class="panel preview-panel">
+      <div class="section-heading compact">
+        <div>
+          <p class="eyebrow">Visualizacao</p>
+          <h2>Canvas principal</h2>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <article>
+          <span>Modo</span>
+          <strong>{{ runner.visualScene().decision.mode }}</strong>
+        </article>
+        <article data-testid="formula-particle-count">
+          <span>Particulas</span>
+          <strong>{{ runner.visualScene().decision.particleCount }}</strong>
+        </article>
+        <article>
+          <span>Tempo</span>
+          <strong>{{ runner.elapsedSeconds() | number: '1.1-1' }} s</strong>
+        </article>
+        <article>
+          <span>Velocidade</span>
+          <strong>{{ (runner.selectedBody()?.speed ?? 0) | number: '1.0-2' }}</strong>
+        </article>
+      </div>
+
+      <app-simulation-canvas
+        [bodies]="runner.bodies()"
+        [selectedBodyId]="runner.selectedBody()?.id ?? null"
+        [decorations]="runner.visualScene().decorations"
+        [legendItems]="runner.visualScene().legendItems"
+        [minimalChrome]="true"
+        [showVectors]="runner.visualScene().decision.showVectors"
+        [showTrails]="runner.visualScene().decision.showTrails"
+        [emptyMessage]="'Analise uma formula para gerar a cena'"
+        (bodySelected)="runner.selectBody($event)"
+      />
+
+      <div class="action-row">
+        <button
+          type="button"
+          class="primary-button"
+          data-testid="toggle-formula-scenario"
+          (click)="runner.isRunning() ? runner.pause() : runner.play()"
+        >
+          {{ runner.isRunning() ? 'Pausar' : 'Iniciar' }}
+        </button>
+
+        <button type="button" class="secondary-button" (click)="runner.reset()">
+          Resetar
+        </button>
+
+        @if (allowSave) {
+          <button
+            type="button"
+            class="secondary-button"
+            data-testid="save-formula-scenario"
+            [disabled]="submitting"
+            (click)="save()"
+          >
+            {{ submitting ? 'Salvando...' : saveLabel }}
+          </button>
+        }
+      </div>
+
+      @if (runner.errorMessage()) {
+        <p class="feedback error">{{ runner.errorMessage() }}</p>
+      }
+    </section>
+  </form>
+</section>

@@ -1,0 +1,157 @@
+.canvas-shell {
+  display: grid;
+  gap: 1rem;
+  padding: 1.35rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.25rem;
+  background: rgba(8, 14, 26, 0.72);
+}
+
+.canvas-shell.minimal {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.canvas-headline {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  color: #9dc7ff;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+h2 {
+  margin: 0;
+}
+
+.caption {
+  margin: 0;
+  max-width: 18rem;
+  color: rgba(245, 241, 230, 0.68);
+}
+
+.canvas-frame {
+  position: relative;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.canvas-shell.minimal .canvas-frame {
+  min-height: 420px;
+  background: rgba(8, 14, 26, 0.42);
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 320px;
+  cursor: crosshair;
+}
+
+.canvas-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  color: rgba(245, 241, 230, 0.72);
+  text-align: center;
+  background: linear-gradient(180deg, rgba(2, 8, 23, 0.18), rgba(2, 8, 23, 0.52));
+}
+
+.legend {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.9rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding: 0.6rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(8, 14, 26, 0.74);
+  color: rgba(245, 241, 230, 0.82);
+  font-size: 0.8rem;
+}
+
+.legend.compact {
+  right: 0.75rem;
+  top: 0.75rem;
+  bottom: auto;
+  gap: 0.45rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.72rem;
+}
+
+.legend span {
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.legend-chip {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+}
+
+.legend-chip.velocity {
+  background: #7ce6ff;
+}
+
+.legend-chip.force {
+  background: #f4c66a;
+}
+
+.legend-chip.trail {
+  background: #9dc7ff;
+}
+
+.legend-chip.prediction {
+  background: #ffffff;
+}
+
+.legend-chip.pulse {
+  background: #d8b4ff;
+}
+
+.legend-chip.wake {
+  background: #ff8f70;
+}
+
+.legend-chip.anchor {
+  background: #f4c66a;
+}
+
+.legend-chip.comparison {
+  background: #8ff7c1;
+}
+
+.legend-chip.interaction {
+  background: #ffb36c;
+}
+
+.legend-chip.pattern {
+  background: #d6f0ff;
+}
+
+@media (max-width: 760px) {
+  .canvas-headline {
+    flex-direction: column;
+  }
+
+  .legend {
+    left: 0.75rem;
+    right: 0.75rem;
+  }
+}

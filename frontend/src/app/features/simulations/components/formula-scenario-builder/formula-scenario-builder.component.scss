@@ -1,0 +1,190 @@
+.builder-shell {
+  display: grid;
+}
+
+.builder-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(320px, 0.92fr) minmax(0, 1.18fr);
+  grid-template-areas:
+    'formula preview'
+    'parameters preview';
+}
+
+.panel {
+  display: grid;
+  gap: 1rem;
+  padding: 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  background:
+    linear-gradient(180deg, rgba(13, 24, 42, 0.92), rgba(7, 13, 24, 0.95)),
+    rgba(8, 14, 26, 0.76);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+}
+
+.formula-panel {
+  grid-area: formula;
+}
+
+.parameters-panel {
+  grid-area: parameters;
+}
+
+.preview-panel {
+  grid-area: preview;
+  align-content: start;
+}
+
+.section-heading,
+.subpanel-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  color: #9dc7ff;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+h2,
+p {
+  margin: 0;
+}
+
+.muted-text,
+span {
+  color: rgba(245, 241, 230, 0.72);
+}
+
+.category-badge,
+.chip-button {
+  border-radius: 999px;
+  font: inherit;
+}
+
+.category-badge {
+  padding: 0.45rem 0.75rem;
+  background: rgba(124, 230, 255, 0.14);
+  color: #d9f8ff;
+}
+
+.preset-row,
+.action-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.builder-form,
+label,
+.subpanel {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.formula-field textarea {
+  min-height: 7.5rem;
+  font-size: 1.15rem;
+  line-height: 1.45;
+}
+
+.meta-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.description-field {
+  min-height: 100%;
+}
+
+.subpanel {
+  padding: 1rem;
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.parameter-grid,
+.stats-grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.stats-grid article {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.9rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.chip-button,
+.primary-button,
+.secondary-button {
+  border: 0;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+}
+
+.chip-button {
+  background: rgba(157, 199, 255, 0.12);
+  color: #f5f1e6;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, #f4c66a, #f08d4e);
+  color: #11131e;
+}
+
+.secondary-button {
+  background: rgba(157, 199, 255, 0.16);
+  color: #f5f1e6;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  background: rgba(2, 8, 18, 0.52);
+  color: #f5f1e6;
+  font: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.feedback {
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+}
+
+.feedback.error {
+  background: rgba(234, 101, 93, 0.12);
+  color: #ffb8b1;
+}
+
+@media (max-width: 1120px) {
+  .builder-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'formula'
+      'parameters'
+      'preview';
+  }
+}
+
+@media (max-width: 760px) {
+  .parameter-grid,
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

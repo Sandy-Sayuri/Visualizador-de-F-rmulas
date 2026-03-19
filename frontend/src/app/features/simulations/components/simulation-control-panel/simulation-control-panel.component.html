@@ -1,0 +1,212 @@
+<aside class="panel">
+  <section class="panel-section controls-strip">
+    <button
+      type="button"
+      class="primary-button"
+      data-testid="toggle-simulation"
+      (click)="toggleRequested.emit()"
+    >
+      {{ isRunning ? 'Pausar simulacao' : 'Iniciar simulacao' }}
+    </button>
+    <button type="button" class="secondary-button" (click)="resetRequested.emit()">
+      Resetar
+    </button>
+    <button type="button" class="secondary-button" (click)="randomRequested.emit()">
+      Gerar sistema aleatorio
+    </button>
+  </section>
+
+  <section class="panel-section stats-grid">
+    <article>
+      <span>Tempo</span>
+      <strong>{{ elapsedSeconds | number: '1.1-1' }} s</strong>
+    </article>
+    <article>
+      <span>Corpos</span>
+      <strong>{{ runtimeBodies.length }}</strong>
+    </article>
+    <article>
+      <span>Energia do sistema</span>
+      <strong>{{ totalEnergy | number: '1.0-2' }}</strong>
+    </article>
+  </section>
+
+  <section class="panel-section explanation-card">
+    <p class="eyebrow">Leitura visual</p>
+    <h3>O que esta acontecendo</h3>
+    <p>{{ explanation }}</p>
+    <small>Azul = velocidade atual. Dourado = forca gravitacional resultante.</small>
+  </section>
+
+  <section class="panel-section">
+    <div class="section-header">
+      <div>
+        <p class="eyebrow">Selecao</p>
+        <h3>Corpo ativo</h3>
+      </div>
+    </div>
+
+    <div class="body-chip-grid">
+      @for (body of runtimeBodies; track body.id) {
+        <button
+          type="button"
+          class="chip-button"
+          [class.active]="selectedBody?.id === body.id"
+          (click)="bodySelected.emit(body.id)"
+        >
+          <span class="swatch" [style.background]="body.color"></span>
+          {{ body.name }}
+        </button>
+      }
+    </div>
+  </section>
+
+  @if (selectedBody) {
+    <section class="panel-section">
+      <div class="section-header">
+        <div>
+          <p class="eyebrow">Metricas</p>
+          <h3>{{ selectedBody.name }}</h3>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <article>
+          <span>Velocidade</span>
+          <strong>{{ selectedBody.speed | number: '1.0-2' }}</strong>
+        </article>
+        <article>
+          <span>Forca</span>
+          <strong>{{ forceMagnitude(selectedBody) | number: '1.0-2' }}</strong>
+        </article>
+        <article>
+          <span>Energia</span>
+          <strong>{{ selectedBody.totalEnergy | number: '1.0-2' }}</strong>
+        </article>
+      </div>
+
+      <div class="live-controls">
+        <label>
+          <span>Massa</span>
+          <input
+            type="range"
+            min="1"
+            max="2000"
+            data-testid="mass-slider"
+            [value]="selectedBody.mass"
+            (input)="requestMassUpdate(selectedBody.id, $any($event.target).valueAsNumber)"
+          />
+          <input
+            type="number"
+            min="1"
+            step="any"
+            data-testid="mass-input"
+            [value]="selectedBody.mass"
+            (input)="requestMassUpdate(selectedBody.id, $any($event.target).valueAsNumber)"
+          />
+        </label>
+
+        <div class="velocity-grid">
+          <label>
+            <span>Velocidade X</span>
+            <input
+              type="number"
+              step="any"
+              [value]="selectedBody.velocity.x"
+              (input)="
+                requestVelocityUpdate(selectedBody.id, {
+                  x: $any($event.target).valueAsNumber,
+                  y: selectedBody.velocity.y
+                })
+              "
+            />
+          </label>
+
+          <label>
+            <span>Velocidade Y</span>
+            <input
+              type="number"
+              step="any"
+              [value]="selectedBody.velocity.y"
+              (input)="
+                requestVelocityUpdate(selectedBody.id, {
+                  x: selectedBody.velocity.x,
+                  y: $any($event.target).valueAsNumber
+                })
+              "
+            />
+          </label>
+        </div>
+
+        <button
+          type="button"
+          class="danger-button"
+          (click)="bodyRemoved.emit(selectedBody.id)"
+        >
+          Remover corpo selecionado
+        </button>
+      </div>
+    </section>
+  }
+
+  <section class="panel-section">
+    <div class="section-header">
+      <div>
+        <p class="eyebrow">Edicao ao vivo</p>
+        <h3>Adicionar novo corpo</h3>
+      </div>
+    </div>
+
+    <form class="body-form" [formGroup]="addBodyForm" (ngSubmit)="submitNewBody()">
+      <label>
+        <span>Nome</span>
+        <input type="text" formControlName="name" />
+      </label>
+
+      <div class="velocity-grid">
+        <label>
+          <span>Massa</span>
+          <input type="number" step="any" min="0.0000001" formControlName="mass" />
+        </label>
+
+        <label>
+          <span>Raio</span>
+          <input type="number" step="any" min="0.0000001" formControlName="radius" />
+        </label>
+      </div>
+
+      <label>
+        <span>Cor</span>
+        <input type="text" formControlName="color" />
+      </label>
+
+      <div class="velocity-grid">
+        <label>
+          <span>Posicao X</span>
+          <input type="number" step="any" formControlName="positionX" />
+        </label>
+
+        <label>
+          <span>Posicao Y</span>
+          <input type="number" step="any" formControlName="positionY" />
+        </label>
+      </div>
+
+      <div class="velocity-grid">
+        <label>
+          <span>Velocidade X</span>
+          <input type="number" step="any" formControlName="velocityX" />
+        </label>
+
+        <label>
+          <span>Velocidade Y</span>
+          <input type="number" step="any" formControlName="velocityY" />
+        </label>
+      </div>
+
+      <button type="submit" class="secondary-button full-width">
+        Adicionar durante execucao
+      </button>
+    </form>
+  </section>
+</aside>

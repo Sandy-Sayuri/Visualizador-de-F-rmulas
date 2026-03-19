@@ -1,0 +1,38 @@
+<section class="page">
+  <div class="hero-card">
+    <div>
+      <p class="eyebrow">Biblioteca</p>
+      <h2>Experimentos salvos</h2>
+      <p class="lead">
+        Revise formulas e cenas persistidas no backend, reabra cada experimento
+        e continue a exploracao visual quando quiser.
+      </p>
+    </div>
+
+    <a class="primary-link" routerLink="/simulations">Abrir laboratorio</a>
+  </div>
+
+  @if (facade.errorMessage()) {
+    <p class="feedback error">{{ facade.errorMessage() }}</p>
+  }
+
+  @if (facade.loadingList()) {
+    <p class="feedback">Carregando simulacoes...</p>
+  } @else if (!facade.simulations().length) {
+    <section class="empty-state">
+      <h3>Nenhum experimento encontrado</h3>
+      <p>Crie uma formula na home para iniciar sua biblioteca visual.</p>
+      <a class="secondary-link" routerLink="/simulations">Criar agora</a>
+    </section>
+  } @else {
+    <div class="cards-grid">
+      @for (simulation of facade.simulations(); track simulation.id) {
+        <app-simulation-card
+          [simulation]="simulation"
+          (viewRequested)="openDetails($event)"
+          (deleteRequested)="removeSimulation($event)"
+        />
+      }
+    </div>
+  }
+</section>

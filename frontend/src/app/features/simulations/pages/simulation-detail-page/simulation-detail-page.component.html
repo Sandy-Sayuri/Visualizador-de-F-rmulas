@@ -1,0 +1,159 @@
+<section class="page">
+  <div class="hero-card">
+    <div>
+      <p class="eyebrow">Experimento visual</p>
+      <h2>{{ facade.selectedSimulation()?.name || 'Cena fisica' }}</h2>
+      <p class="lead">
+        @if (formulaDraft()) {
+          Revise a formula salva, ajuste parametros e veja o comportamento da cena em
+          tempo real.
+        } @else {
+          Execute a cena em tempo real, ajuste propriedades durante o movimento e
+          observe rastros, vetores e energia do sistema.
+        }
+      </p>
+    </div>
+
+    <div class="hero-actions">
+      <a class="ghost-link" routerLink="/simulations">Voltar</a>
+      <button type="button" class="danger-button" (click)="removeSimulation()">
+        Remover simulacao
+      </button>
+    </div>
+  </div>
+
+  @if (facade.errorMessage()) {
+    <p class="feedback error">{{ facade.errorMessage() }}</p>
+  }
+
+  @if (localError()) {
+    <p class="feedback error">{{ localError() }}</p>
+  }
+
+  @if (facade.loadingDetails()) {
+    <p class="feedback">Carregando simulacao...</p>
+  } @else {
+    @if (facade.selectedSimulation(); as simulation) {
+      @if (formulaDraft(); as draft) {
+        <section class="meta-panel">
+          <div class="meta-row">
+            <article>
+              <span>Descricao</span>
+              <strong>{{ draft.description || 'Sem descricao cadastrada.' }}</strong>
+            </article>
+            <article>
+              <span>Criada em</span>
+              <strong>{{ simulation.createdAt | date: 'short' }}</strong>
+            </article>
+            <article>
+              <span>Atualizada em</span>
+              <strong>{{ simulation.updatedAt | date: 'short' }}</strong>
+            </article>
+          </div>
+        </section>
+
+        <app-formula-scenario-builder
+          [initialDraft]="draft"
+          [saveLabel]="'Salvar copia'"
+          (saved)="saveFormulaCopy($event)"
+        />
+      } @else {
+        <div class="workspace-grid">
+          <section class="workspace-column">
+            <section class="meta-panel">
+              <div class="meta-row">
+                <article>
+                  <span>Descricao</span>
+                  <strong>{{ simulation.description || 'Sem descricao cadastrada.' }}</strong>
+                </article>
+                <article>
+                  <span>Criada em</span>
+                  <strong>{{ simulation.createdAt | date: 'short' }}</strong>
+                </article>
+                <article>
+                  <span>Atualizada em</span>
+                  <strong>{{ simulation.updatedAt | date: 'short' }}</strong>
+                </article>
+              </div>
+            </section>
+
+            <app-simulation-canvas
+              [bodies]="runner.runtimeBodies()"
+              [selectedBodyId]="runner.selectedBodyId()"
+              (bodySelected)="selectBody($event)"
+            />
+
+            <section class="bodies-panel">
+              <div class="panel-header">
+                <div>
+                  <p class="eyebrow">Estado atual</p>
+                  <h3>{{ runner.runtimeBodies().length }} corpos em execucao</h3>
+                </div>
+              </div>
+
+              @if (!runner.runtimeBodies().length) {
+                <p class="feedback">
+                  Gere um sistema aleatorio ou adicione um corpo para iniciar a simulacao.
+                </p>
+              } @else {
+                <div class="bodies-grid">
+                  @for (body of runner.runtimeBodies(); track body.id) {
+                    <article
+                      class="body-card"
+                      [class.selected]="runner.selectedBodyId() === body.id"
+                      (click)="selectBody(body.id)"
+                    >
+                      <div class="body-row">
+                        <div>
+                          <h4>{{ body.name }}</h4>
+                          <p>{{ body.color }}</p>
+                        </div>
+                        <span class="swatch" [style.background]="body.color"></span>
+                      </div>
+
+                      <dl>
+                        <div>
+                          <dt>Massa</dt>
+                          <dd>{{ body.mass | number: '1.0-2' }}</dd>
+                        </div>
+                        <div>
+                          <dt>Velocidade</dt>
+                          <dd>{{ body.speed | number: '1.0-2' }}</dd>
+                        </div>
+                        <div>
+                          <dt>Forca</dt>
+                          <dd>{{ forceMagnitude(body.force) | number: '1.0-2' }}</dd>
+                        </div>
+                        <div>
+                          <dt>Energia</dt>
+                          <dd>{{ body.totalEnergy | number: '1.0-2' }}</dd>
+                        </div>
+                      </dl>
+                    </article>
+                  }
+                </div>
+              }
+            </section>
+          </section>
+
+          <app-simulation-control-panel
+            [runtimeBodies]="runner.runtimeBodies()"
+            [selectedBody]="runner.selectedBody()"
+            [isRunning]="runner.isRunning()"
+            [elapsedSeconds]="runner.elapsedSeconds()"
+            [totalEnergy]="runner.totalEnergy()"
+            [explanation]="runner.explanation()"
+            (toggleRequested)="toggleSimulation()"
+            (resetRequested)="resetSimulation()"
+            (randomRequested)="generateRandomSystem()"
+            (bodySelected)="selectBody($event)"
+            (massChanged)="updateMass($event)"
+            (velocityChanged)="updateVelocity($event)"
+            (bodyAdded)="addBody($event)"
+            (bodyRemoved)="removeRuntimeBody($event)"
+          />
+        </div>
+      }
+    }
+  }
+</section>

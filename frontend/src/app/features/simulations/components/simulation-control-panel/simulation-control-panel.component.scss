@@ -1,0 +1,151 @@
+.panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.panel-section {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.25rem;
+  background: rgba(8, 14, 26, 0.72);
+}
+
+.controls-strip {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  color: #9dc7ff;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+h3,
+p,
+small {
+  margin: 0;
+}
+
+.stats-grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.stats-grid article {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.85rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.stats-grid span,
+.body-form span,
+.live-controls span,
+.explanation-card p,
+small {
+  color: rgba(245, 241, 230, 0.7);
+}
+
+.body-chip-grid {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.chip-button {
+  display: inline-flex;
+  gap: 0.55rem;
+  align-items: center;
+  padding: 0.75rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f5f1e6;
+  cursor: pointer;
+}
+
+.chip-button.active {
+  border-color: rgba(244, 198, 106, 0.46);
+  background: rgba(244, 198, 106, 0.12);
+}
+
+.swatch {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 999px;
+}
+
+.live-controls,
+.body-form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+label {
+  display: grid;
+  gap: 0.45rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.85rem;
+  background: rgba(2, 8, 18, 0.48);
+  color: #f5f1e6;
+  font: inherit;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.82rem 1rem;
+  font: inherit;
+  cursor: pointer;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, #f4c66a, #f08d4e);
+  color: #11131e;
+}
+
+.secondary-button {
+  background: rgba(157, 199, 255, 0.16);
+  color: #f5f1e6;
+}
+
+.danger-button {
+  background: rgba(234, 101, 93, 0.16);
+  color: #ffb8b1;
+}
+
+.velocity-grid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.full-width {
+  width: 100%;
+}
+
+@media (max-width: 760px) {
+  .controls-strip,
+  .stats-grid,
+  .velocity-grid {
+    grid-template-columns: 1fr;
+  }
+}

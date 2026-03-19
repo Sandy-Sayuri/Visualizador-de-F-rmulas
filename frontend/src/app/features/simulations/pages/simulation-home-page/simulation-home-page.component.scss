@@ -1,0 +1,124 @@
+.page {
+  display: grid;
+}
+
+.support-panel {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  background:
+    linear-gradient(180deg, rgba(13, 24, 42, 0.88), rgba(8, 14, 26, 0.94)),
+    rgba(8, 14, 26, 0.72);
+}
+
+.workspace-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.8fr);
+  align-items: start;
+}
+
+.studio-column,
+.support-column,
+.usage-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #9dc7ff;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h2,
+h3 {
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  line-height: 0.98;
+}
+
+.lead,
+.feedback {
+  color: rgba(245, 241, 230, 0.74);
+}
+
+.lead.compact {
+  font-size: 0.96rem;
+}
+
+.usage-card {
+  display: grid;
+  gap: 0.45rem;
+  padding: 1rem;
+  border-radius: 1.15rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.feedback {
+  padding: 1rem 1.1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.feedback.error {
+  background: rgba(234, 101, 93, 0.12);
+  color: #ffb8b1;
+}
+
+.primary-link,
+.secondary-link,
+.ghost-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 10rem;
+  padding: 0.85rem 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+.primary-link {
+  background: linear-gradient(135deg, #f4c66a, #f08d4e);
+  color: #11131e;
+}
+
+.secondary-link {
+  background: rgba(157, 199, 255, 0.16);
+  color: #f5f1e6;
+}
+
+.ghost-link {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f5f1e6;
+}
+
+.ghost-link.compact {
+  min-width: auto;
+  padding-inline: 0.85rem;
+}
+
+.accent-panel {
+  background:
+    radial-gradient(circle at top right, rgba(124, 230, 255, 0.14), transparent 16rem),
+    linear-gradient(180deg, rgba(13, 24, 42, 0.88), rgba(8, 14, 26, 0.94));
+}
+
+@media (max-width: 1160px) {
+  .workspace-grid {
+    grid-template-columns: 1fr;
+  }
+}

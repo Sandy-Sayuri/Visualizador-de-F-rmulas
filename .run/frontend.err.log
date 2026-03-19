@@ -1,0 +1,29 @@
+[1m[33mComponent HMR has been enabled, see https://angular.dev/hmr for more info.[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mTS-998113: RouterLink is not used within the template of SimulationHomePageComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/pages/simulation-home-page/simulation-home-page.component.ts:14:26:
+[37m      14 │   imports: [CommonModule, [32mRouterLink[37m, FormulaScenarioBuilderCompon...
+         ╵                           [32m~~~~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mTS-998113: RouterLink is not used within the template of SimulationHomePageComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/features/simulations/pages/simulation-home-page/simulation-home-page.component.ts:14:26:
+[37m      14 │   imports: [CommonModule, [32mRouterLink[37m, FormulaScenarioBuilderCompon...
+         ╵                           [32m~~~~~~~~~~[0m
+
+[39m[22m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mTS-998113: RouterLink is not used within the template of AppComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.component.ts:6:26:
+[37m      6 │   imports: [RouterOutlet, [32mRouterLink[37m, RouterLinkActive],
+        ╵                           [32m~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mTS-998113: RouterLinkActive is not used within the template of AppComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.component.ts:6:38:
+[37m      6 │   imports: [RouterOutlet, RouterLink, [32mRouterLinkActive[37m],
+        ╵                                       [32m~~~~~~~~~~~~~~~~[0m
+
+[39m[22m

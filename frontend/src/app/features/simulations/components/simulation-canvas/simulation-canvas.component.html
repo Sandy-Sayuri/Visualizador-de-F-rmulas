@@ -1,0 +1,37 @@
+<section class="canvas-shell" [class.minimal]="minimalChrome">
+  @if (!minimalChrome) {
+    <div class="canvas-headline">
+      <div>
+        <p class="eyebrow">Canvas</p>
+        <h2>Cena fisica</h2>
+      </div>
+
+      <p class="caption">Clique em um elemento para focar vetores e trilhas.</p>
+    </div>
+  }
+
+  <div class="canvas-frame">
+    <canvas
+      #sceneCanvas
+      width="860"
+      height="420"
+      data-testid="scene-canvas"
+      (click)="selectBody($event)"
+    ></canvas>
+
+    @if (legendItems.length) {
+      <div class="legend" [class.compact]="minimalChrome" data-testid="canvas-legend">
+        @for (item of legendItems; track item.key) {
+          <span data-testid="canvas-legend-item">
+            <i class="legend-chip {{ item.tone }}"></i>
+            {{ resolveLegendLabel(item) }}
+          </span>
+        }
+      </div>
+    }
+
+    @if (!bodies.length) {
+      <div class="canvas-empty">{{ emptyMessage }}</div>
+    }
+  </div>
+</section>
