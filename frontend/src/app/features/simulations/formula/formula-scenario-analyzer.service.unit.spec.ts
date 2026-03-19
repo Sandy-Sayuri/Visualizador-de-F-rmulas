@@ -50,6 +50,18 @@ describe('FormulaScenarioAnalyzerService', () => {
     ]);
   });
 
+  it('resolves conceptual multi-equation inputs before extracting simulation parameters', () => {
+    const analysis = service.analyze('F = m*a\na = g*sin(theta)');
+
+    expect(analysis.target).toBe('ax');
+    expect(analysis.equationCount).toBe(2);
+    expect(analysis.resolvedFormula.replace(/\s+/g, '')).toBe('ax=g*sin(theta)');
+    expect(analysis.parameterDefinitions.map((parameter) => parameter.key)).toEqual([
+      'g',
+      'theta',
+    ]);
+  });
+
   it('accepts delta notation for constant velocity formulas', () => {
     const analysis = service.analyze('v = Δs/Δt');
 

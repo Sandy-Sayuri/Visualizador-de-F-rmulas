@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { MathNode, parse } from 'mathjs';
+import { Injectable, inject } from '@angular/core';
+import { MathNode } from 'mathjs';
 
 import {
   ParsedFormulaModel,
@@ -10,11 +10,14 @@ import {
   FormulaScenarioEvaluationModeModel,
   FormulaScenarioTargetModel,
 } from '../models/formula-scenario.model';
+import { PhysicsEquationEngineService } from './physics-equation-engine.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormulaScenarioParserService {
+  private readonly equationEngine = inject(PhysicsEquationEngineService);
+
   parseFormula(formula: string): ParsedFormulaModel {
     const rawFormula = formula.trim();
 
@@ -22,33 +25,26 @@ export class FormulaScenarioParserService {
       throw new Error('Informe uma formula para iniciar a simulacao.');
     }
 
-    const normalizedFormula = this.normalizeFormula(rawFormula);
-    const segments = normalizedFormula.split('=');
-
-    if (segments.length !== 2) {
-      throw new Error('Use o formato variavel = expressao.');
-    }
-
-    const leftSide = segments[0].trim();
-    const expression = segments[1].trim();
-
-    if (!leftSide || !expression) {
-      throw new Error('A formula precisa ter variavel e expressao.');
-    }
+    const resolution = this.equationEngine.resolveFormula(rawFormula);
+    const leftSide = resolution.leftSide;
+    const expression = resolution.expression;
 
     const targetInfo = this.resolveTarget(leftSide);
-    const expressionNode = this.parseExpression(expression);
-    const metadata = this.extractMetadata(expressionNode);
+    const metadata = this.extractMetadata(resolution.expressionNode);
 
     return {
       formula: rawFormula,
-      normalizedFormula,
+      normalizedFormula: resolution.normalizedInput,
+      resolvedFormula: resolution.resolvedFormula,
       leftSide,
       expression,
-      expressionNode,
+      expressionNode: resolution.expressionNode,
       symbols: metadata.symbols,
       functionNames: metadata.functionNames,
       targetInfo,
+      equationCount: resolution.equationCount,
+      dependentVariables: resolution.dependentVariables,
+      resolutionSteps: resolution.resolutionSteps,
     };
   }
 
@@ -81,6 +77,7 @@ export class FormulaScenarioParserService {
         return this.createTargetInfo('vx', targetName, 'x', 'velocity');
       case 'vy':
         return this.createTargetInfo('vy', targetName, 'y', 'velocity');
+      case 'a':
       case 'ax':
         return this.createTargetInfo('ax', targetName, 'x', 'acceleration');
       case 'ay':
@@ -135,14 +132,6 @@ export class FormulaScenarioParserService {
     }
 
     return 'x';
-  }
-
-  private parseExpression(expression: string): MathNode {
-    try {
-      return parse(expression);
-    } catch {
-      throw new Error('Nao foi possivel interpretar a formula.');
-    }
   }
 
   private extractMetadata(expressionNode: MathNode): {

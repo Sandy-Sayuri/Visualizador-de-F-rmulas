@@ -40,6 +40,7 @@ export interface FormulaParameterDefinitionModel {
 export interface FormulaScenarioAnalysisModel {
   formula: string;
   normalizedFormula: string;
+  resolvedFormula: string;
   target: FormulaScenarioTargetModel;
   targetName: string;
   axis: FormulaScenarioAxisModel;
@@ -54,6 +55,9 @@ export interface FormulaScenarioAnalysisModel {
   usesTrig: boolean;
   usesState: boolean;
   usesInteraction: boolean;
+  equationCount: number;
+  dependentVariables: string[];
+  resolutionSteps: string[];
 }
 
 export interface FormulaScenarioConfigModel {

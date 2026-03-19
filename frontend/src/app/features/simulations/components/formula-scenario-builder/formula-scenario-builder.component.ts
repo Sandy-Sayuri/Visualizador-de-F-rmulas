@@ -87,6 +87,15 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
   readonly inclinedPlaneSnapshot = computed<InclinedPlaneSceneSnapshotModel | null>(
     () => this.runner.state()?.sceneData?.inclinedPlane ?? null,
   );
+  readonly shouldShowResolvedFormula = computed(() => {
+    const analysis = this.analysis();
+
+    if (!analysis || this.isGuidedPreset()) {
+      return false;
+    }
+
+    return analysis.equationCount > 1 || analysis.resolutionSteps.length > 0;
+  });
   readonly categoryLabel = computed(() => {
     const analysis = this.analysis();
 
@@ -108,6 +117,8 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
     PHYSICS_GUIDED_SCENARIO_CATALOG;
   readonly supportedShapes = [
     'x = x0 + v*t',
+    'F = m*a',
+    'F = m*a + a = g*sin(theta)',
     'y = v0*t - (g*t^2)/2',
     'ax = -k*x/m',
     'x = A*cos(w*t)',

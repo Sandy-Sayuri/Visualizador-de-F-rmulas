@@ -9,7 +9,7 @@
             @if (isGuidedPreset()) {
               Cenario guiado deste dominio.
             } @else {
-              Use o formato alvo = expressao.
+              Use o formato alvo = expressao ou uma equacao por linha.
             }
           </p>
         </div>
@@ -42,13 +42,26 @@
             formControlName="formula"
             rows="3"
             data-testid="formula-main-input"
-            placeholder="Ex.: ax = -k*x/m"
+            placeholder="Ex.: F = m*a&#10;a = g*sin(theta)"
           ></textarea>
         </label>
       }
 
       @if (formulaError()) {
         <p class="feedback error">{{ formulaError() }}</p>
+      }
+
+      @if (shouldShowResolvedFormula() && analysis(); as analysis) {
+        <section class="resolved-formula-card" data-testid="resolved-formula-card">
+          <span>Forma executavel</span>
+          <strong>{{ analysis.resolvedFormula }}</strong>
+          <p>
+            {{ analysis.equationCount }} equacao(oes) analisada(s)
+            @if (analysis.dependentVariables.length) {
+              com dependencia temporal em {{ analysis.dependentVariables.join(', ') }}(t)
+            }
+          </p>
+        </section>
       }
 
       <section class="support-card" data-testid="supported-formula-topics">

@@ -37,6 +37,7 @@ export class FormulaScenarioAnalyzerService {
     return {
       formula: parsed.formula,
       normalizedFormula: parsed.normalizedFormula,
+      resolvedFormula: parsed.resolvedFormula,
       target: parsed.targetInfo.target,
       targetName: parsed.targetInfo.targetName,
       axis: parsed.targetInfo.axis,
@@ -51,6 +52,9 @@ export class FormulaScenarioAnalyzerService {
       usesTrig: features.usesTrig,
       usesState: features.usesState,
       usesInteraction: features.usesInteraction,
+      equationCount: parsed.equationCount,
+      dependentVariables: parsed.dependentVariables,
+      resolutionSteps: parsed.resolutionSteps,
     };
   }
 
@@ -75,7 +79,9 @@ export class FormulaScenarioAnalyzerService {
       a: { key: 'a', label: 'a', defaultValue: 8 },
       ax0: { key: 'ax0', label: 'ax0', defaultValue: 0 },
       ay0: { key: 'ay0', label: 'ay0', defaultValue: -9.81 },
+      F: { key: 'F', label: 'F', defaultValue: 18 },
       g: { key: 'g', label: 'g', defaultValue: 9.81 },
+      theta: { key: 'theta', label: 'theta (rad)', defaultValue: Math.PI / 6, step: 0.01 },
       A: { key: 'A', label: 'A', defaultValue: 140 },
       w: { key: 'w', label: 'w', defaultValue: 1.4 },
       G: { key: 'G', label: 'G', defaultValue: 1000 },

@@ -27,6 +27,21 @@ describe('FormulaScenarioBuilderComponent', () => {
     ]);
   });
 
+  it('accepts multiple equations and shows the resolved simulation formula', () => {
+    component.form.controls.formula.setValue('F = m*a\na = g*sin(theta)');
+    component.detectParameters(true);
+    fixture.detectChanges();
+
+    expect(component.analysis()?.target).toBe('ax');
+    expect(component.parameterDefinitions().map((parameter) => parameter.key)).toEqual([
+      'g',
+      'theta',
+    ]);
+    expect(
+      fixture.nativeElement.querySelector('[data-testid="resolved-formula-card"]'),
+    ).not.toBeNull();
+  });
+
   it('emits the draft when saving a valid formula scenario', () => {
     spyOn(component.saved, 'emit');
 

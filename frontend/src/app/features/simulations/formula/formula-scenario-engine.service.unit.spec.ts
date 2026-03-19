@@ -57,6 +57,28 @@ describe('FormulaScenarioEngineService', () => {
     expect(Math.abs(nextState.bodies[0].force.x)).toBeGreaterThan(0);
   });
 
+  it('simulates a multi-equation conceptual input after resolving it to acceleration', () => {
+    const config = {
+      formula: 'F = m*a\na = g*sin(theta)',
+      parameterValues: {
+        g: 9.81,
+        theta: Math.PI / 6,
+      },
+      primaryLabel: 'Particula',
+      secondaryLabel: 'Secundaria',
+      primaryColor: '#7ce6ff',
+      secondaryColor: '#f4c66a',
+      particleRadius: 8,
+    };
+    const program = service.compileProgram(config);
+    const initialState = service.createInitialState(config, program);
+    const nextState = service.step(initialState, config, program, 0.2);
+
+    expect(program.analysis.target).toBe('ax');
+    expect(program.analysis.resolvedFormula.replace(/\s+/g, '')).toBe('ax=g*sin(theta)');
+    expect(nextState.bodies[0].position.x).toBeGreaterThan(initialState.bodies[0].position.x);
+  });
+
   it('creates two interacting bodies for gravity formulas', () => {
     const config = {
       formula: 'F = G * (m1 * m2) / r^2',

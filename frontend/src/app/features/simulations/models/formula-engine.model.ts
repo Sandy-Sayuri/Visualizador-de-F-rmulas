@@ -59,12 +59,16 @@ export interface ParsedFormulaTargetInfoModel {
 export interface ParsedFormulaModel {
   formula: string;
   normalizedFormula: string;
+  resolvedFormula: string;
   leftSide: string;
   expression: string;
   expressionNode: MathNode;
   symbols: string[];
   functionNames: string[];
   targetInfo: ParsedFormulaTargetInfoModel;
+  equationCount: number;
+  dependentVariables: string[];
+  resolutionSteps: string[];
 }
 
 export interface FormulaScenarioFeatureModel {

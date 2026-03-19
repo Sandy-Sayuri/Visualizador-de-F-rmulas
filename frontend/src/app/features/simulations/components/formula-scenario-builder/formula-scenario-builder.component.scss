@@ -136,6 +136,7 @@ span {
 .support-heading,
 .support-shapes,
 .guided-scenario-card,
+.resolved-formula-card,
 .system-warning,
 .inclined-plane-card,
 .inclined-plane-heading {
@@ -154,6 +155,13 @@ span {
   border-radius: 1.15rem;
   background: rgba(124, 230, 255, 0.08);
   border: 1px solid rgba(124, 230, 255, 0.16);
+}
+
+.resolved-formula-card {
+  padding: 1rem;
+  border-radius: 1.15rem;
+  background: rgba(157, 199, 255, 0.08);
+  border: 1px solid rgba(157, 199, 255, 0.16);
 }
 
 .inclined-plane-card {
@@ -180,11 +188,17 @@ span {
   align-items: start;
 }
 
+.resolved-formula-card strong,
 .inclined-plane-heading strong,
 .support-heading strong,
 .system-warning strong,
 .support-shapes > span {
   color: #f5f1e6;
+}
+
+.resolved-formula-card p {
+  color: rgba(245, 241, 230, 0.78);
+  line-height: 1.4;
 }
 
 .inclined-plane-heading > span {
