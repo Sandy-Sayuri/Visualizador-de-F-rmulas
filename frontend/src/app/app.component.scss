@@ -5,7 +5,7 @@
 
 .app-shell {
   min-height: 100vh;
-  padding: 2rem;
+  padding: clamp(1rem, 2vw, 1.75rem);
   background:
     radial-gradient(circle at top left, rgba(244, 187, 68, 0.18), transparent 24rem),
     radial-gradient(circle at center right, rgba(124, 230, 255, 0.12), transparent 22rem),
@@ -15,7 +15,7 @@
 
 .page-frame {
   margin: 0 auto;
-  max-width: 1180px;
+  max-width: 1520px;
 }
 
 @media (max-width: 840px) {

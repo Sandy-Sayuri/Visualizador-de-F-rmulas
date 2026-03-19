@@ -1,213 +1,130 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
+import { FormulaScenarioClassifierService } from './formula-scenario-classifier.service';
+import { FormulaScenarioParserService } from './formula-scenario-parser.service';
 import {
   FormulaParameterDefinitionModel,
   FormulaScenarioAnalysisModel,
-  FormulaScenarioCategoryModel,
-  FormulaScenarioTargetModel,
+  FormulaScenarioParticleStrategyModel,
 } from '../models/formula-scenario.model';
 
-const RESERVED_SYMBOLS = new Set([
-  't',
-  'r',
-  'pi',
-  'e',
-  'sin',
-  'cos',
-  'tan',
-  'sqrt',
-  'log',
-  'abs',
-  'exp',
-  'min',
-  'max',
-  'pow',
-]);
+const GLOBAL_RESERVED_SYMBOLS = new Set(['t', 'dt', 'pi', 'e']);
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormulaScenarioAnalyzerService {
+  private readonly parser = inject(FormulaScenarioParserService);
+  private readonly classifier = inject(FormulaScenarioClassifierService);
+
   analyze(formula: string): FormulaScenarioAnalysisModel {
-    const normalizedFormula = formula.trim();
-
-    if (!normalizedFormula) {
-      throw new Error('Informe uma formula para iniciar a simulacao.');
-    }
-
-    const segments = normalizedFormula.split('=');
-
-    if (segments.length !== 2) {
-      throw new Error('Use o formato variavel = expressao.');
-    }
-
-    const leftSide = segments[0].trim();
-    const expression = segments[1].trim();
-
-    if (!leftSide || !expression) {
-      throw new Error('A formula precisa ter variavel e expressao.');
-    }
-
-    const target = this.resolveTarget(leftSide);
-    const symbols = this.extractSymbols(expression);
-    const category = this.resolveCategory(target, expression, symbols);
-    const parameterDefinitions = symbols
-      .filter((symbol) => !RESERVED_SYMBOLS.has(symbol))
-      .map((symbol) => this.createParameterDefinition(symbol, category));
+    const parsed = this.parser.parseFormula(formula);
+    const { classification, features } = this.classifier.classify(parsed);
+    const stateSymbols = this.classifier.resolveStateSymbols(features.particleStrategy);
+    const parameterDefinitions = parsed.symbols
+      .filter((symbol) => !GLOBAL_RESERVED_SYMBOLS.has(symbol))
+      .filter((symbol) => !stateSymbols.has(symbol))
+      .map((symbol) => this.createParameterDefinition(symbol));
 
     return {
-      formula: normalizedFormula,
-      normalizedFormula,
-      target,
-      expression,
-      category,
+      formula: parsed.formula,
+      normalizedFormula: parsed.normalizedFormula,
+      target: parsed.targetInfo.target,
+      targetName: parsed.targetInfo.targetName,
+      axis: parsed.targetInfo.axis,
+      expression: parsed.expression,
+      evaluationMode: parsed.targetInfo.evaluationMode,
+      particleStrategy: features.particleStrategy,
+      classification,
       parameterDefinitions: this.deduplicateDefinitions(parameterDefinitions),
+      symbols: parsed.symbols,
+      functionNames: parsed.functionNames,
+      usesTime: features.usesTime,
+      usesTrig: features.usesTrig,
+      usesState: features.usesState,
+      usesInteraction: features.usesInteraction,
     };
   }
 
-  private resolveTarget(leftSide: string): FormulaScenarioTargetModel {
-    const normalizedTarget = leftSide.replace(/\s+/g, '').toLowerCase();
-
-    if (normalizedTarget === 'x' || normalizedTarget === 'x(t)') {
-      return 'x';
-    }
-
-    if (normalizedTarget === 'y' || normalizedTarget === 'y(t)') {
-      return 'y';
-    }
-
-    if (normalizedTarget === 'f' || normalizedTarget === 'f(r)') {
-      return 'force';
-    }
-
-    throw new Error('Use x, y ou F como variavel principal.');
+  resolveStateSymbols(
+    particleStrategy: FormulaScenarioParticleStrategyModel,
+  ): Set<string> {
+    return this.classifier.resolveStateSymbols(particleStrategy);
   }
 
-  private resolveCategory(
-    target: FormulaScenarioTargetModel,
-    expression: string,
-    symbols: string[],
-  ): FormulaScenarioCategoryModel {
-    if (target === 'force') {
-      return 'two-body-gravity';
-    }
-
-    const symbolSet = new Set(symbols);
-    const hasTrig = /\b(sin|cos)\b/.test(expression);
-    const hasTimeSquared = /t\s*\^\s*2/.test(expression) || /t\s*\*\s*t/.test(expression);
-
-    if (hasTrig) {
-      return 'harmonic-oscillation';
-    }
-
-    if (target === 'y' && (symbolSet.has('g') || hasTimeSquared)) {
-      return 'vertical-launch';
-    }
-
-    if (symbolSet.has('a') || hasTimeSquared) {
-      return 'uniform-acceleration';
-    }
-
-    return 'uniform-motion';
-  }
-
-  private extractSymbols(expression: string): string[] {
-    const matches = expression.match(/[A-Za-z_][A-Za-z0-9_]*/g) ?? [];
-    const seen = new Set<string>();
-
-    return matches.filter((symbol) => {
-      if (seen.has(symbol)) {
-        return false;
-      }
-
-      seen.add(symbol);
-      return true;
-    });
-  }
-
-  private createParameterDefinition(
-    key: string,
-    category: FormulaScenarioCategoryModel,
-  ): FormulaParameterDefinitionModel {
+  private createParameterDefinition(key: string): FormulaParameterDefinitionModel {
     const defaults: Record<string, FormulaParameterDefinitionModel> = {
-      x0: {
-        key: 'x0',
-        label: 'x0',
-        defaultValue: -180,
-      },
-      y0: {
-        key: 'y0',
-        label: 'y0',
-        defaultValue: 0,
-      },
-      v: {
-        key: 'v',
-        label: 'v',
-        defaultValue: 42,
-      },
-      v0: {
-        key: 'v0',
-        label: 'v0',
-        defaultValue: 54,
-      },
-      a: {
-        key: 'a',
-        label: 'a',
-        defaultValue: 8,
-      },
-      g: {
-        key: 'g',
-        label: 'g',
-        defaultValue: 9.81,
-      },
-      A: {
-        key: 'A',
-        label: 'A',
-        defaultValue: 140,
-      },
-      w: {
-        key: 'w',
-        label: 'w',
-        defaultValue: 1.4,
-      },
-      G: {
-        key: 'G',
-        label: 'G',
-        defaultValue: 1000,
-      },
-      m1: {
-        key: 'm1',
-        label: 'm1',
-        defaultValue: 36,
-        min: 0.0000001,
-      },
-      m2: {
-        key: 'm2',
-        label: 'm2',
-        defaultValue: 12,
-        min: 0.0000001,
-      },
-      mass: {
-        key: 'mass',
-        label: 'mass',
-        defaultValue: category === 'two-body-gravity' ? 20 : 1,
-        min: 0.0000001,
-      },
-      m: {
-        key: 'm',
-        label: 'm',
-        defaultValue: 1,
-        min: 0.0000001,
-      },
+      x0: { key: 'x0', label: 'x0', defaultValue: -180 },
+      y0: { key: 'y0', label: 'y0', defaultValue: 0 },
+      v: { key: 'v', label: 'v', defaultValue: 42 },
+      v0: { key: 'v0', label: 'v0', defaultValue: 42 },
+      vx0: { key: 'vx0', label: 'vx0', defaultValue: 42 },
+      vy0: { key: 'vy0', label: 'vy0', defaultValue: 0 },
+      a: { key: 'a', label: 'a', defaultValue: 8 },
+      ax0: { key: 'ax0', label: 'ax0', defaultValue: 0 },
+      ay0: { key: 'ay0', label: 'ay0', defaultValue: -9.81 },
+      g: { key: 'g', label: 'g', defaultValue: 9.81 },
+      A: { key: 'A', label: 'A', defaultValue: 140 },
+      w: { key: 'w', label: 'w', defaultValue: 1.4 },
+      G: { key: 'G', label: 'G', defaultValue: 1000 },
+      k: { key: 'k', label: 'k', defaultValue: 0.8 },
+      c: { key: 'c', label: 'c', defaultValue: 0.2 },
+      m: { key: 'm', label: 'm', defaultValue: 10, min: 0.0000001 },
+      mass: { key: 'mass', label: 'mass', defaultValue: 10, min: 0.0000001 },
+      m1: { key: 'm1', label: 'm1', defaultValue: 36, min: 0.0000001 },
+      m2: { key: 'm2', label: 'm2', defaultValue: 12, min: 0.0000001 },
     };
 
-    return (
-      defaults[key] ?? {
+    if (defaults[key]) {
+      return defaults[key];
+    }
+
+    if (/^m\d*$/i.test(key) || /^mass\d*$/i.test(key)) {
+      return {
         key,
         label: key,
-        defaultValue: 1,
-      }
-    );
+        defaultValue: 10,
+        min: 0.0000001,
+      };
+    }
+
+    if (/^x\d*0?$/i.test(key)) {
+      return {
+        key,
+        label: key,
+        defaultValue: -180,
+      };
+    }
+
+    if (/^y\d*0?$/i.test(key)) {
+      return {
+        key,
+        label: key,
+        defaultValue: 0,
+      };
+    }
+
+    if (/^v/i.test(key)) {
+      return {
+        key,
+        label: key,
+        defaultValue: 24,
+      };
+    }
+
+    if (/^a/i.test(key)) {
+      return {
+        key,
+        label: key,
+        defaultValue: 6,
+      };
+    }
+
+    return {
+      key,
+      label: key,
+      defaultValue: 1,
+    };
   }
 
   private deduplicateDefinitions(

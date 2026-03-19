@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { FormulaScenarioBuilderComponent } from '../../components/formula-scenario-builder/formula-scenario-builder.component';
+import {
+  FORMULA_SCENARIO_PRESETS,
+  FormulaPresetModel,
+} from '../../formula/formula-scenario-presets';
 
 @Component({
   selector: 'app-simulation-home-page',
@@ -10,4 +14,13 @@ import { FormulaScenarioBuilderComponent } from '../../components/formula-scenar
   templateUrl: './simulation-home-page.component.html',
   styleUrl: './simulation-home-page.component.scss',
 })
-export class SimulationHomePageComponent {}
+export class SimulationHomePageComponent {
+  @ViewChild(FormulaScenarioBuilderComponent)
+  private builder?: FormulaScenarioBuilderComponent;
+
+  readonly presets: FormulaPresetModel[] = FORMULA_SCENARIO_PRESETS;
+
+  applyPreset(preset: FormulaPresetModel): void {
+    this.builder?.loadPreset(preset);
+  }
+}

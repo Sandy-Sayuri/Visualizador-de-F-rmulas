@@ -15,7 +15,6 @@ export class FormulaScenarioRunnerService {
   private readonly engine = inject(FormulaScenarioEngineService);
   private readonly visualization = inject(FormulaScenarioVisualizationService);
 
-  private readonly timeScale = 1;
   private animationFrameId: number | null = null;
   private lastTimestamp: number | null = null;
   private initialState: FormulaScenarioStateModel | null = null;
@@ -27,6 +26,7 @@ export class FormulaScenarioRunnerService {
   readonly isRunning = signal(false);
   readonly errorMessage = signal<string | null>(null);
   readonly selectedBodyId = signal<string | null>(null);
+  readonly timeScale = signal(1);
 
   readonly visualScene = computed<FormulaScenarioVisualSceneModel>(() => {
     const currentAnalysis = this.analysis();
@@ -119,6 +119,14 @@ export class FormulaScenarioRunnerService {
     this.pause();
   }
 
+  setTimeScale(nextScale: number): void {
+    const safeScale = Number.isFinite(nextScale)
+      ? Math.min(8, Math.max(0.25, nextScale))
+      : 1;
+
+    this.timeScale.set(safeScale);
+  }
+
   private tick(timestamp: number): void {
     const currentState = this.state();
     const currentConfig = this.config();
@@ -135,7 +143,7 @@ export class FormulaScenarioRunnerService {
 
     try {
       const deltaTime =
-        Math.min(0.03, (timestamp - this.lastTimestamp) / 1000) * this.timeScale;
+        Math.min(0.03, (timestamp - this.lastTimestamp) / 1000) * this.timeScale();
       this.lastTimestamp = timestamp;
       this.state.set(this.engine.step(currentState, currentConfig, this.program, deltaTime));
       this.animationFrameId = requestAnimationFrame((frame) => this.tick(frame));

@@ -56,6 +56,7 @@ type FormulaScenarioBuilderFormGroup = FormGroup<{
   providers: [FormulaScenarioRunnerService],
 })
 export class FormulaScenarioBuilderComponent implements OnChanges {
+  readonly speedSteps = [1, 2, 4, 8];
   private readonly formBuilder = inject(NonNullableFormBuilder);
   private readonly analyzer = inject(FormulaScenarioAnalyzerService);
   private readonly destroyRef = inject(DestroyRef);
@@ -74,25 +75,15 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
   readonly parameterDefinitions = computed(
     () => this.analysis()?.parameterDefinitions ?? [],
   );
+  readonly speedLabel = computed(() => `${this.runner.timeScale()}x`);
   readonly categoryLabel = computed(() => {
     const analysis = this.analysis();
 
     if (!analysis) {
-      return 'Categoria pendente';
+      return 'Analise pendente';
     }
 
-    switch (analysis.category) {
-      case 'uniform-motion':
-        return 'Movimento uniforme';
-      case 'uniform-acceleration':
-        return 'Movimento acelerado';
-      case 'vertical-launch':
-        return 'Queda livre / lancamento';
-      case 'harmonic-oscillation':
-        return 'Oscilacao harmonica';
-      case 'two-body-gravity':
-        return 'Interacao gravitacional';
-    }
+    return analysis.classification.displayLabel;
   });
 
   readonly presets: FormulaPresetModel[] = FORMULA_SCENARIO_PRESETS;
@@ -150,8 +141,7 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
       primaryLabel: preset.primaryLabel,
       secondaryLabel: preset.secondaryLabel,
     });
-    this.detectParameters();
-    this.applyPreview();
+    this.preparePreview();
   }
 
   detectParameters(skipPreview = false): void {
@@ -168,18 +158,33 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
       }
     } catch (error) {
       this.analysis.set(null);
+      this.syncParameterControls(null, {});
       this.formulaError.set(error instanceof Error ? error.message : 'Formula invalida.');
     }
   }
 
-  applyPreview(): void {
+  applyPreview(): boolean {
     const config = this.toConfig();
 
     if (!config) {
-      return;
+      return false;
     }
 
     this.runner.loadConfig(config);
+    return !this.runner.errorMessage();
+  }
+
+  startOrPause(): void {
+    if (this.runner.isRunning()) {
+      this.runner.pause();
+      return;
+    }
+
+    if (!this.preparePreview()) {
+      return;
+    }
+
+    this.runner.play();
   }
 
   save(): void {
@@ -190,7 +195,7 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
       return;
     }
 
-    this.applyPreview();
+    this.preparePreview();
 
     if (!this.runner.errorMessage()) {
       this.saved.emit(draft);
@@ -198,11 +203,19 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
   }
 
   isGravityCategory(): boolean {
-    return this.analysis()?.category === 'two-body-gravity';
+    return this.analysis()?.particleStrategy === 'pair';
   }
 
   parameterControl(key: string): FormControl<number> {
     return this.form.controls.parameters.controls[key];
+  }
+
+  increaseTimeScale(): void {
+    const currentScale = this.runner.timeScale();
+    const nextScale =
+      this.speedSteps.find((speed) => speed > currentScale) ?? currentScale;
+
+    this.runner.setTimeScale(nextScale);
   }
 
   private patchDraft(draft: FormulaScenarioDraftModel): void {
@@ -221,7 +234,7 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
       this.analysis(),
       draft.config.parameterValues,
     );
-    this.applyPreview();
+    this.preparePreview();
   }
 
   private syncParameterControls(
@@ -283,5 +296,59 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
       description: this.form.controls.description.getRawValue().trim() || null,
       config,
     };
+  }
+
+  private preparePreview(): boolean {
+    this.detectParameters(true);
+
+    const config = this.toConfig();
+
+    if (!config) {
+      return false;
+    }
+
+    if (this.isLoadedConfig(config)) {
+      return true;
+    }
+
+    return this.applyPreview();
+  }
+
+  private isLoadedConfig(config: FormulaScenarioConfigModel): boolean {
+    const loadedConfig = this.runner.config();
+
+    if (!loadedConfig) {
+      return false;
+    }
+
+    return (
+      loadedConfig.formula === config.formula &&
+      loadedConfig.primaryLabel === config.primaryLabel &&
+      loadedConfig.secondaryLabel === config.secondaryLabel &&
+      loadedConfig.primaryColor === config.primaryColor &&
+      loadedConfig.secondaryColor === config.secondaryColor &&
+      loadedConfig.particleRadius === config.particleRadius &&
+      this.haveSameParameters(
+        loadedConfig.parameterValues,
+        config.parameterValues,
+      )
+    );
+  }
+
+  private haveSameParameters(
+    left: Record<string, number>,
+    right: Record<string, number>,
+  ): boolean {
+    const leftKeys = Object.keys(left).sort();
+    const rightKeys = Object.keys(right).sort();
+
+    if (leftKeys.length !== rightKeys.length) {
+      return false;
+    }
+
+    return leftKeys.every(
+      (key, index) =>
+        key === rightKeys[index] && left[key] === right[key],
+    );
   }
 }

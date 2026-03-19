@@ -17,30 +17,62 @@ describe('FormulaScenarioAnalyzerService', () => {
     const analysis = service.analyze('x = x0 + v*t');
 
     expect(analysis.target).toBe('x');
-    expect(analysis.category).toBe('uniform-motion');
+    expect(analysis.evaluationMode).toBe('position');
+    expect(analysis.particleStrategy).toBe('single');
+    expect(analysis.classification.domain).toBe('kinematics');
+    expect(analysis.classification.solverStrategy).toBe('direct-expression');
+    expect(analysis.usesTime).toBeTrue();
     expect(analysis.parameterDefinitions.map((parameter) => parameter.key)).toEqual([
       'x0',
       'v',
     ]);
   });
 
-  it('classifies vertical launch and harmonic formulas', () => {
-    const vertical = service.analyze('y = v0*t - (g*t^2)/2');
-    const harmonic = service.analyze('x = A*cos(w*t)');
+  it('detects generic velocity and acceleration formulas without exposing state variables', () => {
+    const velocity = service.analyze('vx = v0 - g*t');
+    const acceleration = service.analyze('ax = -k*x/m');
 
-    expect(vertical.category).toBe('vertical-launch');
-    expect(harmonic.category).toBe('harmonic-oscillation');
+    expect(velocity.target).toBe('vx');
+    expect(velocity.evaluationMode).toBe('velocity');
+    expect(velocity.classification.domain).toBe('kinematics');
+    expect(velocity.parameterDefinitions.map((parameter) => parameter.key)).toEqual([
+      'v0',
+      'g',
+    ]);
+
+    expect(acceleration.target).toBe('ax');
+    expect(acceleration.evaluationMode).toBe('acceleration');
+    expect(acceleration.classification.domain).toBe('oscillation');
+    expect(acceleration.usesState).toBeTrue();
+    expect(acceleration.parameterDefinitions.map((parameter) => parameter.key)).toEqual([
+      'k',
+      'm',
+    ]);
   });
 
-  it('detects two-body gravity from a force formula', () => {
+  it('detects free scalar formulas and pair interactions from force laws', () => {
+    const scalar = service.analyze('s = v*t');
     const analysis = service.analyze('F = G * (m1 * m2) / r^2');
 
+    expect(scalar.target).toBe('scalar');
+    expect(scalar.evaluationMode).toBe('scalar');
+    expect(scalar.classification.domain).toBe('kinematics');
+    expect(scalar.parameterDefinitions.map((parameter) => parameter.key)).toEqual(['v']);
+
     expect(analysis.target).toBe('force');
-    expect(analysis.category).toBe('two-body-gravity');
+    expect(analysis.evaluationMode).toBe('force');
+    expect(analysis.particleStrategy).toBe('pair');
+    expect(analysis.classification.domain).toBe('gravitation');
     expect(analysis.parameterDefinitions.map((parameter) => parameter.key)).toEqual([
       'G',
       'm1',
       'm2',
     ]);
+  });
+
+  it('throws a friendly error for invalid formulas', () => {
+    expect(() => service.analyze('x + y')).toThrowError(
+      'Use o formato variavel = expressao.',
+    );
   });
 });

@@ -1,14 +1,27 @@
 import { CanvasDecorationModel, CanvasLegendItemModel } from './canvas-decoration.model';
+import type { FormulaScenarioClassificationModel } from './formula-engine.model';
 import { RuntimeBodyModel } from './runtime-body.model';
 
-export type FormulaScenarioTargetModel = 'x' | 'y' | 'force';
+export type FormulaScenarioTargetModel =
+  | 'x'
+  | 'y'
+  | 'vx'
+  | 'vy'
+  | 'ax'
+  | 'ay'
+  | 'force'
+  | 'scalar';
 
-export type FormulaScenarioCategoryModel =
-  | 'uniform-motion'
-  | 'uniform-acceleration'
-  | 'vertical-launch'
-  | 'harmonic-oscillation'
-  | 'two-body-gravity';
+export type FormulaScenarioAxisModel = 'x' | 'y';
+
+export type FormulaScenarioEvaluationModeModel =
+  | 'position'
+  | 'velocity'
+  | 'acceleration'
+  | 'force'
+  | 'scalar';
+
+export type FormulaScenarioParticleStrategyModel = 'single' | 'pair';
 
 export interface FormulaParameterDefinitionModel {
   key: string;
@@ -22,9 +35,19 @@ export interface FormulaScenarioAnalysisModel {
   formula: string;
   normalizedFormula: string;
   target: FormulaScenarioTargetModel;
+  targetName: string;
+  axis: FormulaScenarioAxisModel;
   expression: string;
-  category: FormulaScenarioCategoryModel;
+  evaluationMode: FormulaScenarioEvaluationModeModel;
+  particleStrategy: FormulaScenarioParticleStrategyModel;
+  classification: FormulaScenarioClassificationModel;
   parameterDefinitions: FormulaParameterDefinitionModel[];
+  symbols: string[];
+  functionNames: string[];
+  usesTime: boolean;
+  usesTrig: boolean;
+  usesState: boolean;
+  usesInteraction: boolean;
 }
 
 export interface FormulaScenarioConfigModel {

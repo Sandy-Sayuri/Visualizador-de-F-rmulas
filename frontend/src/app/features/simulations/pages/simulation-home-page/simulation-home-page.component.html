@@ -1,31 +1,37 @@
 <section class="page">
-  <div class="workspace-grid">
-    <section class="studio-column">
-      <app-formula-scenario-builder
-        #builder
-        [allowSave]="false"
-      />
-    </section>
-
-    <aside class="support-column">
-      <section class="support-panel">
-        <p class="eyebrow">Fluxo</p>
-        <h3>Nada depende de banco</h3>
-        <div class="usage-stack">
-          <article class="usage-card">
-            <strong>1. Digite a formula</strong>
-            <p>O analisador detecta a categoria e extrai os parametros.</p>
-          </article>
-          <article class="usage-card">
-            <strong>2. Ajuste os valores</strong>
-            <p>Os inputs aparecem dinamicamente conforme a equacao.</p>
-          </article>
-          <article class="usage-card">
-            <strong>3. Veja a cena</strong>
-            <p>O canvas anima o comportamento sem salvar nada no backend.</p>
-          </article>
+  <section class="hero-card">
+    <div class="hero-copy">
+      <p class="eyebrow">OrbitLab</p>
+      <div class="hero-headline">
+        <div>
+          <h1>Digite a formula e veja o movimento</h1>
+          <p class="lead">
+            O sistema detecta as variaveis, monta os campos e anima o
+            comportamento direto no canvas.
+          </p>
         </div>
-      </section>
-    </aside>
-  </div>
+
+        <span class="status-chip">100% local</span>
+      </div>
+
+      <div class="tag-row" aria-label="Exemplos de formula">
+        @for (preset of presets; track preset.id) {
+          <button
+            type="button"
+            class="preset-chip"
+            (click)="applyPreset(preset)"
+          >
+            {{ preset.formula }}
+          </button>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="builder-host">
+    <app-formula-scenario-builder
+      #builder
+      [allowSave]="false"
+    />
+  </section>
 </section>
