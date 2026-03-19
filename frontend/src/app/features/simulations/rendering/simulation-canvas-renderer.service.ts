@@ -142,6 +142,39 @@ export class SimulationCanvasRendererService {
         continue;
       }
 
+      if (decoration.kind === 'arrow') {
+        const from = this.toCanvasPoint(decoration.from, width, height, scale);
+        const to = this.toCanvasPoint(decoration.to, width, height, scale);
+        context.save();
+        context.globalAlpha = decoration.opacity;
+        context.strokeStyle = decoration.color;
+        context.fillStyle = decoration.color;
+        context.lineWidth = decoration.width;
+        context.setLineDash(decoration.dashed ? [8, 8] : []);
+        context.beginPath();
+        context.moveTo(from.x, from.y);
+        context.lineTo(to.x, to.y);
+        context.stroke();
+        context.closePath();
+
+        const angle = Math.atan2(from.y - to.y, to.x - from.x);
+        const headLength = 9;
+        context.beginPath();
+        context.moveTo(to.x, to.y);
+        context.lineTo(
+          to.x - headLength * Math.cos(angle - Math.PI / 6),
+          to.y + headLength * Math.sin(angle - Math.PI / 6),
+        );
+        context.lineTo(
+          to.x - headLength * Math.cos(angle + Math.PI / 6),
+          to.y + headLength * Math.sin(angle + Math.PI / 6),
+        );
+        context.closePath();
+        context.fill();
+        context.restore();
+        continue;
+      }
+
       if (decoration.kind === 'path' && decoration.points.length > 1) {
         context.save();
         context.globalAlpha = decoration.opacity;
@@ -345,6 +378,16 @@ export class SimulationCanvasRendererService {
 
     decorations.forEach((decoration) => {
       if (decoration.kind === 'line') {
+        coordinates.push(
+          Math.abs(decoration.from.x),
+          Math.abs(decoration.from.y),
+          Math.abs(decoration.to.x),
+          Math.abs(decoration.to.y),
+        );
+        return;
+      }
+
+      if (decoration.kind === 'arrow') {
         coordinates.push(
           Math.abs(decoration.from.x),
           Math.abs(decoration.from.y),

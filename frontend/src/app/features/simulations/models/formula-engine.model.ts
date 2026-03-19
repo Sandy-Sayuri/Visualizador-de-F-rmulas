@@ -29,6 +29,7 @@ export type FormulaSolverStrategyModel =
   | 'direct-expression'
   | 'single-state-integration'
   | 'pair-force-integration'
+  | 'electromagnetic-interaction'
   | 'wave-sampling'
   | 'optical-guided'
   | 'equation-system'
@@ -219,8 +220,8 @@ export const FORMULA_ENGINE_DOMAIN_CATALOG: PhysicsDomainDescriptorModel[] = [
   {
     domain: 'electromagnetism',
     label: 'Eletromagnetismo',
-    status: 'planned',
-    notes: 'Campos eletricos e magneticos exigem novas estrategias de solver e renderizacao.',
+    status: 'implemented',
+    notes: 'Lei de Coulomb, campo eletrico simples, vetores e linhas de campo.',
   },
 ];
 

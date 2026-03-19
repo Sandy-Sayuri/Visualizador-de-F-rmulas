@@ -23,9 +23,14 @@ export class GravitationFormulaModuleService extends BasePhysicsDomainService {
     parsed: ParsedFormulaModel,
     features: FormulaScenarioFeatureModel,
   ) {
+    const symbols = new Set(features.symbols.map((symbol) => symbol.toLowerCase()));
+
     if (
       parsed.targetInfo.evaluationMode !== 'force' ||
-      features.particleStrategy !== 'pair'
+      features.particleStrategy !== 'pair' ||
+      symbols.has('q1') ||
+      symbols.has('q2') ||
+      symbols.has('q')
     ) {
       return null;
     }

@@ -97,6 +97,33 @@ describe('FormulaScenarioAnalyzerService', () => {
     ]);
   });
 
+  it('extracts electromagnetism parameters for Coulomb formulas and guided field presets', () => {
+    const coulomb = service.analyze('F = k*(q1*q2)/r^2');
+    const field = service.analyze('electro_field = 0');
+
+    expect(coulomb.classification.domain).toBe('electromagnetism');
+    expect(coulomb.parameterDefinitions.map((parameter) => parameter.key)).toEqual([
+      'q1',
+      'q2',
+      'k',
+      'x1',
+      'y1',
+      'x2',
+      'y2',
+    ]);
+
+    expect(field.classification.family).toBe('field-guided');
+    expect(field.parameterDefinitions.map((parameter) => parameter.key)).toEqual([
+      'q1',
+      'q2',
+      'k',
+      'x1',
+      'y1',
+      'x2',
+      'y2',
+    ]);
+  });
+
   it('throws a friendly error for invalid formulas', () => {
     expect(() => service.analyze('x + y')).toThrowError(
       'Use o formato variavel = expressao.',

@@ -72,4 +72,33 @@ describe('FormulaScenarioVisualizationService', () => {
     expect(scene.decorations.some((decoration) => decoration.kind === 'arc')).toBeTrue();
     expect(scene.legendItems.some((item) => item.tone === 'ray')).toBeTrue();
   });
+
+  it('builds field lines and arrows for electromagnetism scenes', () => {
+    const config = {
+      formula: 'F = k*(q1*q2)/r^2',
+      parameterValues: {
+        k: 42000,
+        q1: 1.6,
+        q2: -1.2,
+        x1: -140,
+        y1: 0,
+        x2: 140,
+        y2: 0,
+      },
+      primaryLabel: 'Carga 1',
+      secondaryLabel: 'Carga 2',
+      primaryColor: '#ffb36c',
+      secondaryColor: '#7ce6ff',
+      particleRadius: 8,
+    };
+    const analysis = analyzer.analyze(config.formula);
+    const program = engine.compileProgram(config, analysis);
+    const state = engine.createInitialState(config, program);
+    const scene = service.buildScene(analysis, state);
+
+    expect(scene.decision.mode).toBe('electric-field');
+    expect(scene.decorations.some((decoration) => decoration.kind === 'path')).toBeTrue();
+    expect(scene.decorations.some((decoration) => decoration.kind === 'arrow')).toBeTrue();
+    expect(scene.legendItems.some((item) => item.tone === 'field')).toBeTrue();
+  });
 });

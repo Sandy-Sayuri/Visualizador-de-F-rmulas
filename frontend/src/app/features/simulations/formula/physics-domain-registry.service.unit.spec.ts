@@ -26,7 +26,7 @@ describe('PhysicsDomainRegistryService', () => {
     expect(domains).toContain(
       jasmine.objectContaining({
         key: 'electromagnetism',
-        status: 'planned',
+        status: 'implemented',
       }),
     );
     expect(domains).toContain(

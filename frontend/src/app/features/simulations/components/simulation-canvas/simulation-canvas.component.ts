@@ -108,6 +108,8 @@ export class SimulationCanvasComponent implements AfterViewInit, OnChanges {
     switch (item.tone) {
       case 'ray':
         return this.minimalChrome ? 'Raio' : 'Raios';
+      case 'field':
+        return this.minimalChrome ? 'Campo' : 'Campo';
       case 'velocity':
         return this.minimalChrome ? 'Vel' : 'Velocidade';
       case 'force':

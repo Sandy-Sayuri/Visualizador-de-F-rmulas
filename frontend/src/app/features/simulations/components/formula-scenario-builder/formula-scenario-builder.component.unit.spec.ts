@@ -77,4 +77,23 @@ describe('FormulaScenarioBuilderComponent', () => {
       'sourceY',
     ]);
   });
+
+  it('loads the guided electromagnetism field preset with dynamic parameters', () => {
+    const fieldPreset = component.presets.find((preset) => preset.id === 'electro-field');
+
+    component.loadPreset(fieldPreset!);
+    fixture.detectChanges();
+
+    expect(component.isGuidedPreset()).toBeTrue();
+    expect(component.analysis()?.classification.domain).toBe('electromagnetism');
+    expect(component.parameterDefinitions().map((parameter) => parameter.key)).toEqual([
+      'q1',
+      'q2',
+      'k',
+      'x1',
+      'y1',
+      'x2',
+      'y2',
+    ]);
+  });
 });

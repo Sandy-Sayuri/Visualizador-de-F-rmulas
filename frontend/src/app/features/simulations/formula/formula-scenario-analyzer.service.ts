@@ -76,6 +76,9 @@ export class FormulaScenarioAnalyzerService {
       w: { key: 'w', label: 'w', defaultValue: 1.4 },
       G: { key: 'G', label: 'G', defaultValue: 1000 },
       k: { key: 'k', label: 'k', defaultValue: 0.8 },
+      q: { key: 'q', label: 'q', defaultValue: 1 },
+      q1: { key: 'q1', label: 'q1', defaultValue: 1.6 },
+      q2: { key: 'q2', label: 'q2', defaultValue: -1.2 },
       c: { key: 'c', label: 'c', defaultValue: 0.2 },
       m: { key: 'm', label: 'm', defaultValue: 10, min: 0.0000001 },
       mass: { key: 'mass', label: 'mass', defaultValue: 10, min: 0.0000001 },
@@ -125,6 +128,14 @@ export class FormulaScenarioAnalyzerService {
         key,
         label: key,
         defaultValue: 6,
+      };
+    }
+
+    if (/^q\d*$/i.test(key)) {
+      return {
+        key,
+        label: key,
+        defaultValue: key.toLowerCase().endsWith('2') ? -1.2 : 1.6,
       };
     }
 

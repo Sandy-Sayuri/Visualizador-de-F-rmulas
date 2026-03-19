@@ -108,8 +108,10 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
     'ax = -k*x/m',
     'x = A*cos(w*t)',
     'F = G*(m1*m2)/r^2',
+    'F = k*(q1*q2)/r^2',
     'y = A*sin(k*x - w*t)',
     'Optica: reflexao, refracao, lente',
+    'Eletromagnetismo: cargas e campo',
   ];
 
   readonly form: FormulaScenarioBuilderFormGroup = this.formBuilder.group({
@@ -235,7 +237,12 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
   }
 
   isGravityCategory(): boolean {
-    return this.analysis()?.particleStrategy === 'pair';
+    const analysis = this.analysis();
+
+    return (
+      analysis?.particleStrategy === 'pair' ||
+      analysis?.classification.domain === 'electromagnetism'
+    );
   }
 
   activePreset(): FormulaPresetModel | null {

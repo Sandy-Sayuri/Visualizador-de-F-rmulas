@@ -39,6 +39,8 @@ const PAIR_STATE_SYMBOLS = new Set([
   'ay2',
 ]);
 const INTERACTION_HINTS = new Set([
+  'q1',
+  'q2',
   'm1',
   'm2',
   'x1',
@@ -104,6 +106,7 @@ export class FormulaScenarioClassifierService {
 
     const symbolSet = new Set(parsed.symbols.map((symbol) => symbol.toLowerCase()));
     const hasMassPair = symbolSet.has('m1') && symbolSet.has('m2');
+    const hasChargePair = symbolSet.has('q1') && symbolSet.has('q2');
     const hasDistanceState =
       symbolSet.has('r') ||
       symbolSet.has('distance') ||
@@ -113,7 +116,13 @@ export class FormulaScenarioClassifierService {
       (symbolSet.has('y1') && symbolSet.has('y2'));
     const hasIndexedPair = this.hasIndexedPair(parsed.symbols);
 
-    if (hasMassPair || hasDistanceState || hasIndexedCoordinates || hasIndexedPair) {
+    if (
+      hasMassPair ||
+      hasChargePair ||
+      hasDistanceState ||
+      hasIndexedCoordinates ||
+      hasIndexedPair
+    ) {
       return 'pair';
     }
 

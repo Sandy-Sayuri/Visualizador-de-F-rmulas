@@ -21,6 +21,9 @@ describe('FormulaScenarioClassifierService', () => {
     const oscillation = service.classify(parser.parseFormula('x = A*cos(w*t)'));
     const wave = service.classify(parser.parseFormula('y = A*sin(k*x - w*t)'));
     const optics = service.classify(parser.parseFormula('optics_reflection = 0'));
+    const electromagnetism = service.classify(
+      parser.parseFormula('F = k*(q1*q2)/r^2'),
+    );
     const gravitation = service.classify(
       parser.parseFormula('F = G * (m1 * m2) / r^2'),
     );
@@ -34,6 +37,10 @@ describe('FormulaScenarioClassifierService', () => {
     expect(wave.classification.solverStrategy).toBe('wave-sampling');
     expect(optics.classification.domain).toBe('optics');
     expect(optics.classification.solverStrategy).toBe('optical-guided');
+    expect(electromagnetism.classification.domain).toBe('electromagnetism');
+    expect(electromagnetism.classification.solverStrategy).toBe(
+      'electromagnetic-interaction',
+    );
     expect(gravitation.classification.domain).toBe('gravitation');
     expect(gravitation.classification.solverStrategy).toBe('pair-force-integration');
     expect(plannedDomainFallback.classification.domain).toBe('generic');

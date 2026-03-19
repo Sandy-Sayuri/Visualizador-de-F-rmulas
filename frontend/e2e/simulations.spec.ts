@@ -80,3 +80,17 @@ test('runs a guided optics reflection scene from the presets', async ({ page }) 
   await expect(formulaLegend).toContainText('Raios');
   await expect(formulaLegend).toContainText('Angulos');
 });
+
+test('runs an electromagnetism scene from the Coulomb formula', async ({ page }) => {
+  await page.goto('/simulations');
+
+  await page.getByRole('button', { name: 'Coulomb' }).first().click();
+  await page.getByTestId('toggle-formula-scenario').click();
+
+  await expect(page.getByTestId('formula-category')).toContainText('Eletromagnetismo');
+  await expect(page.getByTestId('formula-particle-count')).toContainText('2');
+
+  const formulaLegend = page.locator('[data-testid="canvas-legend"]').first();
+  await expect(formulaLegend).toContainText('Campo');
+  await expect(formulaLegend).toContainText('Forca');
+});

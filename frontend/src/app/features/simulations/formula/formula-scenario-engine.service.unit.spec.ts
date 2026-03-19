@@ -151,4 +151,33 @@ describe('FormulaScenarioEngineService', () => {
     expect(initialState.sceneData?.optical?.scenario).toBe('reflection');
     expect(nextState.bodies[0].position.x).not.toBe(initialState.bodies[0].position.x);
   });
+
+  it('simulates Coulomb interaction as an electromagnetism pair scene', () => {
+    const config = {
+      formula: 'F = k*(q1*q2)/r^2',
+      parameterValues: {
+        k: 42000,
+        q1: 1.6,
+        q2: -1.2,
+        x1: -140,
+        y1: 0,
+        x2: 140,
+        y2: 0,
+      },
+      primaryLabel: 'Carga 1',
+      secondaryLabel: 'Carga 2',
+      primaryColor: '#ffb36c',
+      secondaryColor: '#7ce6ff',
+      particleRadius: 8,
+    };
+    const program = service.compileProgram(config);
+    const initialState = service.createInitialState(config, program);
+    const nextState = service.step(initialState, config, program, 0.2);
+
+    expect(program.analysis.classification.domain).toBe('electromagnetism');
+    expect(initialState.bodies).toHaveSize(2);
+    expect(initialState.sceneData?.electromagnetism?.scenario).toBe('coulomb');
+    expect(nextState.bodies[0].position.x).toBeGreaterThan(initialState.bodies[0].position.x);
+    expect(nextState.bodies[1].position.x).toBeLessThan(initialState.bodies[1].position.x);
+  });
 });

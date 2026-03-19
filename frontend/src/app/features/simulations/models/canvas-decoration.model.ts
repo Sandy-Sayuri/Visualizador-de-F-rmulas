@@ -19,6 +19,15 @@ export type CanvasDecorationModel =
       dashed?: boolean;
     }
   | {
+      kind: 'arrow';
+      from: Vector2Model;
+      to: Vector2Model;
+      color: string;
+      width: number;
+      opacity: number;
+      dashed?: boolean;
+    }
+  | {
       kind: 'dot';
       position: Vector2Model;
       radius: number;
@@ -50,6 +59,7 @@ export interface CanvasLegendItemModel {
   key: string;
   tone:
     | 'ray'
+    | 'field'
     | 'velocity'
     | 'force'
     | 'trail'
