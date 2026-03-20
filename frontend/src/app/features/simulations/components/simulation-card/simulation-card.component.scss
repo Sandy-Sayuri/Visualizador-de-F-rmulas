@@ -2,12 +2,14 @@
   display: grid;
   gap: 1rem;
   padding: 1.35rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.25rem;
-  background:
-    linear-gradient(180deg, rgba(17, 28, 48, 0.92), rgba(10, 16, 31, 0.96)),
-    rgba(12, 18, 34, 0.92);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+  border: var(--theme-border-width) solid var(--theme-panel-border);
+  border-radius: var(--theme-card-radius);
+  background: var(--theme-card-background);
+  box-shadow: var(--theme-card-shadow);
+  transition:
+    background 280ms ease,
+    border-color 280ms ease,
+    box-shadow 280ms ease;
 }
 
 .card-header {
@@ -19,7 +21,7 @@
 
 .eyebrow {
   margin: 0 0 0.35rem;
-  color: #9dc7ff;
+  color: var(--theme-eyebrow);
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -27,21 +29,21 @@
 
 h2 {
   margin: 0;
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: var(--theme-font-display);
   font-size: 1.35rem;
 }
 
 .body-badge {
   padding: 0.35rem 0.75rem;
-  border-radius: 999px;
-  background: rgba(244, 198, 106, 0.16);
-  color: #f4c66a;
+  border-radius: var(--theme-pill-radius);
+  background: var(--theme-warm-badge-background);
+  color: var(--theme-warm-badge-text);
   font-size: 0.9rem;
 }
 
 .description {
   margin: 0;
-  color: rgba(245, 241, 230, 0.72);
+  color: var(--theme-text-muted);
 }
 
 .meta-grid {
@@ -53,13 +55,13 @@ h2 {
 
 .meta-grid div {
   padding: 0.85rem;
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--theme-input-radius);
+  background: var(--theme-subtle-background);
 }
 
 .meta-grid dt {
   margin-bottom: 0.4rem;
-  color: rgba(245, 241, 230, 0.58);
+  color: var(--theme-text-soft);
   font-size: 0.8rem;
 }
 
@@ -75,18 +77,27 @@ h2 {
 
 button {
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--theme-pill-radius);
   padding: 0.75rem 1rem;
   font: inherit;
   cursor: pointer;
+  transition:
+    transform 140ms ease,
+    background 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
 }
 
 .ghost-button {
-  background: rgba(157, 199, 255, 0.16);
-  color: #f5f1e6;
+  background: var(--theme-button-secondary-background);
+  color: var(--theme-button-secondary-text);
 }
 
 .danger-button {
-  background: rgba(234, 101, 93, 0.16);
-  color: #ffb8b1;
+  background: var(--theme-button-danger-background);
+  color: var(--theme-button-danger-text);
 }

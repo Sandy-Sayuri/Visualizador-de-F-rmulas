@@ -7,9 +7,13 @@
   display: grid;
   gap: 1rem;
   padding: 1.25rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.25rem;
-  background: rgba(8, 14, 26, 0.72);
+  border: var(--theme-border-width) solid var(--theme-panel-border);
+  border-radius: var(--theme-card-radius);
+  background: var(--theme-panel-muted-background);
+  transition:
+    background 280ms ease,
+    border-color 280ms ease,
+    box-shadow 280ms ease;
 }
 
 .controls-row {
@@ -25,7 +29,7 @@
 
 .eyebrow {
   margin: 0 0 0.35rem;
-  color: #9dc7ff;
+  color: var(--theme-eyebrow);
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -34,6 +38,10 @@
 h3,
 p {
   margin: 0;
+}
+
+h3 {
+  font-family: var(--theme-font-display);
 }
 
 .stats-grid {
@@ -46,8 +54,8 @@ p {
   display: grid;
   gap: 0.35rem;
   padding: 0.85rem;
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.04);
+  border-radius: var(--theme-input-radius);
+  background: var(--theme-subtle-background);
 }
 
 .formula-form,
@@ -71,7 +79,7 @@ label {
 
 span,
 .formula-help {
-  color: rgba(245, 241, 230, 0.72);
+  color: var(--theme-text-muted);
 }
 
 input,
@@ -82,27 +90,46 @@ button {
 input {
   width: 100%;
   padding: 0.8rem 0.9rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 0.9rem;
-  background: rgba(2, 8, 18, 0.48);
-  color: #f5f1e6;
+  border: var(--theme-border-width) solid var(--theme-input-border);
+  border-radius: var(--theme-input-radius);
+  background: var(--theme-input-background);
+  color: var(--theme-text);
+  transition:
+    background 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--theme-input-focus-border);
+  box-shadow: var(--theme-input-focus-ring);
 }
 
 button {
   border: 0;
-  border-radius: 999px;
+  border-radius: var(--theme-pill-radius);
   padding: 0.82rem 1rem;
   cursor: pointer;
+  transition:
+    transform 140ms ease,
+    background 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
 }
 
 .primary-button {
-  background: linear-gradient(135deg, #f4c66a, #f08d4e);
-  color: #11131e;
+  background: var(--theme-button-primary-background);
+  color: var(--theme-button-primary-text);
 }
 
 .secondary-button {
-  background: rgba(157, 199, 255, 0.16);
-  color: #f5f1e6;
+  background: var(--theme-button-secondary-background);
+  color: var(--theme-button-secondary-text);
 }
 
 .full-width {
@@ -112,7 +139,7 @@ button {
 .formula-help code {
   padding: 0.15rem 0.3rem;
   border-radius: 0.35rem;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--theme-code-background);
 }
 
 .feedback-card {
@@ -120,7 +147,7 @@ button {
 }
 
 .error-text {
-  color: #ffb8b1;
+  color: var(--theme-error-text);
 }
 
 @media (max-width: 900px) {

@@ -10,6 +10,7 @@ import {
   SimpleChanges,
   ViewChild,
   inject,
+  signal,
 } from '@angular/core';
 
 import { CanvasDecorationModel, CanvasLegendItemModel } from '../../models/canvas-decoration.model';
@@ -21,6 +22,8 @@ const DEFAULT_LEGEND_ITEMS: CanvasLegendItemModel[] = [
   { key: 'force', tone: 'force', label: 'Forca' },
   { key: 'trail', tone: 'trail', label: 'Rastro' },
 ];
+
+type SimulationCanvasViewMode = '2d' | '3d';
 
 @Component({
   selector: 'app-simulation-canvas',
@@ -37,6 +40,7 @@ export class SimulationCanvasComponent implements AfterViewInit, OnChanges {
   @Input() decorations: CanvasDecorationModel[] = [];
   @Input() legendItems: CanvasLegendItemModel[] = DEFAULT_LEGEND_ITEMS;
   @Input() minimalChrome = false;
+  @Input() allowViewToggle = false;
   @Input() emptyMessage = 'Adicione elementos para visualizar a cena fisica.';
   @Input() showVectors = true;
   @Input() showTrails = true;
@@ -45,6 +49,8 @@ export class SimulationCanvasComponent implements AfterViewInit, OnChanges {
 
   @ViewChild('sceneCanvas')
   private canvasRef?: ElementRef<HTMLCanvasElement>;
+
+  readonly viewMode = signal<SimulationCanvasViewMode>('2d');
 
   ngAfterViewInit(): void {
     this.renderScene();
@@ -56,25 +62,18 @@ export class SimulationCanvasComponent implements AfterViewInit, OnChanges {
       changes['selectedBodyId'] ||
       changes['decorations'] ||
       changes['showVectors'] ||
-      changes['showTrails']
+      changes['showTrails'] ||
+      changes['allowViewToggle']
     ) {
       this.renderScene();
     }
   }
 
-  private renderScene(): void {
-    const canvas = this.canvasRef?.nativeElement;
-    if (!canvas) {
-      return;
-    }
-
-    this.renderer.render(canvas, {
-      bodies: this.bodies,
-      selectedBodyId: this.selectedBodyId,
-      decorations: this.decorations,
-      showVectors: this.showVectors,
-      showTrails: this.showTrails,
-    });
+  toggleViewMode(event: MouseEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.viewMode.update((currentMode) => (currentMode === '2d' ? '3d' : '2d'));
+    this.renderScene();
   }
 
   selectBody(event: MouseEvent): void {
@@ -91,6 +90,7 @@ export class SimulationCanvasComponent implements AfterViewInit, OnChanges {
       {
         bodies: this.bodies,
         decorations: this.decorations,
+        viewMode: this.viewMode(),
       },
       canvas,
     );
@@ -133,5 +133,21 @@ export class SimulationCanvasComponent implements AfterViewInit, OnChanges {
       default:
         return 'Cena';
     }
+  }
+
+  private renderScene(): void {
+    const canvas = this.canvasRef?.nativeElement;
+    if (!canvas) {
+      return;
+    }
+
+    this.renderer.render(canvas, {
+      bodies: this.bodies,
+      selectedBodyId: this.selectedBodyId,
+      decorations: this.decorations,
+      showVectors: this.showVectors,
+      showTrails: this.showTrails,
+      viewMode: this.viewMode(),
+    });
   }
 }
