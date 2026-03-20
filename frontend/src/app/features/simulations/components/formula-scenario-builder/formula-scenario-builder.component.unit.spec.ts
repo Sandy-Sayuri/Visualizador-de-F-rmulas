@@ -56,9 +56,21 @@ describe('FormulaScenarioBuilderComponent', () => {
         simulationName: 'Formula Demo',
         config: jasmine.objectContaining({
           formula: 'x = x0 + v*t',
+          visualParticleCount: 8,
         }),
       }),
     );
+  });
+
+  it('shows a dedicated visual particle control for single-body formulas', () => {
+    component.form.controls.formula.setValue('x = x0 + v*t');
+    component.detectParameters(true);
+    fixture.detectChanges();
+
+    expect(component.supportsVisualParticleCountControl()).toBeTrue();
+    expect(
+      fixture.nativeElement.querySelector('[data-testid="visual-particle-count"]'),
+    ).not.toBeNull();
   });
 
   it('increases the runner time scale from the speed button', () => {

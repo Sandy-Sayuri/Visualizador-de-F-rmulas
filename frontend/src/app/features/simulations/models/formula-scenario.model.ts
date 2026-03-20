@@ -68,6 +68,7 @@ export interface FormulaScenarioConfigModel {
   primaryColor: string;
   secondaryColor: string;
   particleRadius: number;
+  visualParticleCount?: number;
 }
 
 export interface FormulaScenarioDraftModel {

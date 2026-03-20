@@ -64,6 +64,10 @@ export class SimulationCanvasRendererService {
     );
 
     return scene.bodies.find((body) => {
+      if (body.visualOnly) {
+        return false;
+      }
+
       const point = this.toCanvasPoint(body.position, canvas.width, canvas.height, scale);
       const radius = Math.max(4, Math.min(28, body.radius)) + 8;
 
@@ -259,12 +263,21 @@ export class SimulationCanvasRendererService {
     showVectors: boolean,
     showTrails: boolean,
   ): void {
-    for (const body of bodies) {
+    const orderedBodies = [
+      ...bodies.filter((body) => body.visualOnly),
+      ...bodies.filter((body) => !body.visualOnly),
+    ];
+
+    for (const body of orderedBodies) {
       const point = this.toCanvasPoint(body.position, width, height, scale);
       const radius = Math.max(4, Math.min(28, body.radius));
       const isSelected = body.id === selectedBodyId;
+      const bodyOpacity = body.visualOnly ? 0.34 : 1;
 
-      if (showTrails && body.trail.length > 1) {
+      context.save();
+      context.globalAlpha = bodyOpacity;
+
+      if (showTrails && body.trail.length > 1 && !body.visualOnly) {
         context.beginPath();
         context.strokeStyle = `${body.color}88`;
         context.lineWidth = isSelected ? 2.4 : 1.2;
@@ -285,7 +298,7 @@ export class SimulationCanvasRendererService {
 
       context.beginPath();
       context.fillStyle = body.color;
-      context.shadowBlur = isSelected ? 22 : 14;
+      context.shadowBlur = body.visualOnly ? 8 : isSelected ? 22 : 14;
       context.shadowColor = body.color;
       context.arc(point.x, point.y, radius, 0, Math.PI * 2);
       context.fill();
@@ -319,13 +332,14 @@ export class SimulationCanvasRendererService {
         }
       }
 
-      context.shadowBlur = 0;
-
-      if (body.name) {
+      if (body.name && !body.visualOnly) {
+        context.shadowBlur = 0;
         context.fillStyle = '#f5f1e6';
         context.font = '12px Georgia';
         context.fillText(body.name, point.x + radius + 6, point.y - radius - 4);
       }
+
+      context.restore();
     }
   }
 
