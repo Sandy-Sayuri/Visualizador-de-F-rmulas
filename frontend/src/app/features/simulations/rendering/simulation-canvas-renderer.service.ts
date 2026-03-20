@@ -9,6 +9,8 @@ interface SceneScale {
   scale: number;
 }
 
+type CanvasViewMode = '2d' | '3d';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -21,6 +23,7 @@ export class SimulationCanvasRendererService {
       decorations: CanvasDecorationModel[];
       showVectors: boolean;
       showTrails: boolean;
+      viewMode: CanvasViewMode;
     },
   ): void {
     const context = canvas.getContext('2d');
@@ -33,9 +36,16 @@ export class SimulationCanvasRendererService {
     const scale = this.computeScale(scene.bodies, scene.decorations, width, height);
 
     context.clearRect(0, 0, width, height);
-    this.drawBackground(context, width, height);
-    this.drawGrid(context, width, height);
-    this.drawDecorations(context, width, height, scale, scene.decorations);
+    this.drawBackground(context, width, height, scene.viewMode);
+    this.drawGrid(context, width, height, scene.viewMode);
+    this.drawDecorations(
+      context,
+      width,
+      height,
+      scale,
+      scene.decorations,
+      scene.viewMode,
+    );
     this.drawBodies(
       context,
       width,
@@ -45,6 +55,7 @@ export class SimulationCanvasRendererService {
       scene.selectedBodyId,
       scene.showVectors,
       scene.showTrails,
+      scene.viewMode,
     );
   }
 
@@ -53,6 +64,7 @@ export class SimulationCanvasRendererService {
     scene: {
       bodies: RuntimeBodyModel[];
       decorations: CanvasDecorationModel[];
+      viewMode: CanvasViewMode;
     },
     canvas: HTMLCanvasElement,
   ): RuntimeBodyModel | undefined {
@@ -68,7 +80,13 @@ export class SimulationCanvasRendererService {
         return false;
       }
 
-      const point = this.toCanvasPoint(body.position, canvas.width, canvas.height, scale);
+      const point = this.toCanvasPoint(
+        body.position,
+        canvas.width,
+        canvas.height,
+        scale,
+        scene.viewMode,
+      );
       const radius = Math.max(4, Math.min(28, body.radius)) + 8;
 
       return Math.hypot(pointer.x - point.x, pointer.y - point.y) <= radius;
@@ -79,7 +97,31 @@ export class SimulationCanvasRendererService {
     context: CanvasRenderingContext2D,
     width: number,
     height: number,
+    viewMode: CanvasViewMode,
   ): void {
+    if (viewMode === '3d') {
+      const gradient = context.createLinearGradient(0, 0, width, height);
+      gradient.addColorStop(0, '#02050f');
+      gradient.addColorStop(0.45, '#091729');
+      gradient.addColorStop(1, '#142b42');
+      context.fillStyle = gradient;
+      context.fillRect(0, 0, width, height);
+
+      const glow = context.createRadialGradient(
+        width / 2,
+        height * 0.18,
+        12,
+        width / 2,
+        height * 0.18,
+        width * 0.55,
+      );
+      glow.addColorStop(0, 'rgba(124, 230, 255, 0.24)');
+      glow.addColorStop(1, 'rgba(124, 230, 255, 0)');
+      context.fillStyle = glow;
+      context.fillRect(0, 0, width, height);
+      return;
+    }
+
     const gradient = context.createLinearGradient(0, 0, width, height);
     gradient.addColorStop(0, '#020817');
     gradient.addColorStop(1, '#13233d');
@@ -91,7 +133,47 @@ export class SimulationCanvasRendererService {
     context: CanvasRenderingContext2D,
     width: number,
     height: number,
+    viewMode: CanvasViewMode,
   ): void {
+    if (viewMode === '3d') {
+      const horizonY = height * 0.22;
+      const floorY = height * 0.94;
+      const vanishingX = width / 2;
+
+      context.save();
+      context.strokeStyle = 'rgba(157, 199, 255, 0.12)';
+      context.lineWidth = 1;
+
+      for (let index = 0; index <= 10; index += 1) {
+        const startX = (width / 10) * index;
+        context.beginPath();
+        context.moveTo(startX, floorY);
+        context.lineTo(vanishingX, horizonY);
+        context.stroke();
+        context.closePath();
+      }
+
+      for (let index = 0; index <= 6; index += 1) {
+        const depth = index / 6;
+        const y = horizonY + (floorY - horizonY) * depth * depth;
+        const inset = width * 0.44 * (1 - depth);
+        context.beginPath();
+        context.moveTo(inset, y);
+        context.lineTo(width - inset, y);
+        context.stroke();
+        context.closePath();
+      }
+
+      context.strokeStyle = 'rgba(244, 198, 106, 0.24)';
+      context.beginPath();
+      context.moveTo(0, horizonY);
+      context.lineTo(width, horizonY);
+      context.stroke();
+      context.closePath();
+      context.restore();
+      return;
+    }
+
     context.strokeStyle = 'rgba(157, 199, 255, 0.08)';
     context.lineWidth = 1;
 
@@ -127,11 +209,12 @@ export class SimulationCanvasRendererService {
     height: number,
     scale: SceneScale,
     decorations: CanvasDecorationModel[],
+    viewMode: CanvasViewMode,
   ): void {
     for (const decoration of decorations) {
       if (decoration.kind === 'line') {
-        const from = this.toCanvasPoint(decoration.from, width, height, scale);
-        const to = this.toCanvasPoint(decoration.to, width, height, scale);
+        const from = this.toCanvasPoint(decoration.from, width, height, scale, viewMode);
+        const to = this.toCanvasPoint(decoration.to, width, height, scale, viewMode);
         context.save();
         context.globalAlpha = decoration.opacity;
         context.strokeStyle = decoration.color;
@@ -147,8 +230,8 @@ export class SimulationCanvasRendererService {
       }
 
       if (decoration.kind === 'arrow') {
-        const from = this.toCanvasPoint(decoration.from, width, height, scale);
-        const to = this.toCanvasPoint(decoration.to, width, height, scale);
+        const from = this.toCanvasPoint(decoration.from, width, height, scale, viewMode);
+        const to = this.toCanvasPoint(decoration.to, width, height, scale, viewMode);
         context.save();
         context.globalAlpha = decoration.opacity;
         context.strokeStyle = decoration.color;
@@ -188,7 +271,7 @@ export class SimulationCanvasRendererService {
         context.beginPath();
 
         decoration.points.forEach((point, index) => {
-          const canvasPoint = this.toCanvasPoint(point, width, height, scale);
+          const canvasPoint = this.toCanvasPoint(point, width, height, scale, viewMode);
           if (index === 0) {
             context.moveTo(canvasPoint.x, canvasPoint.y);
           } else {
@@ -203,7 +286,13 @@ export class SimulationCanvasRendererService {
       }
 
       if (decoration.kind === 'dot') {
-        const point = this.toCanvasPoint(decoration.position, width, height, scale);
+        const point = this.toCanvasPoint(
+          decoration.position,
+          width,
+          height,
+          scale,
+          viewMode,
+        );
         context.save();
         context.globalAlpha = decoration.opacity;
         context.fillStyle = decoration.color;
@@ -216,14 +305,26 @@ export class SimulationCanvasRendererService {
       }
 
       if (decoration.kind === 'ring') {
-        const center = this.toCanvasPoint(decoration.center, width, height, scale);
+        const center = this.toCanvasPoint(decoration.center, width, height, scale, viewMode);
         context.save();
         context.globalAlpha = decoration.opacity;
         context.strokeStyle = decoration.color;
         context.lineWidth = decoration.width;
         context.setLineDash(decoration.dashed ? [6, 8] : []);
         context.beginPath();
-        context.arc(center.x, center.y, decoration.radius, 0, Math.PI * 2);
+        if (viewMode === '3d') {
+          context.ellipse(
+            center.x,
+            center.y,
+            decoration.radius,
+            decoration.radius * 0.58,
+            0,
+            0,
+            Math.PI * 2,
+          );
+        } else {
+          context.arc(center.x, center.y, decoration.radius, 0, Math.PI * 2);
+        }
         context.stroke();
         context.closePath();
         context.restore();
@@ -231,21 +332,35 @@ export class SimulationCanvasRendererService {
       }
 
       if (decoration.kind === 'arc') {
-        const center = this.toCanvasPoint(decoration.center, width, height, scale);
+        const center = this.toCanvasPoint(decoration.center, width, height, scale, viewMode);
+        const radius = decoration.radius * scale.scale;
         context.save();
         context.globalAlpha = decoration.opacity;
         context.strokeStyle = decoration.color;
         context.lineWidth = decoration.width;
         context.setLineDash(decoration.dashed ? [6, 8] : []);
         context.beginPath();
-        context.arc(
-          center.x,
-          center.y,
-          decoration.radius * scale.scale,
-          -decoration.startAngle,
-          -decoration.endAngle,
-          true,
-        );
+        if (viewMode === '3d') {
+          context.ellipse(
+            center.x,
+            center.y,
+            radius,
+            radius * 0.58,
+            0,
+            -decoration.startAngle,
+            -decoration.endAngle,
+            true,
+          );
+        } else {
+          context.arc(
+            center.x,
+            center.y,
+            radius,
+            -decoration.startAngle,
+            -decoration.endAngle,
+            true,
+          );
+        }
         context.stroke();
         context.closePath();
         context.restore();
@@ -262,6 +377,7 @@ export class SimulationCanvasRendererService {
     selectedBodyId: string | null,
     showVectors: boolean,
     showTrails: boolean,
+    viewMode: CanvasViewMode,
   ): void {
     const orderedBodies = [
       ...bodies.filter((body) => body.visualOnly),
@@ -269,7 +385,7 @@ export class SimulationCanvasRendererService {
     ];
 
     for (const body of orderedBodies) {
-      const point = this.toCanvasPoint(body.position, width, height, scale);
+      const point = this.toCanvasPoint(body.position, width, height, scale, viewMode);
       const radius = Math.max(4, Math.min(28, body.radius));
       const isSelected = body.id === selectedBodyId;
       const bodyOpacity = body.visualOnly ? 0.34 : 1;
@@ -283,7 +399,13 @@ export class SimulationCanvasRendererService {
         context.lineWidth = isSelected ? 2.4 : 1.2;
 
         for (let index = 0; index < body.trail.length; index += 1) {
-          const trailPoint = this.toCanvasPoint(body.trail[index], width, height, scale);
+          const trailPoint = this.toCanvasPoint(
+            body.trail[index],
+            width,
+            height,
+            scale,
+            viewMode,
+          );
 
           if (index === 0) {
             context.moveTo(trailPoint.x, trailPoint.y);
@@ -296,6 +418,10 @@ export class SimulationCanvasRendererService {
         context.closePath();
       }
 
+      if (viewMode === '3d') {
+        this.drawGroundShadow(context, point, radius);
+      }
+
       context.beginPath();
       context.fillStyle = body.color;
       context.shadowBlur = body.visualOnly ? 8 : isSelected ? 22 : 14;
@@ -303,6 +429,10 @@ export class SimulationCanvasRendererService {
       context.arc(point.x, point.y, radius, 0, Math.PI * 2);
       context.fill();
       context.closePath();
+
+      if (viewMode === '3d') {
+        this.drawSphereHighlight(context, point, radius);
+      }
 
       if (isSelected) {
         context.beginPath();
@@ -315,25 +445,32 @@ export class SimulationCanvasRendererService {
         if (showVectors) {
           this.drawVector(
             context,
-            point.x,
-            point.y,
+            body.position,
             body.velocity,
             scale.scale * 0.8,
             '#7ce6ff',
+            width,
+            height,
+            scale,
+            viewMode,
           );
           this.drawVector(
             context,
-            point.x,
-            point.y,
+            body.position,
             body.force,
             scale.scale * 0.03,
             '#f4c66a',
+            width,
+            height,
+            scale,
+            viewMode,
           );
         }
       }
 
+      context.shadowBlur = 0;
+
       if (body.name && !body.visualOnly) {
-        context.shadowBlur = 0;
         context.fillStyle = '#f5f1e6';
         context.font = '12px Georgia';
         context.fillText(body.name, point.x + radius + 6, point.y - radius - 4);
@@ -345,24 +482,29 @@ export class SimulationCanvasRendererService {
 
   private drawVector(
     context: CanvasRenderingContext2D,
-    startX: number,
-    startY: number,
+    origin: Vector2Model,
     vector: Vector2Model,
     scale: number,
     color: string,
+    width: number,
+    height: number,
+    sceneScale: SceneScale,
+    viewMode: CanvasViewMode,
   ): void {
-    const endX = startX + vector.x * scale;
-    const endY = startY - vector.y * scale;
+    const start = this.toCanvasPoint(origin, width, height, sceneScale, viewMode);
+    const projectedVector = this.projectVector(vector, scale, viewMode);
+    const endX = start.x + projectedVector.x;
+    const endY = start.y + projectedVector.y;
 
     context.beginPath();
     context.strokeStyle = color;
     context.lineWidth = 2;
-    context.moveTo(startX, startY);
+    context.moveTo(start.x, start.y);
     context.lineTo(endX, endY);
     context.stroke();
     context.closePath();
 
-    const angle = Math.atan2(startY - endY, endX - startX);
+    const angle = Math.atan2(start.y - endY, endX - start.x);
     const headLength = 8;
 
     context.beginPath();
@@ -378,6 +520,68 @@ export class SimulationCanvasRendererService {
     );
     context.closePath();
     context.fill();
+  }
+
+  private drawGroundShadow(
+    context: CanvasRenderingContext2D,
+    point: { x: number; y: number },
+    radius: number,
+  ): void {
+    context.save();
+    context.globalAlpha = 0.24;
+    context.fillStyle = '#010509';
+    context.beginPath();
+    context.ellipse(
+      point.x + radius * 0.3,
+      point.y + radius * 1.35,
+      radius * 1.32,
+      Math.max(3, radius * 0.42),
+      0,
+      0,
+      Math.PI * 2,
+    );
+    context.fill();
+    context.closePath();
+    context.restore();
+  }
+
+  private drawSphereHighlight(
+    context: CanvasRenderingContext2D,
+    point: { x: number; y: number },
+    radius: number,
+  ): void {
+    context.save();
+    context.globalAlpha = 0.36;
+    context.fillStyle = '#ffffff';
+    context.beginPath();
+    context.arc(
+      point.x - radius * 0.28,
+      point.y - radius * 0.32,
+      Math.max(2, radius * 0.28),
+      0,
+      Math.PI * 2,
+    );
+    context.fill();
+    context.closePath();
+    context.restore();
+  }
+
+  private projectVector(
+    vector: Vector2Model,
+    scale: number,
+    viewMode: CanvasViewMode,
+  ): { x: number; y: number } {
+    if (viewMode === '3d') {
+      return {
+        x: (vector.x + vector.y * 0.36) * scale,
+        y: -(vector.y * 0.76 - vector.x * 0.14) * scale,
+      };
+    }
+
+    return {
+      x: vector.x * scale,
+      y: -vector.y * scale,
+    };
   }
 
   private computeScale(
@@ -450,7 +654,15 @@ export class SimulationCanvasRendererService {
     width: number,
     height: number,
     scale: SceneScale,
+    viewMode: CanvasViewMode,
   ): { x: number; y: number } {
+    if (viewMode === '3d') {
+      return {
+        x: width / 2 + (point.x + point.y * 0.36) * scale.scale,
+        y: height * 0.56 - (point.y * 0.76 - point.x * 0.14) * scale.scale,
+      };
+    }
+
     return {
       x: width / 2 + point.x * scale.scale,
       y: height / 2 - point.y * scale.scale,
