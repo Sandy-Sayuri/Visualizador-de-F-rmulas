@@ -22,4 +22,20 @@ describe('SimulationCanvasComponent', () => {
       'Adicione elementos para visualizar a cena fisica.',
     );
   });
+
+  it('toggles the canvas into 3d mode when enabled', () => {
+    fixture.componentRef.setInput('allowViewToggle', true);
+    fixture.detectChanges();
+
+    const element: HTMLElement = fixture.nativeElement;
+    const toggle = element.querySelector(
+      '[data-testid="canvas-view-toggle"]',
+    ) as HTMLButtonElement | null;
+
+    expect(toggle).not.toBeNull();
+    toggle?.click();
+    fixture.detectChanges();
+
+    expect(element.querySelector('.canvas-shell')?.classList.contains('mode-3d')).toBeTrue();
+  });
 });

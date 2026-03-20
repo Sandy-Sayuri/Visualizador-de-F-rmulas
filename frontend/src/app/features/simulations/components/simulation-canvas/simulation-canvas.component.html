@@ -1,4 +1,8 @@
-<section class="canvas-shell" [class.minimal]="minimalChrome">
+<section
+  class="canvas-shell"
+  [class.minimal]="minimalChrome"
+  [class.mode-3d]="viewMode() === '3d'"
+>
   @if (!minimalChrome) {
     <div class="canvas-headline">
       <div>
@@ -10,7 +14,22 @@
     </div>
   }
 
-  <div class="canvas-frame">
+  <div class="canvas-frame" [class.mode-3d]="viewMode() === '3d'">
+    @if (allowViewToggle) {
+      <button
+        type="button"
+        class="view-toggle"
+        [class.is-3d]="viewMode() === '3d'"
+        [attr.aria-pressed]="viewMode() === '3d'"
+        data-testid="canvas-view-toggle"
+        (click)="toggleViewMode($event)"
+      >
+        <i class="view-toggle-thumb"></i>
+        <span>2D</span>
+        <span>3D</span>
+      </button>
+    }
+
     <canvas
       #sceneCanvas
       width="860"
