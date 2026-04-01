@@ -30,9 +30,10 @@ export class FormulaScenarioRunnerService {
 
   readonly visualScene = computed<FormulaScenarioVisualSceneModel>(() => {
     const currentAnalysis = this.analysis();
+    const currentConfig = this.config();
     const currentState = this.state();
 
-    if (!currentAnalysis || !currentState) {
+    if (!currentAnalysis || !currentConfig || !currentState) {
       return {
         bodies: [],
         decorations: [],
@@ -47,7 +48,7 @@ export class FormulaScenarioRunnerService {
       };
     }
 
-    return this.visualization.buildScene(currentAnalysis, currentState);
+    return this.visualization.buildScene(currentAnalysis, currentState, currentConfig);
   });
 
   readonly bodies = computed<RuntimeBodyModel[]>(() => this.visualScene().bodies);

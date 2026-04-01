@@ -51,10 +51,13 @@ describe('FormulaScenarioRunnerService', () => {
       primaryColor: '#7ce6ff',
       secondaryColor: '#f4c66a',
       particleRadius: 8,
+      visualParticleCount: 10,
     });
 
-    expect(service.bodies()).toHaveSize(1);
+    expect(service.bodies()).toHaveSize(10);
+    expect(service.bodies().filter((body) => body.visualOnly)).toHaveSize(9);
     expect(service.visualScene().decision.mode).toBe('oscillation');
+    expect(service.visualScene().decision.particleCount).toBe(10);
     expect(service.errorMessage()).toBeNull();
   });
 

@@ -42,6 +42,8 @@ import { InclinedPlaneSceneSnapshotModel } from '../../models/inclined-plane-sce
 import { FormulaScenarioRunnerService } from '../../services/formula-scenario-runner.service';
 import { PhysicsDomainRegistryService } from '../../formula/physics-domain-registry.service';
 
+const DEFAULT_VISUAL_PARTICLE_COUNT = 8;
+
 type FormulaScenarioBuilderFormGroup = FormGroup<{
   simulationName: FormControl<string>;
   description: FormControl<string>;
@@ -51,6 +53,7 @@ type FormulaScenarioBuilderFormGroup = FormGroup<{
   primaryColor: FormControl<string>;
   secondaryColor: FormControl<string>;
   particleRadius: FormControl<number>;
+  visualParticleCount: FormControl<number>;
   parameters: FormRecord<FormControl<number>>;
 }>;
 
@@ -105,6 +108,21 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
 
     return analysis.classification.displayLabel;
   });
+  readonly supportsVisualParticleCountControl = computed(() => {
+    const analysis = this.analysis();
+
+    if (!analysis) {
+      return false;
+    }
+
+    if (analysis.parameterDefinitions.some((parameter) => parameter.key === 'particleCount')) {
+      return false;
+    }
+
+    return ['particle', 'trajectory', 'oscillation-pattern'].includes(
+      analysis.classification.visualStrategy,
+    );
+  });
 
   readonly presets: FormulaPresetModel[] = FORMULA_SCENARIO_PRESETS;
   readonly registeredDomains: readonly PhysicsDomainDescriptorModel[] =
@@ -155,6 +173,9 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
     }),
     particleRadius: this.formBuilder.control(8, {
       validators: [Validators.required, Validators.min(1)],
+    }),
+    visualParticleCount: this.formBuilder.control(DEFAULT_VISUAL_PARTICLE_COUNT, {
+      validators: [Validators.required, Validators.min(1), Validators.max(24)],
     }),
     parameters: new FormRecord<FormControl<number>>({}),
   });
@@ -319,6 +340,8 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
       primaryColor: draft.config.primaryColor,
       secondaryColor: draft.config.secondaryColor,
       particleRadius: draft.config.particleRadius,
+      visualParticleCount:
+        draft.config.visualParticleCount ?? DEFAULT_VISUAL_PARTICLE_COUNT,
     });
     this.detectParameters(true);
     this.syncParameterControls(
@@ -372,6 +395,7 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
       primaryColor: this.form.controls.primaryColor.getRawValue().trim(),
       secondaryColor: this.form.controls.secondaryColor.getRawValue().trim(),
       particleRadius: this.form.controls.particleRadius.getRawValue(),
+      visualParticleCount: this.form.controls.visualParticleCount.getRawValue(),
     };
   }
 
@@ -419,11 +443,17 @@ export class FormulaScenarioBuilderComponent implements OnChanges {
       loadedConfig.primaryColor === config.primaryColor &&
       loadedConfig.secondaryColor === config.secondaryColor &&
       loadedConfig.particleRadius === config.particleRadius &&
+      this.resolveVisualParticleCount(loadedConfig) ===
+        this.resolveVisualParticleCount(config) &&
       this.haveSameParameters(
         loadedConfig.parameterValues,
         config.parameterValues,
       )
     );
+  }
+
+  private resolveVisualParticleCount(config: FormulaScenarioConfigModel): number {
+    return config.visualParticleCount ?? DEFAULT_VISUAL_PARTICLE_COUNT;
   }
 
   private haveSameParameters(

@@ -40,7 +40,7 @@ describe('FormulaScenarioVisualizationService', () => {
     const analysis = analyzer.analyze(config.formula);
     const program = engine.compileProgram(config, analysis);
     const state = engine.createInitialState(config, program);
-    const scene = service.buildScene(analysis, state);
+    const scene = service.buildScene(analysis, state, config);
 
     expect(scene.decision.mode).toBe('wave-field');
     expect(scene.decision.showPatterns).toBeTrue();
@@ -65,7 +65,7 @@ describe('FormulaScenarioVisualizationService', () => {
     const analysis = analyzer.analyze(config.formula);
     const program = engine.compileProgram(config, analysis);
     const state = engine.createInitialState(config, program);
-    const scene = service.buildScene(analysis, state);
+    const scene = service.buildScene(analysis, state, config);
 
     expect(scene.decision.mode).toBe('optical-rays');
     expect(scene.decorations.some((decoration) => decoration.kind === 'line')).toBeTrue();
@@ -90,7 +90,7 @@ describe('FormulaScenarioVisualizationService', () => {
     const analysis = analyzer.analyze(config.formula);
     const program = engine.compileProgram(config, analysis);
     const state = engine.createInitialState(config, program);
-    const scene = service.buildScene(analysis, state);
+    const scene = service.buildScene(analysis, state, config);
 
     expect(scene.decision.mode).toBe('inclined-plane');
     expect(scene.decision.showVectors).toBeTrue();
@@ -120,7 +120,7 @@ describe('FormulaScenarioVisualizationService', () => {
     const analysis = analyzer.analyze(config.formula);
     const program = engine.compileProgram(config, analysis);
     const state = engine.createInitialState(config, program);
-    const scene = service.buildScene(analysis, state);
+    const scene = service.buildScene(analysis, state, config);
 
     expect(scene.decision.mode).toBe('electric-field');
     expect(scene.decorations.some((decoration) => decoration.kind === 'path')).toBeTrue();
@@ -145,12 +145,37 @@ describe('FormulaScenarioVisualizationService', () => {
     const analysis = analyzer.analyze(config.formula);
     const program = engine.compileProgram(config, analysis);
     const state = engine.createInitialState(config, program);
-    const scene = service.buildScene(analysis, state);
+    const scene = service.buildScene(analysis, state, config);
 
     expect(scene.decision.mode).toBe('thermo-chamber');
     expect(scene.decorations.some((decoration) => decoration.kind === 'line')).toBeTrue();
     expect(scene.decorations.some((decoration) => decoration.kind === 'path')).toBeTrue();
     expect(scene.legendItems.some((item) => item.label === 'Particulas')).toBeTrue();
     expect(scene.legendItems.some((item) => item.label === 'Temperatura')).toBeTrue();
+  });
+
+  it('expands single-body scenes with visual-only particles when requested', () => {
+    const config = {
+      formula: 'x = x0 + v*t',
+      parameterValues: {
+        x0: -30,
+        v: 12,
+      },
+      primaryLabel: 'Particula',
+      secondaryLabel: 'Eixo',
+      primaryColor: '#7ce6ff',
+      secondaryColor: '#f4c66a',
+      particleRadius: 8,
+      visualParticleCount: 9,
+    };
+    const analysis = analyzer.analyze(config.formula);
+    const program = engine.compileProgram(config, analysis);
+    const state = engine.createInitialState(config, program);
+    const scene = service.buildScene(analysis, state, config);
+
+    expect(scene.decision.mode).toBe('single-particle');
+    expect(scene.decision.particleCount).toBe(9);
+    expect(scene.bodies.filter((body) => body.visualOnly)).toHaveSize(8);
+    expect(scene.bodies[0].visualOnly).not.toBeTrue();
   });
 });

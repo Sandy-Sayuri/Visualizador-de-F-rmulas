@@ -165,6 +165,39 @@
         </div>
       }
 
+      @if (supportsVisualParticleCountControl()) {
+        <section class="subpanel" data-testid="visual-particle-control">
+          <div class="subpanel-heading">
+            <div>
+              <p class="eyebrow">Densidade</p>
+              <strong>Particulas visuais</strong>
+            </div>
+
+            <span class="count-badge">{{ form.controls.visualParticleCount.value }}</span>
+          </div>
+
+          <p class="muted-text">
+            Replica o movimento no canvas sem mexer na formula, deixando o trajeto mais legivel.
+          </p>
+
+          <label class="compact-field">
+            <span class="parameter-label-row">
+              <span>Quantidade no canvas</span>
+              <strong>{{ form.controls.visualParticleCount.value }}</strong>
+            </span>
+
+            <input
+              type="range"
+              min="1"
+              max="24"
+              step="1"
+              formControlName="visualParticleCount"
+              data-testid="visual-particle-count"
+            />
+          </label>
+        </section>
+      }
+
       <details class="advanced-panel">
         <summary>Aparencia opcional</summary>
 

@@ -8,4 +8,5 @@ export interface RuntimeBodyModel extends BodyModel {
   potentialEnergy: number;
   totalEnergy: number;
   trail: Vector2Model[];
+  visualOnly?: boolean;
 }
