@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { SimulationModel } from '../../models/simulation.model';
+import { SimulationLibraryItemModel } from '../../models/simulation-library-item.model';
 
 @Component({
   selector: 'app-simulation-card',
@@ -11,16 +11,16 @@ import { SimulationModel } from '../../models/simulation.model';
   styleUrl: './simulation-card.component.scss',
 })
 export class SimulationCardComponent {
-  @Input({ required: true }) simulation!: SimulationModel;
+  @Input({ required: true }) item!: SimulationLibraryItemModel;
 
   @Output() viewRequested = new EventEmitter<string>();
   @Output() deleteRequested = new EventEmitter<string>();
 
   requestView(): void {
-    this.viewRequested.emit(this.simulation.id);
+    this.viewRequested.emit(this.item.id);
   }
 
   requestDelete(): void {
-    this.deleteRequested.emit(this.simulation.id);
+    this.deleteRequested.emit(this.item.id);
   }
 }

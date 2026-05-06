@@ -82,6 +82,8 @@ Exemplo de payload:
 GET /api/simulations
 ```
 
+Retorno em ordem da simulacao mais recentemente atualizada para a mais antiga.
+
 ### Buscar simulacao por id
 
 ```http

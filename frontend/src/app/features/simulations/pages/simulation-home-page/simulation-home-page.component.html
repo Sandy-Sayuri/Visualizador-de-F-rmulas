@@ -14,6 +14,15 @@
         <span class="status-chip">100% local</span>
       </div>
 
+      <div class="hero-actions">
+        <a class="hero-link hero-link-primary" routerLink="/simulations/library">
+          Abrir biblioteca
+        </a>
+        <a class="hero-link hero-link-secondary" href="#builder-host">
+          Ir para o laboratorio
+        </a>
+      </div>
+
       <div class="tag-row" aria-label="Exemplos de formula">
         @for (preset of presets; track preset.id) {
           <button
@@ -28,7 +37,7 @@
     </div>
   </section>
 
-  <section class="builder-host">
+  <section id="builder-host" class="builder-host">
     <app-formula-scenario-builder
       #builder
       [allowSave]="false"

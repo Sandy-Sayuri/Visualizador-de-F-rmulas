@@ -2,24 +2,52 @@
   <div class="card-header">
     <div>
       <p class="eyebrow">Experimento salvo</p>
-      <h2>{{ simulation.name }}</h2>
+      <h2>{{ item.name }}</h2>
     </div>
 
-    <span class="body-badge">{{ simulation.bodies.length }} corpos</span>
+    <div class="badge-row">
+      <span class="domain-badge">{{ item.domainLabel }}</span>
+
+      @if (item.source === 'formula') {
+        <span class="source-badge">{{ item.sourceLabel }}</span>
+      }
+
+      <span class="body-badge">{{ item.simulation.bodies.length }} corpos</span>
+    </div>
   </div>
 
+  @if (item.formulaPreview) {
+    <p class="formula-preview">
+      <code>{{ item.formulaPreview }}</code>
+    </p>
+  }
+
   <p class="description">
-    {{ simulation.description || 'Sem descricao cadastrada.' }}
+    {{ item.description || 'Sem descricao cadastrada.' }}
   </p>
 
   <dl class="meta-grid">
     <div>
       <dt>Criada</dt>
-      <dd>{{ simulation.createdAt | date: 'short' }}</dd>
+      <dd>{{ item.simulation.createdAt | date: 'short' }}</dd>
     </div>
     <div>
       <dt>Atualizada</dt>
-      <dd>{{ simulation.updatedAt | date: 'short' }}</dd>
+      <dd>{{ item.simulation.updatedAt | date: 'short' }}</dd>
+    </div>
+    <div>
+      <dt>Leitura</dt>
+      <dd>{{ item.familyLabel || item.sourceLabel }}</dd>
+    </div>
+    <div>
+      <dt>Parametros</dt>
+      <dd>
+        @if (item.source === 'formula') {
+          {{ item.parameterCount }}
+        } @else {
+          N/A
+        }
+      </dd>
     </div>
   </dl>
 

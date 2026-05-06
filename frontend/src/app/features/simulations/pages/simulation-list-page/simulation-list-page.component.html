@@ -1,12 +1,33 @@
 <section class="page">
   <div class="hero-card">
-    <div>
+    <div class="hero-copy">
       <p class="eyebrow">Biblioteca</p>
       <h2>Experimentos salvos</h2>
       <p class="lead">
-        Revise formulas e cenas persistidas no backend, reabra cada experimento
-        e continue a exploracao visual quando quiser.
+        Revise formulas, cenarios guiados e cenas persistidas no backend,
+        reabra cada experimento e continue a exploracao visual quando quiser.
       </p>
+
+      @if (summary().total) {
+        <div class="stats-grid">
+          <article>
+            <span>Total</span>
+            <strong>{{ summary().total }}</strong>
+          </article>
+          <article>
+            <span>Por formula</span>
+            <strong>{{ summary().formulas }}</strong>
+          </article>
+          <article>
+            <span>Guiados</span>
+            <strong>{{ summary().guided }}</strong>
+          </article>
+          <article>
+            <span>Dominios</span>
+            <strong>{{ summary().domains }}</strong>
+          </article>
+        </div>
+      }
     </div>
 
     <a class="primary-link" routerLink="/simulations">Abrir laboratorio</a>
@@ -25,14 +46,58 @@
       <a class="secondary-link" routerLink="/simulations">Criar agora</a>
     </section>
   } @else {
+    <section class="toolbar-card">
+      <label class="search-field">
+        <span>Buscar por nome, descricao ou formula</span>
+        <input
+          #searchInput
+          type="search"
+          [value]="searchTerm()"
+          data-testid="library-search"
+          placeholder="Ex.: gravidade, lente, q1, oscilacao"
+          (input)="updateSearch(searchInput.value)"
+        />
+      </label>
+
+      <div class="filter-group" data-testid="library-domain-filter">
+        <span>Filtrar por escopo</span>
+
+        <div class="filter-chip-row">
+          @for (option of domainOptions(); track option.value) {
+            <button
+              type="button"
+              class="filter-chip"
+              [class.is-active]="selectedDomain() === option.value"
+              [attr.aria-pressed]="selectedDomain() === option.value"
+              (click)="selectDomain(option.value)"
+            >
+              {{ option.label }}
+            </button>
+          }
+        </div>
+      </div>
+    </section>
+
+    @if (!filteredItems().length) {
+      <section class="empty-state">
+        <h3>Nenhum resultado para este filtro</h3>
+        <p>
+          Ajuste a busca ou troque o escopo para voltar a listar os experimentos salvos.
+        </p>
+        <button type="button" class="secondary-button" (click)="updateSearch(''); selectDomain('all')">
+          Limpar filtros
+        </button>
+      </section>
+    } @else {
     <div class="cards-grid">
-      @for (simulation of facade.simulations(); track simulation.id) {
+      @for (item of filteredItems(); track item.id) {
         <app-simulation-card
-          [simulation]="simulation"
+          [item]="item"
           (viewRequested)="openDetails($event)"
           (deleteRequested)="removeSimulation($event)"
         />
       }
     </div>
+    }
   }
 </section>

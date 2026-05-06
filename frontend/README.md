@@ -27,13 +27,16 @@ O foco atual do produto e permitir que o usuario escreva uma formula, veja os pa
 - Oscilacao
 - Gravitacao basica
 - Ondas viajantes simples
+- Optica guiada
+- Eletromagnetismo introdutorio
+- Termodinamica visual
 - Expressoes genericas com fallback seguro
 
-## Dominios preparados para expansao futura
+## Biblioteca visual
 
-- Optica
-- Eletromagnetismo classico
-- Termodinamica introdutoria
+- `/simulations/library` lista os experimentos salvos
+- a biblioteca limpa metadados internos de formula antes de renderizar
+- e possivel buscar por nome, descricao, formula e filtrar por dominio
 
 ## Exemplos de formulas
 
@@ -201,7 +204,7 @@ Isso permite testar separadamente:
 
 - a melhor entrada hoje e `uma formula por vez`
 - o formato esperado ainda e `alvo = expressao`
-- optica, eletromagnetismo e termodinamica ainda estao em preparacao
+- parte dos dominios avancados ainda depende de cenarios guiados
 - nem toda a fisica classica esta suportada nesta etapa
 
 ## Visao de crescimento

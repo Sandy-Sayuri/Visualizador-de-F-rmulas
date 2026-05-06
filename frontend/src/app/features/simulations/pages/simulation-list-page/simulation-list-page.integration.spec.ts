@@ -43,18 +43,42 @@ describe('SimulationListPageComponent integration', () => {
     request.flush([
       {
         id: 'sim-42',
-        name: 'Orbit Sandbox',
-        description: 'Integration flow',
+        name: 'Formula Lab',
+        description:
+          'Movimento em linha reta\n\n[OrbitLab:FormulaScenario] {"version":1,"config":{"formula":"x = x0 + v*t","parameterValues":{"x0":-180,"v":42},"primaryLabel":"Particula","secondaryLabel":"Referencia","primaryColor":"#7ce6ff","secondaryColor":"#f4c66a","particleRadius":8,"visualParticleCount":8}}',
         bodies: [],
         createdAt: '2026-03-19T00:00:00.000Z',
         updatedAt: '2026-03-19T00:00:00.000Z',
+      },
+      {
+        id: 'sim-21',
+        name: 'Manual Sandbox',
+        description: 'Cena criada manualmente',
+        bodies: [],
+        createdAt: '2026-03-18T00:00:00.000Z',
+        updatedAt: '2026-03-18T00:00:00.000Z',
       },
     ]);
 
     fixture.detectChanges();
 
     const element: HTMLElement = fixture.nativeElement;
-    expect(element.textContent).toContain('Orbit Sandbox');
+    expect(element.textContent).toContain('Formula Lab');
+    expect(element.textContent).toContain('Manual Sandbox');
+    expect(element.textContent).toContain('x = x0 + v*t');
+    expect(element.textContent).toContain('Cinematica');
+    expect(element.textContent).not.toContain('[OrbitLab:FormulaScenario]');
+    expect(element.querySelectorAll('app-simulation-card').length).toBe(2);
+
+    const searchInput = element.querySelector(
+      '[data-testid="library-search"]',
+    ) as HTMLInputElement;
+    searchInput.value = 'manual';
+    searchInput.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect(element.textContent).toContain('Manual Sandbox');
+    expect(element.textContent).not.toContain('Formula Lab');
     expect(element.querySelectorAll('app-simulation-card').length).toBe(1);
   });
 });

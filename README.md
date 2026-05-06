@@ -23,13 +23,16 @@ Hoje o fluxo principal do produto e `frontend-first`: o usuario digita uma formu
 - Oscilacao
 - Gravitacao basica
 - Ondas viajantes simples
+- Optica guiada
+- Eletromagnetismo introdutorio
+- Termodinamica visual
 - Expressoes genericas com fallback seguro
 
-## Em preparacao
+## Biblioteca e exploracao
 
-- Optica
-- Eletromagnetismo classico
-- Termodinamica introdutoria
+- Biblioteca com experimentos salvos no backend
+- Releitura de simulacoes geradas por formula
+- Busca e filtro por dominio na colecao salva
 
 ## Exemplos de formulas
 
@@ -155,7 +158,7 @@ O projeto foi organizado para ser testavel desde o inicio:
 
 - O fluxo principal atual nao grava nada em banco
 - O backend ainda usa armazenamento em memoria no MVP
-- O frontend esta preparado para expansao progressiva de novos dominios da fisica
+- O frontend ja cobre laboratorio livre e cenarios guiados em varios dominios
 - Nem toda a fisica classica esta coberta ainda; a base foi feita para crescer com seguranca
 
 ## Documentacao especifica

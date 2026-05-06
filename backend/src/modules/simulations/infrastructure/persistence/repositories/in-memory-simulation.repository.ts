@@ -15,9 +15,14 @@ export class InMemorySimulationRepository implements SimulationRepository {
   }
 
   async findAll(): Promise<Simulation[]> {
-    return Array.from(this.simulations.values()).map((record) =>
-      SimulationPersistenceMapper.toDomain(record),
-    );
+    return Array.from(this.simulations.values())
+      .sort(
+        (left, right) =>
+          right.updatedAt.localeCompare(left.updatedAt) ||
+          right.createdAt.localeCompare(left.createdAt) ||
+          left.name.localeCompare(right.name),
+      )
+      .map((record) => SimulationPersistenceMapper.toDomain(record));
   }
 
   async findById(id: string): Promise<Simulation | null> {

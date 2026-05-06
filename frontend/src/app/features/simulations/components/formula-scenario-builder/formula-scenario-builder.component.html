@@ -1,4 +1,4 @@
-<section class="builder-shell">
+﻿<section class="builder-shell">
   <form class="builder-grid" [formGroup]="form">
     <section class="panel formula-panel">
       <div class="section-heading">
@@ -87,13 +87,19 @@
         </div>
 
         <div class="support-shapes">
-          <span>Ainda nao nesta etapa</span>
+          <span>Status do motor</span>
 
-          <div class="support-chip-row">
-            @for (domain of plannedDomains; track domain.domain) {
-              <span class="support-chip">{{ domain.label }}</span>
-            }
-          </div>
+          @if (plannedDomains.length) {
+            <div class="support-chip-row">
+              @for (domain of plannedDomains; track domain.domain) {
+                <span class="support-chip">{{ domain.label }}</span>
+              }
+            </div>
+          } @else {
+            <p class="muted-text">
+              Todos os dominios implementados neste motor ja estao expostos no laboratorio.
+            </p>
+          }
         </div>
 
         <div class="support-shapes">
@@ -112,9 +118,7 @@
             O sistema ja usa <code>t</code>, <code>dt</code>, <code>x</code>,
             <code>y</code>, <code>vx</code>, <code>vy</code>, <code>ax</code>,
             <code>ay</code>, <code>r</code>, <code>distance</code>,
-            <code>dx</code> e <code>dy</code> internamente. Deltas como
-            <code>Δs</code> e <code>Δt</code> viram
-            <code>deltaS</code> e <code>deltaT</code>.
+            <code>dx</code> e <code>dy</code> internamente. Deltas como <code>&#916;s</code> e <code>&#916;t</code> viram <code>deltaS</code> e <code>deltaT</code>.
           </p>
         </div>
       </section>
@@ -324,7 +328,7 @@
             </article>
             <article>
               <span>Aceleracao</span>
-              <strong>{{ incline.acceleration | number: '1.1-2' }} m/s²</strong>
+              <strong>{{ incline.acceleration | number: '1.1-2' }} m/s^2</strong>
               <small>a = g*sen(theta)</small>
             </article>
           </div>
@@ -406,3 +410,4 @@
     </section>
   </form>
 </section>
+

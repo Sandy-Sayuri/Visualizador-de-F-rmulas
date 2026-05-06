@@ -19,6 +19,13 @@
   align-items: flex-start;
 }
 
+.badge-row {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .eyebrow {
   margin: 0 0 0.35rem;
   color: var(--theme-eyebrow);
@@ -33,12 +40,40 @@ h2 {
   font-size: 1.35rem;
 }
 
+.domain-badge,
+.source-badge,
 .body-badge {
   padding: 0.35rem 0.75rem;
   border-radius: var(--theme-pill-radius);
+  font-size: 0.9rem;
+}
+
+.domain-badge {
+  background: var(--theme-badge-background);
+  color: var(--theme-badge-text);
+}
+
+.source-badge {
+  background: var(--theme-secondary-accent-background);
+  color: var(--theme-text);
+}
+
+.body-badge {
   background: var(--theme-warm-badge-background);
   color: var(--theme-warm-badge-text);
-  font-size: 0.9rem;
+}
+
+.formula-preview {
+  margin: 0;
+  padding: 0.8rem 0.9rem;
+  border: var(--theme-border-width) solid var(--theme-secondary-border);
+  border-radius: var(--theme-input-radius);
+  background: var(--theme-code-background);
+  overflow-wrap: anywhere;
+}
+
+.formula-preview code {
+  font-size: 0.92rem;
 }
 
 .description {
@@ -100,4 +135,14 @@ button:hover {
 .danger-button {
   background: var(--theme-button-danger-background);
   color: var(--theme-button-danger-text);
+}
+
+@media (max-width: 680px) {
+  .card-header {
+    flex-direction: column;
+  }
+
+  .badge-row {
+    justify-content: flex-start;
+  }
 }
